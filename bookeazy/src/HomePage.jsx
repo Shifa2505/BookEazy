@@ -87,6 +87,22 @@ export default function Homepage() {
           </div>
         </div>
         </section>
+        <section className="book-info">
+            <div className="info-content">
+                <h1>Simplify Your Daily Routine</h1>
+                <h3>When life gets hectic, you don't have to handle it all on your own. 
+                Reclaim your time for the things you enjoy, without overspending.</h3>
+                <p>Select your Service Provider based on reviews, skills, and pricing</p>    
+                <p>Set a schedule that suits you - as soon as today.</p>  
+            </div>
+            <div className="info-img">
+                {/* <img src="images/booking.jpg" alt="" /> */}
+                <img src="images/electrical.jpeg" alt="" />
+
+            </div>
+              
+
+        </section>
     </div>
   );
 }
