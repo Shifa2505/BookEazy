@@ -1,0 +1,98 @@
+/* .card *{
+    outline: 2px solid yellow;
+} */
+
+.servicemenCard{
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    max-width: 480px;
+    /* border-radius: 0px 8px 8px; */
+    width: 70%;
+    /* transform: translateX(50%); */
+    overflow: hidden;
+    animation: loadCard 0.4s ease-out;
+}
+
+.servicemenCard .leftContainer{
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    align-items: center;
+    grid-row: 1/6;
+    background-color: var(--background);
+    border-radius: 20px 20px 0 20px;
+}
+
+.servicemenCard .rightContainer{
+    color: var(--secondary);
+    grid-row: 2/6;
+    background-color: var(--background);
+    display: flex;
+    border-radius: 0% 20px 20px 0;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 8px 8px 0px;
+    z-index: -1;
+    transform: translateX(-101%);
+    animation: slideRightContainer 0.6s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.servicemenCard .leftContainer img{
+    max-width: 80%;
+    min-width: 48px;
+    aspect-ratio: 1/1;
+    border-radius: calc(20px + 20px);
+    padding: 20px;
+}
+
+.servicemenCard .rightContainer > div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-content: center;
+    color: var(--primary);
+}
+
+.servicemenCard .rightContainer > span{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.servicemenCard .rightContainer > div span:nth-child(2){
+    margin-right: 10%;
+    justify-self: flex-end;
+}
+
+.servicemenCard .rightContainer > div svg{
+    width: 1rem;
+}
+
+@media screen and (max-width:480px){
+    .servicemenCard .leftContainer{
+        border-top-right-radius: 0px;
+    }
+    .servicemenCard .rightContainer{
+        grid-row: 1/6;
+    }
+}
+
+@keyframes loadCard {
+    from{
+        transform: translateX(50%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slideRightContainer {
+    from{
+        transform: translateX(-101%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}

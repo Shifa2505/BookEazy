@@ -1,16 +1,18 @@
+import { Link } from "react-router-dom";
+
 export default function Navbar(){
     return <nav className="nav">
         <a href="/" className="site-title">BookEazy</a>
-        <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+        <i className="fa-solid fa-xmark" onClick="hideMenu()"></i>
         <ul>
             <li>
-                <a href="/about">Home</a>
+                <Link to="/">Home</Link>
             </li>
             <li>
                 <a href="/about">About</a>
             </li>
             <li>
-                <a href="/services">Services</a>
+                <Link to="/services">Services</Link>
                 <div className="dropdown">
                     <ul>
                         <li>

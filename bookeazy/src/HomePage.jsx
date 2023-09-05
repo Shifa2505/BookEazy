@@ -1,15 +1,19 @@
-export default function Homepage(){
-    return <div className="dashboard">
-        {/* Main Content of home screen */}
-        <section className="home-page">
+export default function Homepage() {
+  return (
+    <div className="dashboard">
+      {/* Main Content of home screen */}
+      <section className="home-page">
         <div className="home-wrap">
-        <h1>BookEazy: Connecting You with Trusted Service Professionals</h1>
-        <h3>At BookEazy, we believe in simplifying your life by connecting you with a network 
-            of dedicated Service Professionals who are ready to assist you in various aspects of your daily routine.
-             Our mission is to empower you with convenience, quality, and trustworthiness.</h3>
+          <h1>BookEazy: Connecting You with Trusted Service Professionals</h1>
+          <h3>
+            At BookEazy, we believe in simplifying your life by connecting you
+            with a network of dedicated Service Professionals who are ready to
+            assist you in various aspects of your daily routine. Our mission is
+            to empower you with convenience, quality, and trustworthiness.
+          </h3>
         </div>
         <div className="help-btn">
-        <a href="#service-cards">Help Me Now</a>     
+          <a href="#service-cards">Help Me Now</a>
         </div>
         </section>
        
@@ -18,86 +22,71 @@ export default function Homepage(){
         <div class="servicetext">
             <h2>Our New Services</h2>
         </div>
-        <div class="service-containers">
-            <div class="services-card">
-                <div class="services-main">
-                    <h3>Plumbing Repairs</h3>
-                </div>
-                <div class="services-content">
-                    <h3>Plumbing Repairs</h3>
-                    <p>Avg. Project: ₹400-₹500</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+        <div className="service-containers">
+          <div className="services-card">
+            <div className="services-main">
+              <h3>Plumbing Repairs</h3>
             </div>
-            <div class="services-card">
-                <div class="service-img">
-                    <img src="images/electrical.jpeg" width="480" height="310"/>
-                </div>
-                <div class="services-content">
-                    <h3>Electrical Help</h3>
-                    <p>Avg. Project: ₹500-₹600</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+            <div className="services-content">
+              <h3>Plumbing Repairs</h3>
+              <p>Avg. Project: ₹400-₹500</p>
+              <button className="services-btn">Book Now</button>
             </div>
-            <div class="services-card">
-                <div class="service-img">
-                    <img src="images/cleaning.jpg" width="480" height="310"/>
-                </div>
-                <div class="services-content">
-                    <h3>Home Cleaning</h3>
-                    <p>Avg. Project: ₹200-₹300</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+          </div>
+          <div className="services-card">
+            <div className="service-img">
+              <img src="images/electrical.jpeg" width="480" height="310" />
             </div>
+            <div className="services-content">
+              <h3>Electrical Help</h3>
+              <p>Avg. Project: ₹500-₹600</p>
+              <button className="services-btn">Book Now</button>
+            </div>
+          </div>
+          <div className="services-card">
+            <div className="service-img">
+              <img src="images/cleaning.jpg" width="480" height="310" />
+            </div>
+            <div className="services-content">
+              <h3>Home Cleaning</h3>
+              <p>Avg. Project: ₹200-₹300</p>
+              <button className="services-btn">Book Now</button>
+            </div>
+          </div>
         </div>
-        <div class="service-containers">
-            <div class="services-card">
-                <div class="service-img">
-                    <img src="images/furniture.jpg"  width="480" height="310"/>
-                </div>
-                <div class="services-content">
-                    <h3>Furniture Assembly</h3>
-                    <p>Avg. Project: ₹100-₹200</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+        <div className="service-containers">
+          <div className="services-card">
+            <div className="service-img">
+              <img src="images/furniture.jpg" width="480" height="310" />
             </div>
-            <div class="services-card">
-                <div class="service-img">
-                    <img src="images/painting.jpeg" width="480" height="310"/>
-                </div>
-                <div class="services-content">
-                    <h3>Painting</h3>
-                    <p>Avg. Project: ₹700-₹800</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+            <div className="services-content">
+              <h3>Furniture Assembly</h3>
+              <p>Avg. Project: ₹100-₹200</p>
+              <button className="services-btn">Book Now</button>
             </div>
-            <div class="services-card">
-                <div class="service-img">
-                    <img src="images/lifting.jpeg" width="480" height="310"/>
-                </div>
-                <div class="services-content">
-                    <h3>Heavy Lifting</h3>
-                    <p>Avg. Project: ₹200-₹300</p>
-                    <button className="services-btn">Book Now</button>
-                </div>
+          </div>
+          <div className="services-card">
+            <div className="service-img">
+              <img src="images/painting.jpeg" width="480" height="310" />
             </div>
+            <div className="services-content">
+              <h3>Painting</h3>
+              <p>Avg. Project: ₹700-₹800</p>
+              <button className="services-btn">Book Now</button>
+            </div>
+          </div>
+          <div className="services-card">
+            <div className="service-img">
+              <img src="images/lifting.jpeg" width="480" height="310" />
+            </div>
+            <div className="services-content">
+              <h3>Heavy Lifting</h3>
+              <p>Avg. Project: ₹200-₹300</p>
+              <button className="services-btn">Book Now</button>
+            </div>
+          </div>
         </div>
-        </section>
-        <section className="book-info">
-            <div className="info-content">
-                <h1>Simplify Your Daily Routine</h1>
-                <h3>When life gets hectic, you don't have to handle it all on your own. 
-                Reclaim your time for the things you enjoy, without overspending.</h3>
-                <p>Select your Service Provider based on reviews, skills, and pricing</p>    
-                <p>Set a schedule that suits you - as soon as today.</p>  
-            </div>
-            <div className="info-img">
-                {/* <img src="images/booking.jpg" alt="" /> */}
-                <img src="images/electrical.jpeg" alt="" />
-
-            </div>
-              
-
         </section>
     </div>
+  );
 }
