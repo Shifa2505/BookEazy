@@ -18,6 +18,7 @@ export default function Homepage() {
         </section>
        
         {/* SERVICE CARDS */}
+        {/* <Link to="/services">Services</Link> */}
         <section id="service-cards" className="service-cardss">
         <div class="servicetext">
             <h2>Our New Services</h2>
@@ -41,6 +42,7 @@ export default function Homepage() {
               <h3>Electrical Help</h3>
               <p>Avg. Project: ₹500-₹600</p>
               <button className="services-btn">Book Now</button>
+             
             </div>
           </div>
           <div className="services-card">

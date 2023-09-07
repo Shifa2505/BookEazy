@@ -6,7 +6,7 @@ function ServicemenShowCard(props) {
     <div className={styles.servicemenCard} style={{animationDelay: `${props.index * 100}ms`}}>
       <div className={styles.leftContainer}>
         <img src={props.image} alt={props.name} />
-        <span>33$</span>
+        <span>₹300</span>
       </div>
       <div className={styles.rightContainer}>
         <div>
