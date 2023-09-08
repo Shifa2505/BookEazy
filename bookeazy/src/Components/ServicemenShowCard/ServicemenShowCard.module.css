@@ -7,11 +7,12 @@
     grid-template-columns: 0.8fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
     max-width: 480px;
-    /* border-radius: 0px 8px 8px; */
+    border-radius: 20px;
     width: 70%;
     /* transform: translateX(50%); */
     overflow: hidden;
     animation: loadCard 0.4s ease-out;
+    z-index: 2;
 }
 
 .servicemenCard .leftContainer{
@@ -22,7 +23,7 @@
     align-items: center;
     grid-row: 1/6;
     background-color: var(--background);
-    border-radius: 20px 20px 0 20px;
+    border-radius: 20px 20px 0px 20px;
 }
 
 .servicemenCard .rightContainer{
@@ -45,7 +46,7 @@
     min-width: 48px;
     aspect-ratio: 1/1;
     border-radius: calc(20px + 20px);
-    padding: 20px;
+    margin: 20px;
 }
 
 .servicemenCard .rightContainer > div{
@@ -64,10 +65,15 @@
 .servicemenCard .rightContainer > div span:nth-child(2){
     margin-right: 10%;
     justify-self: flex-end;
+    width: 2rem;
+    display: flex;
+    gap: 1px;
+    align-items: start;
 }
 
 .servicemenCard .rightContainer > div svg{
-    width: 1rem;
+    transform: translateY(1px);
+    width: 0.8rem;
 }
 
 @media screen and (max-width:480px){
@@ -82,17 +88,21 @@
 @keyframes loadCard {
     from{
         transform: translateX(50%);
+        opacity: 0;
     }
     to{
         transform: translateX(0%);
+        opacity: 1;
     }
 }
 
 @keyframes slideRightContainer {
     from{
         transform: translateX(-101%);
+        opacity: 0;
     }
     to{
         transform: translateX(0%);
+        opacity: 1;
     }
 }
