@@ -6,7 +6,7 @@ import "./services_css/painting.css";
 function Painting(){
     return(
         <>
-        <section className="banner">
+        <section className="banner2">
             <div className="banner-info">
                 <h1>Painting</h1>
                 <div className="divider"></div>
@@ -20,6 +20,7 @@ function Painting(){
 
                 <div className="service-txt">
                     <h1>Home Painting Services</h1>
+                    <div className="divider"></div>
                     <p>Are there buckets of paint sitting around that should be up on the wall right now? You probably had 
                         a great vision for how you wanted your space to look, it’s just… painting’s never as easy as we think it is. 
                         That's where Taskers come in: experienced painters for your home's interior. </p>
@@ -31,7 +32,7 @@ function Painting(){
                     </p>
                 </div>
                 <div className="service-img">
-                    <img src="/images/painting.jpeg" alt="" />
+                    <img src="/images/painting2.jpg" alt="" />
                 </div>
             </div>
         </section>
@@ -61,7 +62,7 @@ function Painting(){
         </section>
         <section className="ready-to-hire">
             <div className="ready-img">
-                <img src="/images/ready.jpg" alt="" />
+                <img src="/images/family2.jpg" alt="" />
             </div>
             <div className="ready-txt">
                 <h1>Ready to hire a Service Provider?</h1>

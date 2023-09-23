@@ -1,6 +1,8 @@
-.banner{
+.banner2{
     min-height: 80vh;
-    background-image: url(/images/electrical.jpeg);
+    background-image: url(/images/painting.jpeg);
+    /* background-repeat: no; */
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +22,8 @@
 }
 .divider{
     /* color: black; */
-    background-color: black;
+    background-color: #750202;
+
     height: 2px;
     width: 100px;
 }
@@ -121,11 +124,13 @@
     align-items: center;
 }
 .ready-img img{
-    margin: 30px 40px 30px 100px;
+    margin: 30px 40px 30px 200px;
+    width: 600px;
 }
 .ready-txt h1{
     font-size: 2rem;
 }
 .ready-txt .service-btn{
     width: 250px;
+    background-color: black;
 }

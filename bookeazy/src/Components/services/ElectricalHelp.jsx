@@ -22,6 +22,7 @@ function ElectricalHelp(){
 
                 <div className="service-txt">
                     <h1>Electrical Help And Services</h1>
+                    <div className="divider"></div>
                     <p>You need to find someone to lend a hand with electrical help, 
                         but you don’t want to hire someone you can’t trust. After all, your home or office’s 
                         electrical system is pretty important, and you can’t afford to gamble with it.
@@ -64,7 +65,7 @@ function ElectricalHelp(){
         </section>
         <section className="ready-to-hire">
             <div className="ready-img">
-                <img src="/images/ready.jpg" alt="" />
+                <img src="/images/family2.jpg" alt="" />
             </div>
             <div className="ready-txt">
                 <h1>Ready to hire a Service Provider?</h1>
