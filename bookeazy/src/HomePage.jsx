@@ -1,3 +1,6 @@
+import React from 'react';
+// import { useHistory } from 'react-router-dom';
+
 export default function Homepage() {
   return (
     <div className="dashboard">
@@ -13,7 +16,7 @@ export default function Homepage() {
           </h3>
         </div>
         <div className="help-btn">
-          <a href="#service-cards">Help Me Now</a>
+          <a href="#service-cards">Book Now</a>
         </div>
         </section>
        
