@@ -4,7 +4,8 @@
 
 body {
     margin: 0;
-    background-color: #eae7dc;
+    /* background-color: #eae7dc; */
+    background-color: aliceblue;
 }
 
 .nav {

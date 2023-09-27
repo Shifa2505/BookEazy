@@ -16,13 +16,13 @@ export default function Navbar(){
                 <div className="dropdown">
                     <ul>
                         <li>
-                            <a href="/service1">Plumbing Repairs</a>
+                            <Link to="/service1">Plumbing Repairs</Link>
                         </li>
                         <li>
-                            <a href="/service2">Electrical Help</a>
+                            <Link to="/service2">Electrical Help</Link>
                         </li>
                         <li>
-                            <a href="/service3">Painting</a>
+                            <Link to="/service3">Painting</Link>
                         </li>
                     </ul>
                 </div>
