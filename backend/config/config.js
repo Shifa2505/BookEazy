@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config()
+// import dotenv from "dotenv";
+// dotenv.config()
 // will have to later remove this
 // url = process.env.Test_Database_URL
 

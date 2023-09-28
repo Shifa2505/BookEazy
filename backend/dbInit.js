@@ -6,10 +6,8 @@ import { serviceModel } from "./models/serviceModel.js";
 import { servicepersonModel } from "./models/servicepersonModel.js";
 import { userModel } from "./models/userModel.js"
 dotenv.config()
-// will have to later remove this
-const url = process.env.Database_URL
 
-const connectDB = async() => {
+const connectDB = async(url) => {
     try {
         console.log(url)
         await mongoose.connect(url);
@@ -19,7 +17,7 @@ const connectDB = async() => {
     }
 }
 
-await connectDB();
+await connectDB(process.env.Test_Database_URL);
 
 // console.log(data.serviceCategory)
 await categoryModel.deleteMany();

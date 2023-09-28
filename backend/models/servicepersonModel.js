@@ -23,15 +23,17 @@ const servicepersonSchema = new Schema({
     },
     qualification: {
         type: String,
+        required: true
     },
     bio:{
         type: String,
+        required: true
     },
     rating: {
         type: Number,
-        required: true
+        required: false
     },
-    avatar:{
+    image_url:{
         type: String,
         required: false
     },
