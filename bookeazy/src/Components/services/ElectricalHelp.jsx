@@ -48,8 +48,8 @@ function ElectricalHelp(){
                 <div className="choose-tasker">
                     <img src="/images/choose_tasker.jpeg"    alt="" />
                     <div className="how-works-content">
-                        <h2>Choose Your Tasker</h2> 
-                        <p>Browse trusted Taskers by skills, reviews, and price. Chat with them to confirm details.</p>
+                        <h2>Choose Your Service Provider</h2> 
+                        <p>Browse trusted service providers by skills, reviews, and price. Chat with them to confirm details.</p>
                     </div>
                     
                 </div>
@@ -57,7 +57,7 @@ function ElectricalHelp(){
                     <img src="/images/get_it_done.jpeg"    alt="" />
                     <div className="how-works-content">
                         <h2>Get It Done!</h2>
-                        <p>Your Tasker arrives and gets the job done. Pay securely and leave a review, all through TaskRabbit.</p>
+                        <p>Your service provider arrives and gets the job done. Pay securely and leave a review, all through TaskRabbit.</p>
                     </div>
                     
                 </div>
