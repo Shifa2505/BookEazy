@@ -9,7 +9,7 @@ export default function Navbar(){
                 <Link to="/">Home</Link>
             </li>
             <li>
-                <a href="/about">About</a>
+                <Link to="/about">About</Link>
             </li>
             <li>
                 <Link to="/services">Services</Link>
@@ -43,6 +43,7 @@ export default function Navbar(){
                     </ul>
                 </div>
             </li>
+            
         </ul>
     </nav>
 }
