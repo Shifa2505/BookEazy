@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config()
+// import dotenv from "dotenv";
+// dotenv.config()
 // will have to later remove this
-url = process.env.Test_Database_URL
+// url = process.env.Test_Database_URL
 
-const connectDB = async() => {
+const connectDB = async(url) => {
     try {
         await mongoose.connect(url);
         console.log("Sucessfully connected to database");
@@ -13,4 +13,4 @@ const connectDB = async() => {
     }
 }
 
-module.exports = connectDB;
+export {connectDB};
