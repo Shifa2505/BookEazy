@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // will have to later remove this
 // url = process.env.Test_Database_URL
 
-const connectDB = async(url) => {
+const connectDB = async(url)  => {
     try {
         await mongoose.connect(url);
         console.log("Sucessfully connected to database");
@@ -13,4 +13,6 @@ const connectDB = async(url) => {
     }
 }
 
-export {connectDB};
+export {
+    connectDB
+};
