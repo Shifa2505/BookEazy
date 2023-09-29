@@ -6,8 +6,9 @@ import ContactPage from './Components/contact-page/ContactPage'
 import PlumbingRepairs from './Components/services/PlumbingRepairs'
 import ElectricalHelp from './Components/services/ElectricalHelp'
 
-import Painting from './Components/services/Painting'
+import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import ServiceMen from './Components/servicemen/servicemen'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/service1" element={<PlumbingRepairs/>} /> 
         <Route path="/service2" element={<ElectricalHelp/>} /> 
         <Route path="/service3" element={<Painting/>} /> 
+        <Route path="/paintingservicemen" element={<ServiceMen />} />
         {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
       </Routes>
     </BrowserRouter>

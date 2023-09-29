@@ -1,0 +1,14 @@
+.slogan{
+    width: 100%;
+    height: 5rem;
+    background-color: rgb(214, 234, 251);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slogan img{
+    height: 3rem;
+    width: 3rem;
+   margin-right: 2rem;
+}
