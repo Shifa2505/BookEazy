@@ -3,77 +3,147 @@
 } */
 
 .servicemenCard{
-    display: grid;
-    grid-template-columns: 0.8fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    max-width: 480px;
-    border-radius: 20px;
-    width: 70%;
+    display: flex;
+    border-radius: 1rem;
+    width: 90%;
+    background-color: rgb(214, 234, 251);
     /* transform: translateX(50%); */
     overflow: hidden;
     animation: loadCard 0.4s ease-out;
     z-index: 2;
+    height: 23rem;
+    border: 0.02rem solid rgb(191, 194, 193);
 }
 
 .servicemenCard .leftContainer{
-    color: var(--secondary);
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
+    justify-content: space-between; 
     align-items: center;
-    grid-row: 1/6;
-    background-color: var(--background);
-    border-radius: 20px 20px 0px 20px;
+    margin: 2rem 2rem 2rem;
+}
+
+.servicerImg{
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    height: 204px;
+    width: 204px;
+}
+.servicerImg img{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    object-fit: cover;
+    color: transparent;
+    text-indent: 10000px;
+}
+
+.completeProfile a{
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(40, 101, 154);
+    text-decoration: none;
+}
+
+.book button{
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    text-decoration: none;
+    min-width: 64px;
+    transition: none 0s ease 0s;
+    box-shadow: none;
+    background: rgb(40, 101, 154);
+    font-family: Helvetica,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: normal;
+    line-height: normal;
+    appearance: revert;
+    border-radius: 1000px;
+    height: 43px;
+    outline: revert;
+    padding: 20px 40px;
+    -webkit-tap-highlight-color: revert;
+    border: 1px solid rgb(0, 64, 119);
+    color: rgb(255, 255, 255);
+
+}
+
+.book button:hover,
+.book button:focus { 
+  background-color: rgb(8, 86, 155);
+  color: rgb(255, 255, 255);
+}
+
+.book button:active {
+  background-color: rgb(62, 113, 157);
+  color: rgb(255, 255, 255, .7);
 }
 
 .servicemenCard .rightContainer{
-    color: var(--secondary);
-    grid-row: 2/6;
-    background-color: var(--background);
-    display: flex;
-    border-radius: 0% 20px 20px 0;
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px 8px 8px 0px;
     z-index: -1;
     transform: translateX(-101%);
     animation: slideRightContainer 0.6s ease-out forwards;
     animation-delay: 0.5s;
-}
-
-.servicemenCard .leftContainer img{
-    max-width: 80%;
-    min-width: 48px;
-    aspect-ratio: 1/1;
-    border-radius: calc(20px + 20px);
-    margin: 20px;
-}
-
-.servicemenCard .rightContainer > div{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-content: center;
-    color: var(--primary);
-}
-
-.servicemenCard .rightContainer > span{
-    flex-grow: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between; 
+    margin: 2.3rem 2rem 4rem 1rem;
 }
 
-.servicemenCard .rightContainer > div span:nth-child(2){
-    margin-right: 10%;
-    justify-self: flex-end;
-    width: 2rem;
+.nameAndPrice{
     display: flex;
-    gap: 1px;
-    align-items: start;
+    justify-content: space-between;
+}
+
+.nameAndPrice h1{
+    color: rgb(31, 31, 31);;
+    line-height: 160%;
+    font-family: Helvetica,sans-serif;
+}
+
+.logo label{
+    color: rgb(67, 67, 67);;
+    font-size: 1.1rem;
+    line-height: 160%;
+    font-family: Helvetica,sans-serif;
+    font-weight: 400;
 }
 
 .servicemenCard .rightContainer > div svg{
     transform: translateY(1px);
-    width: 0.8rem;
+    width: 1rem;
+    margin-right: 1rem;
+    
+}
+
+.help h2{
+    color: rgb(58, 58, 58);
+    margin-top: 2rem;
+    font-family: Helvetica,sans-serif;
+}
+
+.about{
+    font-family: Helvetica,sans-serif;
+    font-size: 1rem;
 }
 
 @media screen and (max-width:480px){
