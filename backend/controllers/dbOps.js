@@ -5,7 +5,6 @@ import { servicepersonModel } from "../models/servicepersonModel.js";
 import { userModel } from "../models/userModel.js"
 
 /**
- * 
  * @param {String} username 
  * @param {String} password 
  * @param {String} name 
@@ -73,4 +72,38 @@ async function addServiceperson(name, email, phone, location, qualification, bio
 
 }
 
-export {addUser,addServiceperson}
+/**
+ * 
+ * @param {String} username 
+ * @param {String} password
+ */
+async function userLogin(username,password){
+    let user = await userModel.findOne({username: username}, {_id:0, __v:0});
+    if(!user){ throw new Error("User does not exist.")}
+    if( !await bcrypt.compare(password, user.password)){
+        throw new Error("Invalid credentials");
+    }
+    else{
+        delete user.password;
+        return user;
+    }
+}
+
+/**
+ * 
+ * @param {String} username 
+ * @param {String} password
+ */
+async function servicepersonLogin(username,password){
+    let serviceperson = await servicepersonModel.findOne({username: username}, {_id:0, __v:0});
+    if(!serviceperson){ throw new Error("Serviceperson does not exist.")}
+    if( !await bcrypt.compare(password, serviceperson.password)){
+        throw new Error("Invalid credentials");
+    }
+    else{
+        delete serviceperson.password;
+        return serviceperson;
+    }
+}
+
+export {addUser,addServiceperson,userLogin,servicepersonLogin}
