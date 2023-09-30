@@ -8,6 +8,7 @@ import ElectricalHelp from './Components/services/ElectricalHelp'
 
 import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import ServiceMen from './Components/servicemen/servicemen'
 import About from './Components/about-page/About'
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
         <Route path="/contact-us" element={<ContactPage />} />
         <Route path="/service1" element={<PlumbingRepairs/>} /> 
         <Route path="/service2" element={<ElectricalHelp/>} /> 
+        <Route path="/service3" element={<Painting/>} /> 
+        <Route path="/paintingservicemen" element={<ServiceMen />} />
         <Route path="/service3" element={<Painting/>} />
         <Route path="/about" element={<About/>} /> 
 

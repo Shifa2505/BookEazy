@@ -5,19 +5,34 @@ function ServicemenShowCard(props) {
   return (
     <div className={styles.servicemenCard} style={{animationDelay: `${props.index * 100}ms`}}>
       <div className={styles.leftContainer}>
+      <div className={styles.servicerImg}>
         <img src={props.image} alt={props.name} />
-        <span>₹300</span>
+        </div>
+        <div className={styles.completeProfile}>
+          <a href="/">View Profile and Reviews</a>
+        </div>
+        <div className={styles.book}>
+          <button>Book Now</button>
+        </div>
       </div>
       <div className={styles.rightContainer}>
-        <div>
-          <span>{props.name}</span>
-          <span>
-            {props.rating}
-            <StarLogo />
-          </span>
+        <div className={styles.nameAndPrice}>
+        <div className={styles.name}>
+          <h1>{props.name}</h1>
+        </div>
+        <div className={styles.price}>
+          <h1>$300/hr</h1>
+        </div>
           {/* <span>{props.rating}</span> */}
         </div>
-        <span>{props.about}</span>
+        <div className={styles.help}>
+        <span className={styles.logo}> <StarLogo className={styles.starLogo}/><label>Ratings : 
+            {props.rating}
+          </label></span>
+          <h2>How I Can Help : </h2>
+        <p className={styles.about}>{props.about}</p>
+        <a href="/">Read More</a>
+        </div>
       </div>
     </div>
   );

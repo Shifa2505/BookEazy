@@ -1,5 +1,6 @@
 import React from "react";
 import "./services_css/painting.css";
+import { Link } from "react-router-dom";
 // import Footer from "./Footer";
 // import Footer from "./contact-page/Footer";
 
@@ -11,7 +12,7 @@ function Painting(){
                 <h1>Painting</h1>
                 <div className="divider"></div>
                 <p>Service Providers are happy to hop over and help with interior home painting. </p>
-                <button className="service-btn">Book Now</button>
+                <Link to="/paintingservicemen"><button className="service-btn">Book Now</button></Link>
             </div>
         </section>
         <section className="service-info">
