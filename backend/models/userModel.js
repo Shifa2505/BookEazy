@@ -7,11 +7,13 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     image_url: {
         type: String,
@@ -25,6 +27,7 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,

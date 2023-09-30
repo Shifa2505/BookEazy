@@ -4,12 +4,12 @@ const bookingSchema = new Schema({
   service: {
     type: Schema.Types.ObjectId,
     ref: "Service",
-    required: true
+    required: true,
   },
   servicePerson: {
     type: Schema.Types.ObjectId,
     ref: "Serviceperson",
-    required: true
+    required: true,
   },
   user: {
     type: Schema.Types.ObjectId,
@@ -19,7 +19,7 @@ const bookingSchema = new Schema({
   feedback: {
     type: String,
     required: false,
-    default: null
+    default: null,
   },
   fare: {
     type: Number,
@@ -31,12 +31,13 @@ const bookingSchema = new Schema({
   },
   endTime: {
     type: Date,
-    default: null
+    default: null,
   },
-  accepted: {
-    type: Boolean,
-    default: false
-  }
+  status: {
+    type: String,
+    enum: ["PENDING", "ACCEPTED", "REJECTED", "DONE"],
+    default: "PENDING",
+  },
 });
 
 const bookingModel = new model("Booking", bookingSchema);

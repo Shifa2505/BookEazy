@@ -13,7 +13,7 @@ function verifyRequest(req, res, next) {
       next();
     });
   } else {
-    res.status(401).send("Unauthorised");
+    res.status(403).send("Forbidden");
   }
 }
 
@@ -25,12 +25,32 @@ function isUser(req, res, next) {
       if (err) {
         res.status(401).send("Unauthorised");
       }
-      // check role here
+      if (result.role != "USER"){
+        res.status(401).send("Unauthorised");
+      }
       next();
     });
   } else {
-    res.status(401).send("Unauthorised");
+    res.status(403).send("Forbidden");
   }
 }
 
-export { verifyRequest };
+function isServiceperson(req, res, next) {
+  const token = req.cookies.token;
+  if (token) {
+    console.log(token);
+    jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
+      if (err) {
+        res.status(401).send("Unauthorised");
+      }
+      if (result.role != "SERVICEPERSON"){
+        res.status(401).send("Unauthorised");
+      }
+      next();
+    });
+  } else {
+    res.status(403).send("Forbidden");
+  }
+}
+
+export { verifyRequest, isUser, isServiceperson };

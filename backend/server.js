@@ -6,7 +6,8 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, userLogin } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, getServiceCategories, getServicepersonForCategories, userLogin } from "./controllers/dbOps.js";
+import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -103,6 +104,7 @@ app.post("/sign-up/serviceperson", async (req, res) => {
 });
 
 app.post("/sign-in/user", async (req, res) => {
+  console.log("trying user login")
   let username = req.body.username;
   let password = req.body.password;
 
@@ -146,6 +148,47 @@ app.get("/checkCookie",(req,res)=>{
     res.send(req.cookies)
 })
 
+app.get("/api/get-service-categories",(req,res)=>{
+  getServiceCategories()
+  .then(data=>res.status(200).json(data))
+  .catch(err=>res.sendStatus(500))
+})
+
+app.get("/api/get-servicepeople/:category",isUser, (req,res)=>{
+  getServicepersonForCategories(req.params.category)
+  .then(data=>res.send(data))
+  .catch(err=>res.status(400).send("No such category"))
+})
+
+app.post("/api/new-booking", isUser, (req,res)=>{
+  const service = req.body.service;
+  const serviceperson = req.body.serviceperson;
+  const user = req.body.user;
+  const startTime = req.body.startTime;
+  if(service && serviceperson && user && startTime){
+    // to be implemented
+  }
+  else{
+    res.status(400).send("Request with incomplete data.")
+  }
+  
+})
+
+app.get("/api/accept-booking", isServiceperson, (req,res)=>{
+  
+})
+
+app.get("/api/reject-booking", isServiceperson, (req,res)=>{
+
+})
+
+app.get("/api/send-feedback", isUser, (req,res)=>{
+
+})
+
+app.get("/api/get-bookings", isServiceperson, (req,res)=>{
+
+})
 
 app.listen(8000, () => {
   console.log("Server active...");

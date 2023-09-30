@@ -7,11 +7,13 @@ const servicepersonSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     location: {
         type: String,
@@ -38,11 +40,19 @@ const servicepersonSchema = new Schema({
         required: false
     },
     servicesOffered: [
-        {type: Schema.Types.ObjectId}
+        {
+            service: {
+                type: Schema.Types.ObjectId
+            },
+            fare:{
+                type: Number
+            }
+        }
     ],
     username: {
         type: String,
         required: true,
+        unique: true,
     },
     password: {
         type: String,

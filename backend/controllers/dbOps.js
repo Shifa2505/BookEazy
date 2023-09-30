@@ -26,7 +26,6 @@ async function addUser(username, password, name, email, location, phone, image_u
             phone: phone,
             image_url:image_url
         })
-
     }
     catch(err) {
         console.log(err);
@@ -35,7 +34,6 @@ async function addUser(username, password, name, email, location, phone, image_u
 }
 
 /**
- * 
  * @param {String} name 
  * @param {String} email 
  * @param {String} phone 
@@ -63,17 +61,14 @@ async function addServiceperson(name, email, phone, location, qualification, bio
             password: hashedPassword,
             image_url: image_url
         })
-
     }
     catch(err){
         console.log(err);
         throw new Error("Error storing data.");
     }
-
 }
 
 /**
- * 
  * @param {String} username 
  * @param {String} password
  */
@@ -90,7 +85,6 @@ async function userLogin(username,password){
 }
 
 /**
- * 
  * @param {String} username 
  * @param {String} password
  */
@@ -106,4 +100,19 @@ async function servicepersonLogin(username,password){
     }
 }
 
-export {addUser,addServiceperson,userLogin,servicepersonLogin}
+async function getServiceCategories(){
+    const categories = await categoryModel.find({},{_id:0,__v:0});
+    return categories;
+}
+
+/**
+ * @param {String} category 
+ */
+async function getServicepersonForCategories(category){
+    const serviceCategory = await categoryModel.findOne({name:category});
+    if(!serviceCategory){throw new Error("No such service category.")}
+    const servicepeople = await servicepersonModel.find({servicesOffered:serviceCategory._id});
+    return servicepeople;
+}
+
+export {addUser,addServiceperson,userLogin,servicepersonLogin,getServiceCategories,getServicepersonForCategories}
