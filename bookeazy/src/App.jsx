@@ -6,7 +6,7 @@ import ContactPage from './Components/contact-page/ContactPage'
 import PlumbingRepairs from './Components/services/PlumbingRepairs'
 import ElectricalHelp from './Components/services/ElectricalHelp'
 
-import Painting from './Components/services/Painting'
+import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import About from './Components/about-page/About'
 
