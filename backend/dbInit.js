@@ -5,6 +5,7 @@ import { categoryModel } from "./models/categoryModel.js";
 import { serviceModel } from "./models/serviceModel.js";
 import { servicepersonModel } from "./models/servicepersonModel.js";
 import { userModel } from "./models/userModel.js"
+import { bookingModel } from "./models/bookingModel.js";
 dotenv.config()
 
 const connectDB = async(url) => {
@@ -24,6 +25,7 @@ await categoryModel.deleteMany();
 await serviceModel.deleteMany();
 await servicepersonModel.deleteMany();
 await userModel.deleteMany();
+await bookingModel.deleteMany();
 await categoryModel.insertMany(data.serviceCategory);
 await serviceModel.insertMany(data.services);
 await servicepersonModel.insertMany(data.servicepersons);

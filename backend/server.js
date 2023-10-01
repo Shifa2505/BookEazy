@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, getServiceCategories, getServicepersonForCategories, userLogin } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(cookieParser());
 dotenv.config();
 
-await connectDB(process.env.Database_URL);
+await connectDB(process.env.Test_Database_URL);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");
@@ -156,38 +156,58 @@ app.get("/api/get-service-categories",(req,res)=>{
 
 app.get("/api/get-servicepeople/:category",isUser, (req,res)=>{
   getServicepersonForCategories(req.params.category)
-  .then(data=>res.send(data))
+  .then(data=>res.status(200).send(data))
   .catch(err=>res.status(400).send("No such category"))
 })
 
 app.post("/api/new-booking", isUser, (req,res)=>{
-  const service = req.body.service;
-  const serviceperson = req.body.serviceperson;
-  const user = req.body.user;
+  const serviceName = req.body.service;
+  const servicepersonUsername = req.body.serviceperson;
+  const username = req.user.username;
   const startTime = req.body.startTime;
-  if(service && serviceperson && user && startTime){
+  if(serviceName && servicepersonUsername && username && startTime){
     // to be implemented
+    createBookingRequest(serviceName, servicepersonUsername, username, startTime)
+    .then(booking=>{
+      res.status(200).json(booking);
+    })
+    .catch(err=>{
+      res.status(500).send(err.message);
+    })
   }
   else{
     res.status(400).send("Request with incomplete data.")
   }
-  
 })
 
 app.get("/api/accept-booking", isServiceperson, (req,res)=>{
-  
+  const bookingId = req.query.bookingId;
+  if(!bookingId){
+    res.status(400).send("Need to provide a booking id.");
+  }
+  acceptBooking(req.serviceperson.username, bookingId)
+  .then(()=>res.sendStatus(200))
+  .catch(err=>res.status(500).send(err.message))
 })
 
 app.get("/api/reject-booking", isServiceperson, (req,res)=>{
-
+  const bookingId = req.query.bookingId;
+  if(!bookingId){
+    res.status(400).send("Need to provide a booking id.");
+  }
+  rejectBooking(req.serviceperson.username, bookingId)
+  .then(()=>res.sendStatus(200))
+  .catch(err=>res.status(500).send(err.message))
 })
 
 app.get("/api/send-feedback", isUser, (req,res)=>{
 
 })
 
-app.get("/api/get-bookings", isServiceperson, (req,res)=>{
-
+app.get("/api/get-user-bookings", isUser, (req,res)=>{
+  listUserBookings(req.user.username)
+  .then(data=>res.status(200).json(data))
+  .catch(err=>res.status(500).send(err.message))
 })
 
 app.listen(8000, () => {
