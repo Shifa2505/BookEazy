@@ -10,7 +10,7 @@
     /* transform: translateX(50%); */
     overflow: hidden;
     animation: loadCard 0.4s ease-out;
-    z-index: 2;
+    z-index: 0;
     height: 23rem;
     border: 0.02rem solid rgb(191, 194, 193);
 }
@@ -54,7 +54,7 @@
     text-decoration: none;
 }
 
-.book button{
+.bookBtn{
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
@@ -87,13 +87,13 @@
 
 }
 
-.book button:hover,
-.book button:focus { 
+.bookBtn:hover,
+.bookBtn:focus { 
   background-color: rgb(8, 86, 155);
   color: rgb(255, 255, 255);
 }
 
-.book button:active {
+.bookBtn:active {
   background-color: rgb(62, 113, 157);
   color: rgb(255, 255, 255, .7);
 }
@@ -105,8 +105,9 @@
     animation-delay: 0.5s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
-    margin: 2.3rem 2rem 4rem 1rem;
+    margin: 2rem 2rem 2rem 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nameAndPrice{
@@ -114,10 +115,15 @@
     justify-content: space-between;
 }
 
+.name{
+    margin-right: 20px;
+}
+
 .nameAndPrice h1{
     color: rgb(31, 31, 31);;
     line-height: 160%;
     font-family: Helvetica,sans-serif;
+    margin-bottom: 10px;
 }
 
 .logo label{
@@ -132,12 +138,12 @@
     transform: translateY(1px);
     width: 1rem;
     margin-right: 1rem;
-    
 }
+
 
 .help h2{
     color: rgb(58, 58, 58);
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-family: Helvetica,sans-serif;
 }
 

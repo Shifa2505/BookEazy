@@ -12,7 +12,7 @@ function Painting(){
                 <h1>Painting</h1>
                 <div className="divider"></div>
                 <p>Service Providers are happy to hop over and help with interior home painting. </p>
-                <Link to="/paintingservicemen"><button className="service-btn">Book Now</button></Link>
+                <Link to="/servicemen"><button className="service-btn">Book Now</button></Link>
             </div>
         </section>
         <section className="service-info">
