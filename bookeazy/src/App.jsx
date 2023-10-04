@@ -10,6 +10,7 @@ import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ServiceMen from './Components/servicemen/ServiceMen'
 import About from './Components/about-page/About'
+import FinalBooking from './Components/final-booking/FinalBooking'
 
 function App() {
   return (
@@ -23,9 +24,10 @@ function App() {
         <Route path="/service1" element={<PlumbingRepairs/>} /> 
         <Route path="/service2" element={<ElectricalHelp/>} /> 
         <Route path="/service3" element={<Painting/>} /> 
-        <Route path="/paintingservicemen" element={<ServiceMen />} />
+        <Route path="/servicemen" element={<ServiceMen />} />
         <Route path="/service3" element={<Painting/>} />
         <Route path="/about" element={<About/>} /> 
+        <Route path="/finalBook" element={<FinalBooking/>} /> 
 
         {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
       </Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import "./services_css/ElectricalHelp.css";
+import { Link } from "react-router-dom";
 // import Footer from "./Footer";
 // import Footer from "./contact-page/Footer";
 
@@ -13,7 +14,7 @@ function ElectricalHelp(){
                 <div className="divider"></div>
                 <p>Service Providers can provide electrical help so you can clear your schedule and rest easy. 
                     Hire an electrical helper today!</p>
-                <button className="service-btn">Book Now</button>
+                <Link to="/servicemen"><button className="service-btn">Book Now</button></Link>
             </div>
         </section>
         <section className="service-info">

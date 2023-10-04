@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./ServicemenShowCard.module.css";
+import { Link } from "react-router-dom";
+
 
 function ServicemenShowCard(props) {
   return (
@@ -12,7 +14,7 @@ function ServicemenShowCard(props) {
           <a href="/">View Profile and Reviews</a>
         </div>
         <div className={styles.book}>
-          <button>Book Now</button>
+          <Link className={styles.bookBtn} to="/finalBook">Book Now</Link>
         </div>
       </div>
       <div className={styles.rightContainer}>
@@ -30,13 +32,16 @@ function ServicemenShowCard(props) {
             {props.rating}
           </label></span>
           <h2>How I Can Help : </h2>
+          <div className={styles.aboutDiv}>
         <p className={styles.about}>{props.about}</p>
+        </div>
         <a href="/">Read More</a>
         </div>
       </div>
     </div>
   );
 }
+ 
 
 function StarLogo() {
   return (

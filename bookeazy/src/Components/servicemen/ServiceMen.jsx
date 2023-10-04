@@ -1,6 +1,38 @@
+import React, { useState } from 'react';
 import "./servicemen.css"
 import ShowListOfServicers from "../ServicemenShowCard/ShowListOfServicers"
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import Modal from 'react-modal';
+//import Modal from './Modal';
+
 export default function ServiceMen(){
+    
+  //   const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [selectedDate, setSelectedDate] = useState(null);
+
+  // const openModal = () => {
+  //   setModalIsOpen(true);
+  // };
+
+  // const closeModal = () => {
+  //   setModalIsOpen(false);
+  // };
+
+  // const handleDateChange = (date) => {
+  //   setSelectedDate(date);
+  // };
+  
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleCalendarToggle = () => {
+    setShowCalendar(!showCalendar);
+  };
+  
+    
     return(
         <div className="select-servicemen">
         <div className="slogan">
@@ -17,7 +49,28 @@ export default function ServiceMen(){
                 </div>
                 <div className="right-side-btns">
                 <button className="date-btn">Within 3 Days</button>
-                <button className="date-btn">Choose Date</button>
+                <div>
+                <button className="date-btn" onClick={handleCalendarToggle}>Choose Date</button>
+                <Modal isOpen={showCalendar} onClose={handleCalendarToggle}>
+        <Calendar
+          onChange={setSelectedDate}
+          value={selectedDate}
+        />
+      </Modal>
+                {/* <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Calendar Modal"
+      >
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          // Add any other props or configurations you need
+        />
+        <button onClick={closeModal}>Close</button>
+        </Modal> */}
+        
+      </div>
                 </div>
                 </div>
                 <hr className="horizontal-line"></hr>
@@ -52,5 +105,5 @@ export default function ServiceMen(){
             </div>
         </div>
         </div>
-    )
+    );
 }
