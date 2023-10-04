@@ -18,7 +18,7 @@ const connectDB = async(url) => {
     }
 }
 
-await connectDB(process.env.Test_Database_URL);
+await connectDB(process.env.Database_URL);
 
 // console.log(data.serviceCategory)
 await categoryModel.deleteMany();

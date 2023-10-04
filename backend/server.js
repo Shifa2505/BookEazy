@@ -16,7 +16,7 @@ app.use(cors());
 app.use(cookieParser());
 dotenv.config();
 
-await connectDB(process.env.Test_Database_URL);
+await connectDB(process.env.Database_URL);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");
@@ -154,7 +154,8 @@ app.get("/api/get-service-categories",(req,res)=>{
   .catch(err=>res.sendStatus(500))
 })
 
-app.get("/api/get-servicepeople/:category",isUser, (req,res)=>{
+// app.get("/api/get-servicepeople/:category",isUser, (req,res)=>{
+app.get("/api/get-servicepeople/:category", (req,res)=>{
   getServicepersonForCategories(req.params.category)
   .then(data=>res.status(200).send(data))
   .catch(err=>res.status(400).send("No such category"))

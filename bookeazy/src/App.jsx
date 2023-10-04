@@ -8,7 +8,7 @@ import ElectricalHelp from './Components/services/ElectricalHelp'
 
 import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ServiceMen from './Components/servicemen/servicemen'
+import ServiceMen from './Components/servicemen/ServiceMen'
 import About from './Components/about-page/About'
 
 function App() {
