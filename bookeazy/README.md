@@ -1,5 +1,6 @@
 # React + Vite
-Terminal command to start application: npm run dev
+Terminal command to start application frontend: npm run dev
+for backend: npx nodemon server.js
 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
