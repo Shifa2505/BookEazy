@@ -31,7 +31,8 @@ export default function Navbar(){
                 <Link to="/contact-us">Contact Us</Link>
             </li>
             <li>
-                <a href="/login">Sign up/Log in</a>
+                <Link to="/login">Sign up/Log in</Link>
+                {/* <a href="/login">Sign up/Log in</a> */}
                 <div className="dropdown">
                     <ul>
                         <li>

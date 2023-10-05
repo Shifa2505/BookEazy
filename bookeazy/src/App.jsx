@@ -10,6 +10,7 @@ import Painting from './Components/services/painting'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ServiceMen from './Components/servicemen/ServiceMen'
 import About from './Components/about-page/About'
+import Login from './Components/authentication/login'
 import FinalBooking from './Components/final-booking/FinalBooking'
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
         <Route path="/service3" element={<Painting/>} />
         <Route path="/about" element={<About/>} /> 
         <Route path="/finalBook" element={<FinalBooking/>} /> 
+        <Route path="/login" element={<Login/>} /> 
+        
 
         {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
       </Routes>
