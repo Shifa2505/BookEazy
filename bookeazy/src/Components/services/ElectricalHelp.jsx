@@ -14,7 +14,7 @@ function ElectricalHelp(){
                 <div className="divider"></div>
                 <p>Service Providers can provide electrical help so you can clear your schedule and rest easy. 
                     Hire an electrical helper today!</p>
-                <Link to="/servicemen"><button className="service-btn">Book Now</button></Link>
+                <Link to="/servicemen?category=Electrical Help"><button className="service-btn">Book Now</button></Link>
             </div>
         </section>
         <section className="service-info">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./servicemen.css"
 import ShowListOfServicers from "../ServicemenShowCard/ShowListOfServicers"
 // import DatePicker from 'react-datepicker';
@@ -6,9 +6,15 @@ import ShowListOfServicers from "../ServicemenShowCard/ShowListOfServicers"
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Modal from 'react-modal';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import axios from "axios";
 //import Modal from './Modal';
 
 export default function ServiceMen(){
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [servicePeople, setServicePeople] = useState([]);
+  console.log(searchParams.get("category"));
     
   //   const [modalIsOpen, setModalIsOpen] = useState(false);
   // const [selectedDate, setSelectedDate] = useState(null);
@@ -31,6 +37,15 @@ export default function ServiceMen(){
   const handleCalendarToggle = () => {
     setShowCalendar(!showCalendar);
   };
+
+  useEffect(()=>{
+    if(!searchParams.has("category")){
+      alert("Please mention category.")
+      navigate("/");
+    }
+    axios.get("http://localhost:8000/api/get-servicepeople/"+searchParams.get("category"))
+    .then(res=>setServicePeople(res.data))
+  },[])
   
     
     return(
@@ -101,7 +116,7 @@ export default function ServiceMen(){
             </div>
             
             <div className="servicemens">
-            <ShowListOfServicers />
+            <ShowListOfServicers servicePeople={servicePeople} serviceCategory={searchParams.get("category")}/>
             </div>
         </div>
         </div>

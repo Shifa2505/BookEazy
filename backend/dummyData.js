@@ -67,7 +67,7 @@ const data = {
       qualification: "Certified Carpentry Specialist",
       bio: "Skilled carpenter specializing in custom furniture and cabinetry.",
       rating: 4.5,
-      avatar: "https://example.com/avatar/davidwilson.jpg",
+      image_url: "https://images.pexels.com/photos/1674666/pexels-photo-1674666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:130}, {service:"6514429095402ea423785bcd",fare:200}],
       username: "davidcraftsman",
       password: await bcrypt.hash("password123",10),

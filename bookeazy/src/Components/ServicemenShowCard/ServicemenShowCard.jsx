@@ -8,7 +8,7 @@ function ServicemenShowCard(props) {
     <div className={styles.servicemenCard} style={{animationDelay: `${props.index * 100}ms`}}>
       <div className={styles.leftContainer}>
       <div className={styles.servicerImg}>
-        <img src={props.image} alt={props.name} />
+        <img src={props.image ? props.image : "https://avatars.dicebear.com/api/adventurer-neutral/mail%40ashallendesign.co.uk.svg"} alt={props.name} />
         </div>
         <div className={styles.completeProfile}>
           <a href="/">View Profile and Reviews</a>
@@ -23,7 +23,7 @@ function ServicemenShowCard(props) {
           <h1>{props.name}</h1>
         </div>
         <div className={styles.price}>
-          <h1>$300/hr</h1>
+          <h1>{props.fare}</h1>
         </div>
           {/* <span>{props.rating}</span> */}
         </div>

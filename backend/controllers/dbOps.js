@@ -141,7 +141,7 @@ async function getServicepersonForCategories(category) {
   }
   const servicepeople = await servicepersonModel.find({
     "servicesOffered.service": serviceCategory._id,
-  });
+  },{"_id":0}).populate("servicesOffered.service",{"_id":0});
   return servicepeople;
 }
 
