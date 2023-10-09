@@ -14,7 +14,6 @@ import Login from './Components/authentication/login'
 import FinalBooking from './Components/final-booking/FinalBooking'
 import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBookings'
 import { createContext, useState } from 'react'
-import ShowRequests from './Components/booking-requests/ShowRequests'
 
 export const UserContext = createContext();
 
@@ -37,8 +36,8 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/finalBook" element={<FinalBooking/>} />
           <Route path="/login" element={<Login/>} />
-        <Route path="/test" element={<ShowClientBookings />} /> 
-          <Route path="/test" element={<ShowRequests/>} />
+        {/* <Route path="/test" element={<ShowClientBookings />} />  */}
+          <Route path="/test" element={<ShowRequestsUpdate/>} />
           {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
         </Routes>
       </UserContext.Provider>

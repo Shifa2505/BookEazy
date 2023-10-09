@@ -1,10 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./ShowRequests.module.css";
+import axios from "axios"
 
 function ShowRequestsUpdate() {
+  const [requests, setRequests] = useState([])
+
+  useEffect(()=>{
+    axios.get("http://localhost:8000/api/get-serviceperson-bookings",{withCredentials:true})
+    .then(data=>{
+      console.log(data.data.bookings)
+      setRequests(data.data.bookings)
+    })
+    .catch(err=>console.error(err.response.data))
+  },[])
   return (
     <div className={style.requestsList}>
-      <RequestCardUpdate clientName="John Doe" location="Sion, Mumbai"/>
+      {requests.map(r=><RequestCardUpdate clientName={r.user.name} location={r.user.location}/>)}
     </div>
   );
 }
@@ -33,6 +44,7 @@ function RequestCardUpdate(props) {
         <span>Date here</span>
         <span>Time here</span>
       </span>
+      <span className={style.service}>ServiceName here</span>
       <div className={style.requestBtnContainer}>
         {status == "unset" ? (
           <>

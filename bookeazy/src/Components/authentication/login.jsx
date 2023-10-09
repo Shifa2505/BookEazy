@@ -28,6 +28,15 @@ function Login(){
             })
             .catch(err=>console.error(err.response.data))
         }
+        else{
+            axios.post("http://localhost:8000/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
+            .then(data=>{
+                console.log(data);
+                setUser(data.data)
+            })
+            .catch(err=>console.error(err.response.data))
+
+        }
 
     }
     return(

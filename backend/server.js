@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -207,6 +207,12 @@ app.get("/api/send-feedback", isUser, (req,res)=>{
 
 app.get("/api/get-user-bookings", isUser, (req,res)=>{
   listUserBookings(req.user.username)
+  .then(data=>res.status(200).json(data))
+  .catch(err=>res.status(500).send(err.message))
+})
+
+app.get("/api/get-serviceperson-bookings", isServiceperson, (req, res)=>{
+  listServicepersonBookings(req.serviceperson.username)
   .then(data=>res.status(200).json(data))
   .catch(err=>res.status(500).send(err.message))
 })

@@ -100,9 +100,9 @@ async function userLogin(username, password) {
   }
   if (!(await bcrypt.compare(password, user.password))) {
     throw new Error("Invalid credentials");
-} else {
-      delete user.password;
-      return user;
+  } else {
+    delete user.password;
+    return user;
   }
 }
 
@@ -139,9 +139,14 @@ async function getServicepersonForCategories(category) {
   if (!serviceCategory) {
     throw new Error("No such service category.");
   }
-  const servicepeople = await servicepersonModel.find({
-    "servicesOffered.service": serviceCategory._id,
-  },{"_id":0}).populate("servicesOffered.service",{"_id":0});
+  const servicepeople = await servicepersonModel
+    .find(
+      {
+        "servicesOffered.service": serviceCategory._id,
+      },
+      { _id: 0 }
+    )
+    .populate("servicesOffered.service", { _id: 0 });
   return servicepeople;
 }
 
@@ -159,25 +164,25 @@ async function createBookingRequest(
   timeslot
 ) {
   const service = await serviceModel.findOne({ name: serviceName });
-  if(!service){
-    throw new Error("No such service found.")
+  if (!service) {
+    throw new Error("No such service found.");
   }
   const serviceperson = await servicepersonModel.findOne({
     username: servicePerson,
     "servicesOffered.service": service.category,
   }); //.populate("servicesOffered.service");
-  if(!serviceperson){
-    throw new Error("No such serviceperson for the service.")
+  if (!serviceperson) {
+    throw new Error("No such serviceperson for the service.");
   }
   const fare = serviceperson.servicesOffered.filter(
     (d) => d.service == service.category.toString()
   )[0].fare;
-  if(!fare){
-    throw new Error("Error getting approximate fare.")
+  if (!fare) {
+    throw new Error("Error getting approximate fare.");
   }
-  const user = await userModel.findOne({username:username})
-  if(!user){
-    throw new Error("No such user found.")
+  const user = await userModel.findOne({ username: username });
+  if (!user) {
+    throw new Error("No such user found.");
   }
   const newBooking = await bookingModel.create({
     service: service._id,
@@ -185,91 +190,114 @@ async function createBookingRequest(
     user: user._id,
     fare: fare,
     startTime: timeslot,
-  })
+  });
   serviceperson.bookings.push(newBooking._id);
-  await serviceperson.save()
-  user.bookings.push(newBooking._id);  
-  await user.save()
+  await serviceperson.save();
+  user.bookings.push(newBooking._id);
+  await user.save();
   return newBooking;
 }
 
 /**
- * 
- * @param {String} serviceperson 
- * @param {String} bookingId 
+ *
+ * @param {String} serviceperson
+ * @param {String} bookingId
  */
-async function acceptBooking(servicepersonUsername, bookingId){
+async function acceptBooking(servicepersonUsername, bookingId) {
   const booking = await bookingModel.findOne({
-    _id:bookingId,
-  })
-  if(!booking){
+    _id: bookingId,
+  });
+  if (!booking) {
     throw new Error("No such booking.");
   }
   const serviceperson = await servicepersonModel.findOne({
-    username:servicepersonUsername,
-  })
-  if(!serviceperson){
+    username: servicepersonUsername,
+  });
+  if (!serviceperson) {
     throw new Error("No such serviceperson.");
   }
-  if(serviceperson._id.toString() != booking.servicePerson.toString()){
+  if (serviceperson._id.toString() != booking.servicePerson.toString()) {
     throw new Error("Can only accept your own booking requests.");
   }
-  if(booking.status=="PENDING"){
-    booking.status="ACCEPTED";
+  if (booking.status == "PENDING") {
+    booking.status = "ACCEPTED";
     await booking.save();
-  }
-  else{
+  } else {
     throw new Error("Only pending requests can be accepted.");
   }
 }
 
 /**
- * 
- * @param {String} serviceperson 
- * @param {String} bookingId 
+ *
+ * @param {String} serviceperson
+ * @param {String} bookingId
  */
-async function rejectBooking(servicepersonUsername, bookingId){
+async function rejectBooking(servicepersonUsername, bookingId) {
   const booking = await bookingModel.findOne({
-    _id:bookingId,
-  })
-  if(!booking){
+    _id: bookingId,
+  });
+  if (!booking) {
     throw new Error("No such booking.");
   }
   const serviceperson = await servicepersonModel.findOne({
-    username:servicepersonUsername,
-  })
-  if(!serviceperson){
+    username: servicepersonUsername,
+  });
+  if (!serviceperson) {
     throw new Error("No such serviceperson.");
   }
-  if(serviceperson._id.toString() != booking.servicePerson.toString()){
+  if (serviceperson._id.toString() != booking.servicePerson.toString()) {
     throw new Error("Can only reject your own booking requests.");
   }
-  if(booking.status=="PENDING"){
-    booking.status="REJECTED";
+  if (booking.status == "PENDING") {
+    booking.status = "REJECTED";
     await booking.save();
-  }
-  else{
+  } else {
     throw new Error("Only pending requests can be rejected.");
   }
 }
 
-async function listUserBookings(username){
-  const user = await userModel.findOne({username:username},{username:1,bookings:1}).populate({
-    path:"bookings",
-    populate:{
-      path: "servicePerson"
-    }}).populate({
-      path:"bookings",
-      populate:{
-        path:"service"
-      }
+async function listUserBookings(username) {
+  const user = await userModel
+    .findOne({ username: username }, { username: 1, bookings: 1 })
+    .populate({
+      path: "bookings",
+      populate: {
+        path: "servicePerson",
+      },
+    })
+    .populate({
+      path: "bookings",
+      populate: {
+        path: "service",
+      },
     });
-  if(user){
-    return user
+  if (user) {
+    return user;
+  } else {
+    throw new Error("Error getting specified user bookings");
   }
-  else{
-    throw new Error("Error getting specified user bookings")
-  }
+}
+
+async function listServicepersonBookings(username) {
+  const serviceperson = await servicepersonModel
+    .findOne({ username: username }, { username: 1, bookings: 1 })
+    .populate({
+      path: "bookings",
+      populate: {
+        path: "user",
+      },
+    })
+    .populate({
+      path: "bookings",
+      populate: {
+        path: "service",
+      },
+    });
+    if (serviceperson) {
+      return serviceperson;
+    } else {
+      throw new Error("Error getting specified serviceperson bookings");
+    }
 }
 
 export {
@@ -282,5 +310,6 @@ export {
   createBookingRequest,
   acceptBooking,
   rejectBooking,
-  listUserBookings
+  listUserBookings,
+  listServicepersonBookings,
 };
