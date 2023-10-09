@@ -12,7 +12,7 @@ import { isServiceperson, isUser } from "./middlewares/auth.js";
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({credentials: true, origin:"http://localhost:5173"}));
 app.use(cookieParser());
 dotenv.config();
 
