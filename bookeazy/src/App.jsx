@@ -36,8 +36,8 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/finalBook" element={<FinalBooking/>} />
           <Route path="/login" element={<Login/>} />
-        {/* <Route path="/test" element={<ShowClientBookings />} />  */}
-          <Route path="/test" element={<ShowRequestsUpdate/>} />
+          <Route path="/showBookings" element={<ShowClientBookings />} /> 
+          <Route path="/showRequests" element={<ShowRequestsUpdate/>} />
           {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
         </Routes>
       </UserContext.Provider>

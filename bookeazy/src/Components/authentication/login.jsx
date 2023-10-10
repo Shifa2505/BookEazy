@@ -23,10 +23,10 @@ function Login(){
         if(userTypeRef.current.value=="User"){
             axios.post("http://localhost:8000/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
-                console.log(data);
+                console.log(data.data);
                 setUser(data.data)
             })
-            .catch(err=>console.error(err.response.data))
+            .catch(err=>console.error(err))
         }
         else{
             axios.post("http://localhost:8000/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
