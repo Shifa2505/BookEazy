@@ -12,7 +12,7 @@ export default function Navbar(){
                 <Link to="/about">About</Link>
             </li>
             <li>
-                <Link to="/services">Services</Link>
+                <span>Services</span>
                 <div className="dropdown">
                     <ul>
                         <li>
