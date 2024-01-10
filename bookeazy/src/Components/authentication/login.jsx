@@ -58,7 +58,7 @@ function Login(){
                     <input ref={passwordRef} type="password" id="password" name="password" placeholder="Enter you Password" required/><br/>
                     <select ref={userTypeRef} defaultValue={"Client"}>
                         <option value={"User"}>Client</option>
-                        <option value={"Serviceperson"}>Serviceperson</option>
+                        <option value={"Serviceperson"}>Service Provider</option>
                     </select>
                     <p>New here? <br />Sign up today as a{' '}
                         <Link to="/customerSignUp">Customer</Link>{' '}
