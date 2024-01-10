@@ -3,12 +3,14 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 function Login(){
     const {user, setUser} = useContext(UserContext);
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
     const userTypeRef = useRef(null);
+    const navigate = useNavigate();
     
     function validateAndLogin(){
         if(usernameRef.current.value.trim().length==0){
@@ -23,16 +25,20 @@ function Login(){
         if(userTypeRef.current.value=="User"){
             axios.post("http://localhost:8000/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
+                window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data.data);
-                setUser(data.data)
+                setUser(data.data);
+                navigate("/");
             })
             .catch(err=>console.error(err))
         }
         else{
             axios.post("http://localhost:8000/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
+                window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data);
-                setUser(data.data)
+                setUser(data.data);
+                navigate("/");
             })
             .catch(err=>console.error(err.response.data))
 

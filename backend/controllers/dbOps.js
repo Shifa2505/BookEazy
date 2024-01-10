@@ -151,6 +151,17 @@ async function getServicepersonForCategories(category) {
 }
 
 /**
+ * 
+ * @param {String} category 
+ */
+async function getServicesForCategory(category){
+  const categoryDoc = await categoryModel.findOne({name:category})
+  // console.log(categoryDoc.name)
+  let services = serviceModel.find({category:categoryDoc._id})
+  return services;
+}
+
+/**
  *
  * @param {String} serviceName
  * @param {String} servicePerson
@@ -300,7 +311,7 @@ async function listServicepersonBookings(username) {
     }
 }
 
-export {
+export default{
   addUser,
   addServiceperson,
   userLogin,
@@ -312,4 +323,5 @@ export {
   rejectBooking,
   listUserBookings,
   listServicepersonBookings,
+  getServicesForCategory
 };
