@@ -102,7 +102,7 @@ export default function Homepage() {
             </div>
             <div className="info-img">
                 {/* <img src="images/booking.jpg" alt="" /> */}
-                <img src="images/electrical.jpeg" alt="" />
+                <img src="images/book_info.jpg" alt="" />
 
             </div>
               
