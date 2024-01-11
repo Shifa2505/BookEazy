@@ -44,10 +44,51 @@ await connectDB(process.env.Test_Database_URL);
 //TRYING FILTERING
 let s = await servicepersonModel.aggregate([
     {
-        $match:{
-            "servicesOffered.service":mongoose.Schema.ObjectId("6514429095402ea423785bcc")
+	    $unwind:"$servicesOffered",
+    },
+    {
+        $lookup: {
+            from :"servicecategories",
+            localField:"servicesOffered.service",
+            foreignField:"_id",
+            as : "service"
         }
     },
+    {
+        $unwind : "$service"
+    },
+    {
+        $match: {
+            "service.name" : "Electrical Help",
+        }
+    },
+    {
+        $unwind : {
+            path:"$bookings",
+            preserveNullAndEmptyArrays: true
+        }
+    },
+    {
+        $lookup : {
+            from:"bookings",
+            localField:"bookings",
+            foreignField:"_id",
+            as:"bookings",
+        }
+    },
+    {
+        $unwind : {
+            path:"$bookings",
+            preserveNullAndEmptyArrays: true
+        }
+    },
+    {
+        $match : {
+            "bookings.status" : {
+                $in : [null, "REJECTED"]
+            }
+        }
+    }
     // {
     //     $project:{
     //         _id:1,
@@ -58,7 +99,9 @@ let s = await servicepersonModel.aggregate([
     //     }
     // },
 ])
+// console.log(await servicepersonModel.find({}))
 console.log(s)
+console.log(s.length)
 
 console.log("disconnecting...")
 await mongoose.disconnect();
