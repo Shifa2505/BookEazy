@@ -42,6 +42,7 @@ await connectDB(process.env.Test_Database_URL);
 // }))
 
 //TRYING FILTERING
+const nowTime = new Date();
 let s = await servicepersonModel.aggregate([
     {
 	    $unwind:"$servicesOffered",
@@ -84,20 +85,26 @@ let s = await servicepersonModel.aggregate([
     },
     {
         $match : {
-            "bookings.status" : {
-                $in : [null, "REJECTED"]
-            }
+            $or:[
+                {"bookings.status":"REJECTED"},
+                {"bookings.status":"PENDING"},
+                {"bookings.status":null},
+                {
+                    $and: [
+                    {"bookings.status":"ACCEPTED"},
+                    {
+                        $or : [
+                            {"bookings.startTime" : {
+                                $lt : new Date(nowTime.setHours(nowTime.getHours()-1))
+                            }}
+                        ]
+                    }
+
+                ]}
+            ]
         }
-    }
-    // {
-    //     $project:{
-    //         _id:1,
-    //         name:1,
-    //         username:1,
-    //         servicesOffered:1,
-    //         bookings:1
-    //     }
-    // },
+    },
+    
 ])
 // console.log(await servicepersonModel.find({}))
 console.log(s)

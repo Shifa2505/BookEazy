@@ -325,3 +325,17 @@ export default{
   listServicepersonBookings,
   getServicesForCategory
 };
+export {
+  addUser,
+  addServiceperson,
+  userLogin,
+  servicepersonLogin,
+  getServiceCategories,
+  getServicepersonForCategories,
+  createBookingRequest,
+  acceptBooking,
+  rejectBooking,
+  listUserBookings,
+  listServicepersonBookings,
+  getServicesForCategory
+};

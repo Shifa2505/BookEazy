@@ -25,7 +25,7 @@ await connectDB(process.env.Test_Database_URL);
 // console.log(await getServiceCategories())
 // let x = await getServicepersonForCategories("Electrical Help")
 // console.log(x.map(d=>{return {name:d.name,username:d.username}}))
-// console.log(await createBookingRequest("Applicance Installation","davidcraftsman","johndoe",new Date()))
+console.log(await createBookingRequest("Applicance Installation","sophiacivileng","spiderman",new Date()))
 // await acceptBooking("olivialandscapes","651950733373dd37ad3ea547");
 // await rejectBooking("olivialandscapes","651950733373dd37ad3ea547");
 // console.log(await listUserBookings("johndoe"))
