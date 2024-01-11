@@ -1,7 +1,7 @@
 import React from "react";
 import ContactContent from "./ContactContent";
 import MainForm from "./MainForm";
-import Footer from "./Footer";
+import Footer from "../footer/Footer";
 
 function ContactPage(){
    return(
