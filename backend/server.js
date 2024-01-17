@@ -17,7 +17,7 @@ app.use(cookieParser());
 dotenv.config();
 
 // await connectDB(process.env.Test_Database_URL);
-await connectDB(process.env.Database_URL);
+await connectDB(process.env.Test_Database_URL);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");

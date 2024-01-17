@@ -43,6 +43,7 @@ await connectDB(process.env.Test_Database_URL);
 
 //TRYING FILTERING
 const nowTime = new Date();
+console.log(nowTime)
 let s = await servicepersonModel.aggregate([
     {
 	    $unwind:"$servicesOffered",
@@ -94,12 +95,14 @@ let s = await servicepersonModel.aggregate([
                     {"bookings.status":"ACCEPTED"},
                     {
                         $or : [
+                            // {"bookings.startTime" : {
+                            //     $lt : new Date(nowTime.setHours(nowTime.getHours()-1))
+                            // }},
                             {"bookings.startTime" : {
-                                $lt : new Date(nowTime.setHours(nowTime.getHours()-1))
-                            }}
+                                $gt : new Date(new Date("2024-01-11T05:34:13.267+00:00").setHours(new Date("2024-01-11T05:34:13.267+00:00").getHours()+1))
+                            }},
                         ]
                     }
-
                 ]}
             ]
         }
