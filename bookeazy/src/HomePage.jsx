@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from "./Components/footer/Footer";
 // import { useHistory } from 'react-router-dom';
 
 export default function Homepage() {
@@ -108,6 +109,7 @@ export default function Homepage() {
               
 
         </section>
+        <Footer />
     </div>
   );
 }

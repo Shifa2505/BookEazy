@@ -1,4 +1,4 @@
-import "./css_files/Footer.css";
+import "./Footer.css";
 export default function Footer(){
     return(
         <div className="total-footer">
@@ -11,9 +11,9 @@ export default function Footer(){
             <h2 className="footer-link">LINKS</h2>
             <ul className="all-links">
                 <li className="sinle-link"><a href="#">Home</a></li>
-                <li className="sinle-link"><a href="#">About</a></li>
-                <li className="sinle-link"><a href="#">Services</a></li>
-                <li className="sinle-link"><a href="#">Contact</a></li>
+                <li className="sinle-link"><a href="/about">About</a></li>
+                <li className="sinle-link"><a href="#service-cards">Services</a></li>
+                <li className="sinle-link"><a href="/contact-us">Contact</a></li>
             </ul>
             </div>
             <div className="contact">
@@ -23,7 +23,7 @@ export default function Footer(){
             </div>
         </div>
         <div className="copyright">
-            <p>copyright @ 2023</p>
+            <p>copyright @ 2024</p>
         </div>
         </div>
     )
