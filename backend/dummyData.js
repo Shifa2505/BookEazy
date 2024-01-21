@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const data = {
   servicepersons: [
@@ -14,7 +14,7 @@ const data = {
       avatar: "https://example.com/avatar/johndoe.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:150}],
       username: "johndoe123",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Alice Smith",
@@ -28,7 +28,7 @@ const data = {
       avatar: "https://example.com/avatar/alicesmith.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:160}],
       username: "alicesmith456",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Michael Johnson",
@@ -42,7 +42,7 @@ const data = {
       avatar: "https://example.com/avatar/michaeljohnson.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:140}],
       username: "michaelhvacpro",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Emily Davis",
@@ -56,7 +56,7 @@ const data = {
       avatar: "https://example.com/avatar/emilydavis.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:200}],
       username: "emilydesigns",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "David Wilson",
@@ -70,7 +70,7 @@ const data = {
       image_url: "https://images.pexels.com/photos/1674666/pexels-photo-1674666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:130}, {service:"6514429095402ea423785bcd",fare:200}],
       username: "davidcraftsman",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Olivia Brown",
@@ -84,7 +84,7 @@ const data = {
       avatar: "https://example.com/avatar/oliviabrown.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:140}, {service:"6514429095402ea423785bcd",fare:160}],
       username: "olivialandscapes",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Daniel Lee",
@@ -98,7 +98,7 @@ const data = {
       avatar: "https://example.com/avatar/daniellee.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:200}],
       username: "danielengineer",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Sophia White",
@@ -112,7 +112,7 @@ const data = {
       avatar: "https://example.com/avatar/sophiawhite.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:150}],
       username: "sophiacivileng",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Liam Martinez",
@@ -126,7 +126,7 @@ const data = {
       avatar: "https://example.com/avatar/liammartinez.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:150}],
       username: "liamchemical",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
   ],
   services: [
@@ -182,7 +182,7 @@ const data = {
       location: "New Delhi",
       image_url: "https://example.com/user-images/john.doe.jpg",
       username: "johndoe",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Jane Doe",
@@ -191,7 +191,7 @@ const data = {
       location: "Mumbai",
       image_url: "https://example.com/user-images/jane.doe.jpg",
       username: "janedoe",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Peter Parker",
@@ -200,7 +200,7 @@ const data = {
       location: "Bangalore",
       image_url: "https://example.com/user-images/peter.parker.jpg",
       username: "spiderman",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Bruce Wayne",
@@ -209,7 +209,7 @@ const data = {
       location: "Chennai",
       image_url: "https://example.com/user-images/bruce.wayne.jpg",
       username: "batman",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
     {
       name: "Clark Kent",
@@ -218,7 +218,7 @@ const data = {
       location: "Kolkata",
       image_url: "https://example.com/user-images/clark.kent.jpg",
       username: "superman",
-      password: await bcrypt.hash("password123",10),
+      password: bcrypt.hashSync("password123",10),
     },
   ],
 };

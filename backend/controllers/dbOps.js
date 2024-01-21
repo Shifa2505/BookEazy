@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { categoryModel } from "../models/categoryModel.js";
 import { serviceModel } from "../models/serviceModel.js";
 import { servicepersonModel } from "../models/servicepersonModel.js";
@@ -24,7 +24,7 @@ async function addUser(
   image_url = null
 ) {
   try {
-    let hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = bcrypt.hashSync(password, 10);
     // console.log(hashedPassword);
     await userModel.create({
       username: username,
@@ -66,7 +66,7 @@ async function addServiceperson(
   image_url = null
 ) {
   try {
-    let hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = bcrypt.hashSync(password, 10);
     // console.log(hashedPassword);
     await servicepersonModel.create({
       name: name,
