@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ServicemenShowCard.module.css";
+import ReviewsModal from "./ReviewsModal";
 import { Link } from "react-router-dom";
 
 
 function ServicemenShowCard(props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    console.log("Opening modal...");
+    setIsModalOpen(true);
+  };
+
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
+    <>
     <div className={styles.servicemenCard} style={{animationDelay: `${props.index * 100}ms`}}>
       <div className={styles.leftContainer}>
       <div className={styles.servicerImg}>
         <img src={props.image ? props.image : "https://avatars.dicebear.com/api/adventurer-neutral/mail%40ashallendesign.co.uk.svg"} alt={props.name} />
         </div>
         <div className={styles.completeProfile}>
-          <a href="/">View Profile and Reviews</a>
+          <a href="#" onClick={openModal}>View Profile and Reviews</a>
         </div>
         <div className={styles.book}>
           <Link className={styles.bookBtn} to="/finalBook">Book Now</Link>
@@ -38,7 +52,10 @@ function ServicemenShowCard(props) {
         <a href="/">Read More</a>
         </div>
       </div>
+      {isModalOpen && <ReviewsModal onClose={closeModal} name={props.name}/>}
     </div>
+    </>
+    
   );
 }
  

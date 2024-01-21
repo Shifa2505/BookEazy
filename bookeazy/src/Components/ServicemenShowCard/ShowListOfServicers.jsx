@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { faker } from "@faker-js/faker";
 import ServicemenShowCard from "./ServicemenShowCard";
 import style from "./ShowListOfServicers.module.css";
+import ReviewsModal from "./ReviewsModal";
 
 function ShowListOfServicers(props) {
   // const [servicePeople, setServicePeople] = useState([]);
@@ -25,6 +26,7 @@ function ShowListOfServicers(props) {
           rating={person.rating}
           about={person.bio}
         />
+        
       ))}
     </div>
   );
