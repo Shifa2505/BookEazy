@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { categoryModel } from "../models/categoryModel.js";
 import { serviceModel } from "../models/serviceModel.js";
 import { servicepersonModel } from "../models/servicepersonModel.js";
@@ -24,7 +24,7 @@ async function addUser(
   image_url = null
 ) {
   try {
-    let hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = bcrypt.hashSync(password, 10);
     // console.log(hashedPassword);
     await userModel.create({
       username: username,
@@ -66,7 +66,7 @@ async function addServiceperson(
   image_url = null
 ) {
   try {
-    let hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = bcrypt.hashSync(password, 10);
     // console.log(hashedPassword);
     await servicepersonModel.create({
       name: name,
@@ -134,20 +134,134 @@ async function getServiceCategories() {
 /**
  * @param {String} category
  */
-async function getServicepersonForCategories(category) {
+async function getServicepersonForCategories(category,nowTime=null) {
   const serviceCategory = await categoryModel.findOne({ name: category });
   if (!serviceCategory) {
     throw new Error("No such service category.");
   }
-  const servicepeople = await servicepersonModel
-    .find(
+  let servicepeople;
+  console.log(`received time : ${nowTime}`)
+  if(nowTime){
+    console.log("received time for querying ..")
+    nowTime = new Date(nowTime);
+    servicepeople = await servicepersonModel.aggregate([
       {
-        "servicesOffered.service": serviceCategory._id,
+        $unwind:"$servicesOffered",
       },
-      { _id: 0 }
-    )
-    .populate("servicesOffered.service", { _id: 0 });
-  return servicepeople;
+      {
+          $lookup: {
+              from :"servicecategories",
+              localField:"servicesOffered.service",
+              foreignField:"_id",
+              as : "service"
+          }
+      },
+      {
+          $unwind : "$service"
+      },
+      {
+          $match: {
+              "service.name" : category,
+          }
+      },
+      {
+          $unwind : {
+              path:"$bookings",
+              preserveNullAndEmptyArrays: true
+          }
+      },
+      {
+          $lookup : {
+              from:"bookings",
+              localField:"bookings",
+              foreignField:"_id",
+              as:"bookings",
+          }
+      },
+      {
+          $unwind : {
+              path:"$bookings",
+              preserveNullAndEmptyArrays: true
+          }
+      },
+      {
+          $match : {
+              $or:[
+                  {"bookings.status":"REJECTED"},
+                  {"bookings.status":"PENDING"},
+                  {"bookings.status":null},
+                  {
+                      $and: [
+                      {"bookings.status":"ACCEPTED"},
+                      {
+                          $or : [
+                              {"bookings.startTime" : {
+                                  $lt : new Date(nowTime - 3600000)
+                              }},
+                              {"bookings.startTime" : {
+                                $gt : new Date(nowTime + 3600000)
+                            }}
+                          ]
+                      }
+  
+                  ]}
+              ]
+          }
+      },
+      {
+        $group: {
+          _id: {
+            username: "$username",
+          },
+            username: {$first:"$username"},
+            name: {$first:"$name"},
+            bio: {$first:"$bio"},
+            email: {$first:"$email"},
+            location: {$first:"$location"},
+            phone: {$first:"$phone"},
+            jobs_done: {$first:"$jobs_done"},
+            rating: {$first:"$rating"},
+            servicesOffered: {$first:"$servicesOffered"},
+            bookings: {$push: "$bookings"}
+        },
+    }
+  ])
+  }
+  else{
+    console.log("did not receive time for querying...")
+    // servicepeople = await servicepersonModel
+    //   .find(
+    //     {
+    //       "servicesOffered.service": serviceCategory._id,
+    //     },
+    //     { _id: 0 }
+    //   )
+    //   .populate("servicesOffered.service", { _id: 0 });
+    servicepeople = await servicepersonModel.aggregate([
+      {
+        $unwind: {
+          path: "$servicesOffered",
+        },
+      },
+      {$lookup: {
+          from: "servicecategories",
+          localField: "servicesOffered.service",
+          foreignField: "_id",
+          as: "service"
+        }},
+      {
+        $unwind: {
+          path: "$service",
+        }
+      },
+      {
+        $match: {
+          "service.name":"Electrical Help"
+        }
+      }
+    ])
+    }
+    return servicepeople;
 }
 
 /**
@@ -309,6 +423,10 @@ async function listServicepersonBookings(username) {
     } else {
       throw new Error("Error getting specified serviceperson bookings");
     }
+}
+
+async function getAvailableServicepersonAtTime(){
+
 }
 
 export default{

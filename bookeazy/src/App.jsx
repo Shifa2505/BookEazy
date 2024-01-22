@@ -13,16 +13,20 @@ import About from './Components/about-page/About'
 import Login from './Components/authentication/login'
 import FinalBooking from './Components/final-booking/FinalBooking'
 import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBookings'
+// import Reviews from './Components/ServicemenShowCard/Reviews'
 import { createContext, useState } from 'react'
 
 export const UserContext = createContext();
+export const BookingContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+  const [booking, setBooking] = useState(null);
   return (
     <>
     <BrowserRouter>
       <UserContext.Provider value={{user, setUser}}>
+        <BookingContext.Provider value={{booking, setBooking}}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -38,8 +42,11 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/showBookings" element={<ShowClientBookings />} /> 
           <Route path="/showRequests" element={<ShowRequestsUpdate/>} />
+          {/* <Route path="/reviews" element={<Reviews/>} /> */}
+
           {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
         </Routes>
+        </BookingContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
     </>

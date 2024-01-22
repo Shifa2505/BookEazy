@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -16,8 +16,8 @@ app.use(cors({credentials: true, origin:"http://localhost:5173"}));
 app.use(cookieParser());
 dotenv.config();
 
-// await connectDB(process.env.Test_Database_URL);
 await connectDB(process.env.Test_Database_URL);
+// await connectDB(process.env.Database_URL);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");
@@ -157,9 +157,26 @@ app.get("/api/get-service-categories",(req,res)=>{
 
 // app.get("/api/get-servicepeople/:category",isUser, (req,res)=>{
 app.get("/api/get-servicepeople/:category", (req,res)=>{
-  getServicepersonForCategories(req.params.category)
+  getServicepersonForCategories(req.params.category,req.query.datetime)
   .then(data=>res.status(200).send(data))
-  .catch(err=>res.status(400).send("No such category"))
+  .catch(err=>{
+    console.log(err)
+    res.status(400).send("No such category")
+  })
+})
+
+app.get("/api/get-services-for-category/:category",(req,res)=>{
+  if(req.params.category){
+    getServicesForCategory(req.params.category)
+    .then(data=>res.status(200).send(data))
+    .catch(err=>{
+      console.log(err)
+      res.status(400).send("No such category")
+    })
+  }
+  else{
+    res.status(400).send("Please provide category.")
+  }
 })
 
 app.post("/api/new-booking", isUser, (req,res)=>{
@@ -167,6 +184,7 @@ app.post("/api/new-booking", isUser, (req,res)=>{
   const servicepersonUsername = req.body.serviceperson;
   const username = req.user.username;
   const startTime = req.body.startTime;
+  console.log(serviceName, servicepersonUsername, username, startTime)
   if(serviceName && servicepersonUsername && username && startTime){
     // to be implemented
     createBookingRequest(serviceName, servicepersonUsername, username, startTime)
