@@ -42,7 +42,7 @@ await connectDB(process.env.Test_Database_URL);
 // }))
 
 //TRYING FILTERING
-const nowTime = new Date();
+const nowTime = new Date("2024-01-22T14:26:37.180+00:00");
 let s = await servicepersonModel.aggregate([
     {
 	    $unwind:"$servicesOffered",
@@ -96,6 +96,9 @@ let s = await servicepersonModel.aggregate([
                         $or : [
                             {"bookings.startTime" : {
                                 $lt : new Date(nowTime.setHours(nowTime.getHours()-1))
+                            }},
+                            {"bookings.startTime" : {
+                                $gt : new Date(nowTime.setHours(nowTime.getHours()+1))
                             }}
                         ]
                     }
@@ -104,10 +107,31 @@ let s = await servicepersonModel.aggregate([
             ]
         }
     },
+    {
+        $group: {
+            "_id":{
+                "username":"$username",
+                "name":"$name",
+                "bio":"$bio",
+                "email":"$email",
+                "location":"$location",
+                "phone":"$phone",
+                "jobs_done":"$jobs_done",
+                "rating":"$rating",
+                "servicesOffered":"$servicesOffered",
+                "qualification":"$qualification"
+              },
+              "bookings":{$push:"$bookings"}
+
+        }
+    }
     
 ])
 // console.log(await servicepersonModel.find({}))
-console.log(s)
+console.log(JSON.stringify(s,null,4))
+// s.forEach(element => {
+//     console.log(element.username,element.bookings)
+// });
 console.log(s.length)
 
 console.log("disconnecting...")

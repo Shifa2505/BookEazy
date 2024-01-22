@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./ServicemenShowCard.module.css";
 import ReviewsModal from "./ReviewsModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BookingContext } from "../../App";
 
 
 function ServicemenShowCard(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {booking, setBooking} = useContext(BookingContext);
+  const navigate = useNavigate();
+  // console.log(props.selectedDateTime)
 
   const openModal = () => {
     console.log("Opening modal...");
@@ -28,7 +32,19 @@ function ServicemenShowCard(props) {
           <a href="#" onClick={openModal}>View Profile and Reviews</a>
         </div>
         <div className={styles.book}>
-          <Link className={styles.bookBtn} to="/finalBook">Book Now</Link>
+          <button className={styles.bookBtn} onClick={()=>{
+            if(props.disableBooking){
+              alert("Please select details for booking")
+            }
+            else{
+              setBooking({
+                servicePerson : props.username,
+                selectedDateTime : props.selectedDateTime,
+                selectedService : props.selectedService
+              })
+              navigate("/finalBook")
+            }
+          }}>Book Now</button>
         </div>
       </div>
       <div className={styles.rightContainer}>

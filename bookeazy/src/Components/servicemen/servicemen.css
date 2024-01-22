@@ -115,7 +115,7 @@
 
 .time-selection input{
     height: 1rem;
-    /* width: 1rem; */
+    width: 1rem;
     margin: 0 10px 0 0;
     cursor: pointer;
     border-radius: 4px;
@@ -127,7 +127,7 @@
 }
 
 .servicemens{
-    /* width: 50%; */
+    width: 50%;
     margin-top: 7rem;
     margin-right: 10rem;
 }

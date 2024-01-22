@@ -19,6 +19,7 @@ function verifyRequest(req, res, next) {
 
 function isUser(req, res, next) {
   const token = req.cookies.token;
+  console.log(token)
   if (token) {
     // console.log(token);
     jwt.verify(token, process.env.JWT_SECRET, (err, result) => {

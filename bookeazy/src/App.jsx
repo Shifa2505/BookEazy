@@ -17,13 +17,16 @@ import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBoo
 import { createContext, useState } from 'react'
 
 export const UserContext = createContext();
+export const BookingContext = createContext();
 
 function App() {
   const [user, setUser] = useState(null);
+  const [booking, setBooking] = useState(null);
   return (
     <>
     <BrowserRouter>
       <UserContext.Provider value={{user, setUser}}>
+        <BookingContext.Provider value={{booking, setBooking}}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -43,6 +46,7 @@ function App() {
 
           {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
         </Routes>
+        </BookingContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
     </>

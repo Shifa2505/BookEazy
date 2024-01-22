@@ -15,13 +15,17 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Box, Container, Stack } from "@mui/material";
 import { DatePickerToolbar } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import {FormControl,MenuItem, InputLabel, Select} from "@mui/material";
 //import Modal from './Modal';
 
 export default function ServiceMen() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [servicePeople, setServicePeople] = useState([]);
-  console.log(searchParams.get("category"));
+  const [service, setService] = useState('');
+  const [services, setServices] = useState([])
+  // console.log(searchParams.get("category"));
+  
 
   //   const [modalIsOpen, setModalIsOpen] = useState(false);
   // const [selectedDate, setSelectedDate] = useState(null);
@@ -39,7 +43,8 @@ export default function ServiceMen() {
   // };
 
   const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
 
   const handleCalendarToggle = () => {
     setShowCalendar(!showCalendar);
@@ -55,8 +60,31 @@ export default function ServiceMen() {
         "http://localhost:8000/api/get-servicepeople/" +
           searchParams.get("category")
       )
-      .then((res) => setServicePeople(res.data));
+      .then((res) => {
+        // console.log(res.data)
+        setServicePeople(res.data)
+      });
+    axios.get(`http://localhost:8000/api/get-services-for-category/${searchParams.get("category")}`)
+    .then(res=>{
+      setServices(res.data)
+    })
   }, []);
+
+  useEffect(()=>{
+    console.log("resending new query...")
+    if (!searchParams.has("category")) {
+      alert("Please mention category.");
+      navigate("/");
+    }
+    axios
+      .get(
+        `http://localhost:8000/api/get-servicepeople/${searchParams.get("category")}?datetime=${selectedDateTime}`
+      )
+      .then((res) => {
+        // console.log(res.data)
+        setServicePeople(res.data)
+      });
+  }, [selectedDateTime]);
 
   return (
     <div className="select-servicemen">
@@ -103,14 +131,27 @@ export default function ServiceMen() {
             </div>
           </div>
           <hr className="horizontal-line"></hr>
-          <div className="time-selection">
-            <Stack>
+            <Stack spacing={4}>
               <h4>Time Of Day</h4>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker minDateTime={dayjs(new Date())}/>
+                <DateTimePicker minDateTime={dayjs(new Date())} onAccept={val=>setSelectedDateTime(val.$d)}/>
               </LocalizationProvider>
-            </Stack>
-            {/* <div className="checkbox-1">
+              
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Service</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={service}
+                  label="Service"
+                  onChange={(event)=>setService(event.target.value)}
+                >
+                  {services.map((service,index)=><MenuItem key={index} value={service.name}>{service.name}</MenuItem>)}
+                </Select>
+              </FormControl>
+
+          <div className="time-selection">
+            <div className="checkbox-1">
               <input type="checkbox" />
               <p>Morning (8am to 12pm)</p>
             </div>
@@ -121,8 +162,9 @@ export default function ServiceMen() {
             <div className="checkbox-3">
               <input type="checkbox" />
               <p>Evening (5pm to 9:30pm)</p>
-            </div> */}
+            </div>
           </div>
+            </Stack>
           <hr className="horizontal-line"></hr>
           <h4>Price</h4>
           <div className="price">
@@ -138,6 +180,9 @@ export default function ServiceMen() {
           <ShowListOfServicers
             servicePeople={servicePeople}
             serviceCategory={searchParams.get("category")}
+            disableBooking={!selectedDateTime || !service}
+            selectedDateTime={selectedDateTime}
+            selectedService={service}
           />
         </div>
       </div>
