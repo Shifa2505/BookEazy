@@ -132,100 +132,123 @@ async function getServiceCategories() {
 }
 
 /**
- * @param {String} category
+ * @param {String} category,
+ * @param {Date|null} nowTime
  */
 async function getServicepersonForCategories(category,nowTime=null) {
+  // console.log(`category received = ${category}`)
   const serviceCategory = await categoryModel.findOne({ name: category });
   if (!serviceCategory) {
     throw new Error("No such service category.");
   }
   let servicepeople;
-  console.log(`received time : ${nowTime}`)
+  // console.log(`received time : ${nowTime}`)
   if(nowTime){
     console.log("received time for querying ..")
     nowTime = new Date(nowTime);
+    console.log(typeof nowTime)
     servicepeople = await servicepersonModel.aggregate([
       {
-        $unwind:"$servicesOffered",
+        $unwind: "$servicesOffered",
       },
       {
-          $lookup: {
-              from :"servicecategories",
-              localField:"servicesOffered.service",
-              foreignField:"_id",
-              as : "service"
-          }
+        $lookup: {
+          from: "servicecategories",
+          localField: "servicesOffered.service",
+          foreignField: "_id",
+          as: "service",
+        },
       },
       {
-          $unwind : "$service"
+        $unwind: "$service",
       },
       {
-          $match: {
-              "service.name" : category,
-          }
+        $match: {
+          "service.name": category,
+        },
       },
       {
-          $unwind : {
-              path:"$bookings",
-              preserveNullAndEmptyArrays: true
-          }
+        $unwind: {
+          path: "$bookings",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
-          $lookup : {
-              from:"bookings",
-              localField:"bookings",
-              foreignField:"_id",
-              as:"bookings",
-          }
+        $lookup: {
+          from: "bookings",
+          localField: "bookings",
+          foreignField: "_id",
+          as: "bookings",
+        },
       },
       {
-          $unwind : {
-              path:"$bookings",
-              preserveNullAndEmptyArrays: true
-          }
-      },
-      {
-          $match : {
-              $or:[
-                  {"bookings.status":"REJECTED"},
-                  {"bookings.status":"PENDING"},
-                  {"bookings.status":null},
-                  {
-                      $and: [
-                      {"bookings.status":"ACCEPTED"},
-                      {
-                          $or : [
-                              {"bookings.startTime" : {
-                                  $lt : new Date(nowTime - 3600000)
-                              }},
-                              {"bookings.startTime" : {
-                                $gt : new Date(nowTime + 3600000)
-                            }}
-                          ]
-                      }
-  
-                  ]}
-              ]
-          }
+        $unwind: {
+          path: "$bookings",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $group: {
-          _id: {
-            username: "$username",
-          },
-            username: {$first:"$username"},
-            name: {$first:"$name"},
-            bio: {$first:"$bio"},
-            email: {$first:"$email"},
-            location: {$first:"$location"},
-            phone: {$first:"$phone"},
-            jobs_done: {$first:"$jobs_done"},
-            rating: {$first:"$rating"},
-            servicesOffered: {$first:"$servicesOffered"},
-            bookings: {$push: "$bookings"}
+          _id: { _id: "$_id" },
+          name: { $first: "$name" },
+          bookings: { $push: "$bookings" },
+          username: {$first: "$username"},
+          servicesOffered: {$first: "$servicesOffered"},
+          location: {$first: "$location"},
+          qualification: {$first: "$qualification"},
+          phone: {$first: "$phone"},
+          jobs_done: {$first: "$jobs_done"},
+          bio: {$first: "$bio"},
+          rating: {$first: "$rating"},
+          image_url: {$first: "$image_url"},
+          email: {$first: "$email"},
         },
-    }
-  ])
+      },
+      {
+        $match: {
+          $expr: {
+            $not: {
+              $gt: [
+                {
+                  $size: {
+                    $filter: {
+                      input: "$bookings",
+                      as: "booking",
+                      cond: {
+                        $and: [
+                          {
+                            $gte: [
+                              "$$booking.startTime",
+                              new Date(nowTime.getTime() - 5400000),
+                            ],
+                          },
+                          {
+                            $lte: [
+                              "$$booking.startTime",
+                              new Date(nowTime.getTime() + 5400000),
+                            ],
+                          },
+                          {
+                            $eq: ["$$booking.status", "ACCEPTED"],
+                          },
+                        ],
+                      },
+                    },
+                  },
+                },
+                0,
+              ],
+            },
+          },
+        }
+      },
+      // {
+      //     $project: {
+      //         _id: false,
+      //         name: "$name"
+      //     }
+      // }
+    ])
   }
   else{
     console.log("did not receive time for querying...")

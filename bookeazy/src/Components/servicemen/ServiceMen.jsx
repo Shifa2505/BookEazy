@@ -72,6 +72,7 @@ export default function ServiceMen() {
 
   useEffect(()=>{
     console.log("resending new query...")
+    console.log(selectedDateTime)
     if (!searchParams.has("category")) {
       alert("Please mention category.");
       navigate("/");
@@ -134,7 +135,7 @@ export default function ServiceMen() {
             <Stack spacing={4}>
               <h4>Time Of Day</h4>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker minDateTime={dayjs(new Date())} onAccept={val=>setSelectedDateTime(val.$d)}/>
+                <DateTimePicker minDateTime={dayjs(new Date())} onAccept={val=>setSelectedDateTime(val)}/>
               </LocalizationProvider>
               
               <FormControl fullWidth>
