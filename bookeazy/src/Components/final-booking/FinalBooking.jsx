@@ -65,6 +65,7 @@ export default function FinalBooking(){
                     <div className="confirmation-sec">
                     <div className="detail-and-btn">
                     <div className="service-details">
+                        {console.log(booking)}
                         <div className="service-profile-sec">
                             <h3>{booking.selectedService}</h3>
                             <div className="service-sec-image">
@@ -74,13 +75,13 @@ export default function FinalBooking(){
                         </div>
                         <div className="service-confirm-det">
                         <div className="single-det">
-                            <img src="/src/assets/calendar.png" /><span>{`${booking.selectedDateTime.toLocaleDateString()}`}</span>
+                            <img src="/src/assets/calendar.png" /><span>{`${booking?.selectedDateTime?.$d.toLocaleDateString()}`}</span>
                             </div>
                             <div className="single-det">
                             <img src="/src/assets/pin.png" /><span>{user?.location}</span>
                             </div>
                             <div className="single-det">
-                            <img src="/src/assets/calendar.png" /><span>{`${booking.selectedDateTime.toLocaleTimeString()}`}</span>
+                            <img src="/src/assets/calendar.png" /><span>{`${booking?.selectedDateTime?.$d.toLocaleTimeString()}`}</span>
                             </div>
                         </div>
                     </div>

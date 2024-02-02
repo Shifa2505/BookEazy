@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes, useSearchParams } from 'react-router-dom'
 import ServiceMen from './Components/servicemen/ServiceMen'
 import About from './Components/about-page/About'
 import Login from './Components/authentication/login'
+import Register from "./Components/authentication/userRegister"
 import FinalBooking from './Components/final-booking/FinalBooking'
 import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBookings'
 // import Reviews from './Components/ServicemenShowCard/Reviews'
@@ -40,6 +41,7 @@ function App() {
           <Route path="/about" element={<About/>} />
           <Route path="/finalBook" element={<FinalBooking/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/customerSignUp" element={<Register/>} />
           <Route path="/showBookings" element={<ShowClientBookings />} /> 
           <Route path="/showRequests" element={<ShowRequestsUpdate/>} />
           {/* <Route path="/reviews" element={<Reviews/>} /> */}
