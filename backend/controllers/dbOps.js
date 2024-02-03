@@ -10,6 +10,7 @@ import { bookingModel } from "../models/bookingModel.js";
  * @param {String} password
  * @param {String} name
  * @param {String} email
+ * @param {String} address
  * @param {String} location
  * @param {String} phone
  * @param {String?} image_url
@@ -19,6 +20,7 @@ async function addUser(
   password,
   name,
   email,
+  address,
   location,
   phone,
   image_url = null
@@ -31,6 +33,7 @@ async function addUser(
       password: hashedPassword,
       name: name,
       email: email,
+      address: address,
       location: location,
       phone: phone,
       image_url: image_url,
@@ -45,6 +48,7 @@ async function addUser(
  * @param {String} name
  * @param {String} email
  * @param {String} phone
+ * @param {String} address
  * @param {String} location
  * @param {String} qualification
  * @param {String} bio
@@ -57,6 +61,7 @@ async function addServiceperson(
   name,
   email,
   phone,
+  address,
   location,
   qualification,
   bio,
@@ -72,6 +77,7 @@ async function addServiceperson(
       name: name,
       email: email,
       phone: phone,
+      address: address,
       location: location,
       qualification: qualification,
       bio: bio,
@@ -127,7 +133,7 @@ async function servicepersonLogin(username, password) {
 }
 
 async function getServiceCategories() {
-  const categories = await categoryModel.find({}, { _id: 0, __v: 0 });
+  const categories = await categoryModel.find({}, {__v: 0 });
   return categories;
 }
 

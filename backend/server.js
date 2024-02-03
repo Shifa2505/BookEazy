@@ -25,26 +25,28 @@ app.get("/", (req, res) => {
 
 app.post("/sign-up/user", async (req, res) => {
   console.log(req.body);
-  let username = req.body.username;
-  let password = req.body.password;
-  let name = req.body.name;
-  let email = req.body.email;
-  let location = req.body.location;
-  let phone = req.body.phone;
-  let image_url = req.body.image_url;
+  let username = req.body.username?.trim();
+  let password = req.body.password?.trim();
+  let name = req.body.name?.trim();
+  let email = req.body.email?.trim();
+  let address = req.body.address?.trim();
+  let location = req.body.location?.trim();
+  let phone = req.body.phone?.trim();
+  let image_url = req.body.image_url?.trim();
 
-  if (username && password && name && email && location && phone) {
+  if (username && password && name && email && location && phone && address) {
     image_url
       ? await addUser(
           username,
           password,
           name,
           email,
+          address,
           location,
           phone,
           image_url
         )
-      : await addUser(username, password, name, email, location, phone);
+      : await addUser(username, password, name, email, address, location, phone);
     res.status(200).send("Created New User.");
   } else {
     res.status(400).send("Username or password missing.");
@@ -52,22 +54,25 @@ app.post("/sign-up/user", async (req, res) => {
 });
 
 app.post("/sign-up/serviceperson", async (req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
-  let name = req.body.name;
-  let email = req.body.email;
-  let location = req.body.location;
-  let phone = req.body.phone;
-  let qualification = req.body.qualification;
-  let bio = req.body.bio;
+  console.log(req.body)
+  let username = req.body.username?.trim();
+  let password = req.body.password?.trim();
+  let name = req.body.name?.trim();
+  let email = req.body.email?.trim();
+  let address = req.body.address?.trim();
+  let location = req.body.location?.trim();
+  let phone = req.body.phone?.trim();
+  let qualification = req.body.qualification?.trim();
+  let bio = req.body.bio?.trim();
   let servicesOffered = req.body.servicesOffered;
-  let image_url = req.body.image_url;
+  let image_url = req.body.image_url?.trim();
 
   if (
     username &&
     password &&
     name &&
     email &&
+    address &&
     location &&
     phone &&
     qualification &&
@@ -79,6 +84,7 @@ app.post("/sign-up/serviceperson", async (req, res) => {
           name,
           email,
           phone,
+          address,
           location,
           qualification,
           bio,
@@ -91,6 +97,7 @@ app.post("/sign-up/serviceperson", async (req, res) => {
           name,
           email,
           phone,
+          address,
           location,
           qualification,
           bio,

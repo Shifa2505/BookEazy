@@ -20,6 +20,10 @@ const userSchema = new Schema({
     required: false,
     default: null,
   },
+  address: {
+    type: String,
+    required: true,
+  },
   location: {
     type: String,
     required: true,
