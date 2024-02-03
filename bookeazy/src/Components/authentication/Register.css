@@ -3,7 +3,7 @@
     display: flex;
     /* align-items: center; */
     justify-content: center;
-    margin-top: 70px;
+    /* margin-top: 70px; */
     
 }
 .registerUser-container{
@@ -12,7 +12,7 @@
     /* flex-direction: column; */
     align-items: center;
     justify-content: center;
-    height: 550px;
+    /* height: 550px; */
     /* width: 450px */
 }
 .registerUser-container label{
@@ -61,6 +61,28 @@
     font-weight: bold;
 }    
 #password {
+    width: 100%;
+    padding: 5px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    height: 50px;
+    font-size: 1.1rem;
+    border-bottom: 5px solid rgb(0, 64, 119);
+    border-radius: 10px;
+    font-weight: bold;
+}
+#phone {
+    width: 100%;
+    padding: 5px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    height: 50px;
+    font-size: 1.1rem;
+    border-bottom: 5px solid rgb(0, 64, 119);
+    border-radius: 10px;
+    font-weight: bold;
+}
+#location {
     width: 100%;
     padding: 5px 20px;
     margin: 8px 0;
