@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../axios.config";
 function Login(){
     const {user, setUser} = useContext(UserContext);
     const usernameRef = useRef(null);
@@ -23,7 +23,7 @@ function Login(){
         }
         // console.log(userTypeRef.current.value)
         if(userTypeRef.current.value=="User"){
-            axios.post("http://localhost:8000/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
+            axios.post("/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data.data);
@@ -33,7 +33,7 @@ function Login(){
             .catch(err=>console.error(err))
         }
         else{
-            axios.post("http://localhost:8000/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
+            axios.post("/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data);

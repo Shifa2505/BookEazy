@@ -1,5 +1,5 @@
 import { useState } from "react"
-import axios from 'axios'
+import axios from '../../../axios.config'
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
 import './Register.css'
@@ -56,7 +56,7 @@ export default function ClientRegister(){
             return;
         }
         
-        axios.post("http://localhost:8000/sign-up/user",data,{withCredentials:true})
+        axios.post("/sign-up/user",data,{withCredentials:true})
         .then(data=>{
             toast.success("Registered as user. Please login.");
             setTimeout(()=>navigate("/login",{state:{userType:"client"}}),3000)

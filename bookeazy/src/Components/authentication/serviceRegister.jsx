@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
+import axios from '../../../axios.config'
 import {toast, Toaster} from 'react-hot-toast';
 import { Link, useNavigate } from "react-router-dom";
 import './Register.css'
@@ -7,6 +7,7 @@ import './Register.css'
 export default function ServicemenRegister(){
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
+    const [servicesOffered, setServicesOffered] = useState([]);
     const [data, setData] = useState({
         name: '',
         email: '',
@@ -15,14 +16,14 @@ export default function ServicemenRegister(){
         location: '',
         bio:'',
         qualification:'',
-        servicesOffered:[],
+        // servicesOffered:[],
         username: '',
         password: '',
         
     })
     const registerUser = async (e) => {
         e.preventDefault()
-        const {name, email, phone, location, username, password, address, bio, qualification, servicesOffered} = data;
+        const {name, email, phone, location, username, password, address, bio, qualification} = data;
         if(!name.trim()){
             toast.error("Please enter your name.");
             return;
@@ -68,9 +69,15 @@ export default function ServicemenRegister(){
             toast.error("Please select at least one service.");
             return;
         }
-        console.log(data);
+        for(let s of servicesOffered){
+            if(s.fare<=0){
+                toast.error("Please enter valid fare for "+s.name)
+                return;
+            }
+        }
+        // console.log(data,servicesOffered.map(s=>{delete (s.name);return s;}));
         
-        axios.post("http://localhost:8000/sign-up/serviceperson",data,{withCredentials:true})
+        axios.post("/sign-up/serviceperson",{...data, servicesOffered:servicesOffered.map(s=>{delete (s.name);return s;})},{withCredentials:true})
         .then(data=>{
             toast.success("Registered as serviceperson. Please login.");
             setTimeout(()=>navigate("/login",{state:{userType:"serviceperson"}}),3000)
@@ -82,7 +89,7 @@ export default function ServicemenRegister(){
     }
 
     useEffect(()=>{
-        axios.get("http://localhost:8000/api/get-service-categories")
+        axios.get("/api/get-service-categories")
         .then(data=>{
             console.log(data.data);
             setCategories(data.data)
@@ -118,13 +125,26 @@ export default function ServicemenRegister(){
                             <select multiple id="servicesOffered" onChange={(e) => {
                                 let selectedServices = [];
                                 for(const op of e.target.options){
-                                    if(op.selected){selectedServices.push(op.value)}
+                                    if(op.selected){selectedServices.push({service: op.value,name:op.textContent, fare: 0})}
                                 }
-                                setData({...data,servicesOffered:selectedServices})
+                                setServicesOffered(selectedServices)
                             }} >
                                 <option value="" hidden>Select services.</option>
-                                {services.map((s,i)=><option key={i} value={s._id}>{s.name}</option>)}
+                                {categories.map((s,i)=><option key={i} value={s._id}>{s.name}</option>)}
                             </select>
+                            <div className="serviceEditor">
+                                {servicesOffered.map((s,i)=>
+                                    <div key={i}>
+                                    <span>{s.name}</span>
+                                    <input placeholder="enter your fare" type="number" onChange={(e)=>{
+                                        let temp = servicesOffered;
+                                        temp[i] = {service: s.service, name: s.name, fare: Number(e.target.value)};
+                                        // console.log(temp);
+                                        setServicesOffered(temp);
+                                    }}></input>
+                                    </div>
+                                )}
+                            </div>
                             <label>Bio:</label>
                             <input type="text" id="bio" placeholder="enter bio..." value={data.bio} onChange={(e) => setData({...data, bio: e.target.value})} />
                             <label>Username:</label>
@@ -230,17 +250,17 @@ const qualificationsArr = [
     "Online courses and certifications"
   ]
 
-const services = [
-{
-  "_id": "6514429095402ea423785bcc",
-  "name": "Electrical Help",
-  "description": "Any kind of assistance related to electrical applicances or power boards for your house.",
-  "image_url": "https://media.istockphoto.com/id/1007046542/photo/electrical-terminal-in-junction-box-and-service-by-technician-electrical-device-install-in.jpg?s=1024x1024&w=is&k=20&c=T1pNGQf1Ss-Jd_GbtREJyO83PYvyu_j9k7p6qzYjqgA=" 
-},
-  {
-  "_id": "6514429095402ea423785bcd",
-  "name": "Painting",
-  "description": "Need an artist for a beautiful and mesmerizing piece of visual art, search no more..",
-  "image_url": "https://media.istockphoto.com/id/1183183783/photo/female-artist-works-on-abstract-oil-painting-moving-paint-brush-energetically-she-creates.jpg?s=1024x1024&w=is&k=20&c=XjERsAzJ3ePdYNUqyH8bm0vu93B_E8ASIwVgOsS8v6s="
-}
-]
+// const services = [
+// {
+//   "_id": "6514429095402ea423785bcc",
+//   "name": "Electrical Help",
+//   "description": "Any kind of assistance related to electrical applicances or power boards for your house.",
+//   "image_url": "https://media.istockphoto.com/id/1007046542/photo/electrical-terminal-in-junction-box-and-service-by-technician-electrical-device-install-in.jpg?s=1024x1024&w=is&k=20&c=T1pNGQf1Ss-Jd_GbtREJyO83PYvyu_j9k7p6qzYjqgA=" 
+// },
+//   {
+//   "_id": "6514429095402ea423785bcd",
+//   "name": "Painting",
+//   "description": "Need an artist for a beautiful and mesmerizing piece of visual art, search no more..",
+//   "image_url": "https://media.istockphoto.com/id/1183183783/photo/female-artist-works-on-abstract-oil-painting-moving-paint-brush-energetically-she-creates.jpg?s=1024x1024&w=is&k=20&c=XjERsAzJ3ePdYNUqyH8bm0vu93B_E8ASIwVgOsS8v6s="
+// }
+// ]
