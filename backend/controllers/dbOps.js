@@ -321,6 +321,7 @@ async function createBookingRequest(
   if (!service) {
     throw new Error("No such service found.");
   }
+  console.log(service);
   const serviceperson = await servicepersonModel.findOne({
     username: servicePerson,
     "servicesOffered.service": service.category,
@@ -328,16 +329,19 @@ async function createBookingRequest(
   if (!serviceperson) {
     throw new Error("No such serviceperson for the service.");
   }
+  console.log(serviceperson)
   const fare = serviceperson.servicesOffered.filter(
     (d) => d.service == service.category.toString()
   )[0].fare;
   if (!fare) {
     throw new Error("Error getting approximate fare.");
   }
+  console.log(fare)
   const user = await userModel.findOne({ username: username });
   if (!user) {
     throw new Error("No such user found.");
   }
+  console.log(user)
   const newBooking = await bookingModel.create({
     service: service._id,
     servicePerson: serviceperson._id,
