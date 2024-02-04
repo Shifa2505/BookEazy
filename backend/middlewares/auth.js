@@ -44,9 +44,11 @@ function isServiceperson(req, res, next) {
     jwt.verify(token, process.env.JWT_SECRET, (err, result) => {
       if (err) {
         res.status(401).send("Unauthorised");
+        return;
       }
       if (result.role != "SERVICEPERSON"){
-        res.status(401).send("Unauthorised");
+        res.status(401).send("Not a serviceperson");
+        return;
       }
       req.serviceperson = result;
       next();

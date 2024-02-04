@@ -39,7 +39,7 @@ async function addUser(
       image_url: image_url,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw new Error("Error storing data.");
   }
 }
@@ -87,7 +87,7 @@ async function addServiceperson(
       image_url: image_url,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw new Error("Error storing data.");
   }
 }
@@ -150,9 +150,9 @@ async function getServicepersonForCategories(category,nowTime=null) {
   let servicepeople;
   // console.log(`received time : ${nowTime}`)
   if(nowTime){
-    console.log("received time for querying ..")
+    // console.log("received time for querying ..")
     nowTime = new Date(nowTime);
-    console.log(typeof nowTime)
+    // console.log(typeof nowTime)
     servicepeople = await servicepersonModel.aggregate([
       {
         $unwind: "$servicesOffered",
@@ -257,7 +257,7 @@ async function getServicepersonForCategories(category,nowTime=null) {
     ])
   }
   else{
-    console.log("did not receive time for querying...")
+    // console.log("did not receive time for querying...")
     // servicepeople = await servicepersonModel
     //   .find(
     //     {
@@ -321,7 +321,7 @@ async function createBookingRequest(
   if (!service) {
     throw new Error("No such service found.");
   }
-  console.log(service);
+  // console.log(service);
   const serviceperson = await servicepersonModel.findOne({
     username: servicePerson,
     "servicesOffered.service": service.category,
@@ -329,19 +329,19 @@ async function createBookingRequest(
   if (!serviceperson) {
     throw new Error("No such serviceperson for the service.");
   }
-  console.log(serviceperson)
+  // console.log(serviceperson)
   const fare = serviceperson.servicesOffered.filter(
     (d) => d.service == service.category.toString()
   )[0].fare;
   if (!fare) {
     throw new Error("Error getting approximate fare.");
   }
-  console.log(fare)
+  // console.log(fare)
   const user = await userModel.findOne({ username: username });
   if (!user) {
     throw new Error("No such user found.");
   }
-  console.log(user)
+  // console.log(user)
   const newBooking = await bookingModel.create({
     service: service._id,
     servicePerson: serviceperson._id,
@@ -416,7 +416,7 @@ async function rejectBooking(servicepersonUsername, bookingId) {
 
 async function listUserBookings(username) {
   const user = await userModel
-    .findOne({ username: username }, { username: 1, bookings: 1 })
+    .findOne({ username: username }, { username: 1, bookings: 1 , __id: 1})
     .populate({
       path: "bookings",
       populate: {
@@ -429,6 +429,7 @@ async function listUserBookings(username) {
         path: "service",
       },
     });
+    console.log(user);
   if (user) {
     return user;
   } else {

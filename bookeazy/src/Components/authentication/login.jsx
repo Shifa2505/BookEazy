@@ -27,7 +27,7 @@ function Login(){
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data.data);
-                setUser(data.data);
+                setUser({...data.data, userType:"client"});
                 navigate("/");
             })
             .catch(err=>console.error(err))
@@ -37,7 +37,7 @@ function Login(){
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
                 console.log(data);
-                setUser(data.data);
+                setUser({...data.data,userType:"serviceperson"});
                 navigate("/");
             })
             .catch(err=>console.error(err.response.data))

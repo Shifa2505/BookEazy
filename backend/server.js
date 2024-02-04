@@ -16,6 +16,16 @@ app.use(cors({credentials: true, origin:["http://localhost:5173","http://127.0.0
 app.use(cookieParser());
 dotenv.config();
 
+//braintree config
+import braintree from "braintree";
+
+const gateway = new braintree.BraintreeGateway({
+  environment: braintree.Environment.Sandbox,
+  merchantId: process.env.BRAINTREE_MERCHANT_ID,
+  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+  privateKey: process.env.BRAINTREE_PRIVATE_KEY
+});
+
 await connectDB(process.env.Test_Database_URL);
 // await connectDB(process.env.Database_URL);
 
@@ -24,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/sign-up/user", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   let username = req.body.username?.trim();
   let password = req.body.password?.trim();
   let name = req.body.name?.trim();
@@ -54,7 +64,7 @@ app.post("/sign-up/user", async (req, res) => {
 });
 
 app.post("/sign-up/serviceperson", async (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   let username = req.body.username?.trim();
   let password = req.body.password?.trim();
   let name = req.body.name?.trim();
@@ -112,7 +122,7 @@ app.post("/sign-up/serviceperson", async (req, res) => {
 });
 
 app.post("/sign-in/user", async (req, res) => {
-  console.log("trying user login")
+  // console.log("trying user login")
   let username = req.body.username;
   let password = req.body.password;
 
@@ -167,7 +177,7 @@ app.get("/api/get-servicepeople/:category", (req,res)=>{
   getServicepersonForCategories(req.params.category,req.query.datetime)
   .then(data=>res.status(200).send(data))
   .catch(err=>{
-    console.log(err)
+    // console.log(err)
     res.status(400).send("No such category")
   })
 })
@@ -177,7 +187,7 @@ app.get("/api/get-services-for-category/:category",(req,res)=>{
     getServicesForCategory(req.params.category)
     .then(data=>res.status(200).send(data))
     .catch(err=>{
-      console.log(err)
+      // console.log(err)
       res.status(400).send("No such category")
     })
   }
@@ -191,7 +201,7 @@ app.post("/api/new-booking", isUser, (req,res)=>{
   const servicepersonUsername = req.body.serviceperson;
   const username = req.user.username;
   const startTime = req.body.startTime;
-  console.log(serviceName, servicepersonUsername, username, startTime)
+  // console.log(serviceName, servicepersonUsername, username, startTime)
   if(serviceName && servicepersonUsername && username && startTime){
     // to be implemented
     createBookingRequest(serviceName, servicepersonUsername, username, startTime)
@@ -238,6 +248,7 @@ app.get("/api/get-user-bookings", isUser, (req,res)=>{
 })
 
 app.get("/api/get-serviceperson-bookings", isServiceperson, (req, res)=>{
+  console.log(req.serviceperson)
   listServicepersonBookings(req.serviceperson.username)
   .then(data=>res.status(200).json(data))
   .catch(err=>res.status(500).send(err.message))
