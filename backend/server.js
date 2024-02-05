@@ -224,7 +224,10 @@ app.get("/api/accept-booking", isServiceperson, (req,res)=>{
   }
   acceptBooking(req.serviceperson.username, bookingId)
   .then(()=>res.sendStatus(200))
-  .catch(err=>res.status(500).send(err.message))
+  .catch(err=>{
+    console.log(err)
+    res.status(500).send(err.message)
+  })
 })
 
 app.get("/api/reject-booking", isServiceperson, (req,res)=>{
@@ -234,7 +237,10 @@ app.get("/api/reject-booking", isServiceperson, (req,res)=>{
   }
   rejectBooking(req.serviceperson.username, bookingId)
   .then(()=>res.sendStatus(200))
-  .catch(err=>res.status(500).send(err.message))
+  .catch(err=>{
+    console.log(err);
+    res.status(500).send(err.message)
+  })
 })
 
 app.get("/api/send-feedback", isUser, (req,res)=>{

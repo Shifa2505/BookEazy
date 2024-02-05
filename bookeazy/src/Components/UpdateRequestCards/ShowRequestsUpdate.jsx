@@ -1,43 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "./ShowRequests.module.css";
-import axios from "axios"
+import axios from "../../../axios.config"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 function ShowRequestsUpdate() {
-  const [requests, setRequests] = useState([]);
+  // const [requests, setRequests] = useState([]);
   const [pendingRequests, setPendingRequests] = useState([]);
   const [acceptedRequests, setAcceptedRequests] = useState([]);
   const [rejectedRequests, setRejectedRequests] = useState([]);
 
   function handleAccept(request) {
-    setPendingRequests((prevRequests) => prevRequests.filter(req => req._id !== request.bookingId));
-    setAcceptedRequests((prevRequests) => [...prevRequests, request]);
+    setPendingRequests((prevRequests) => prevRequests.filter(req => req._id !== request._id));
+    setAcceptedRequests((prevRequests) => [...prevRequests, {...request,status:"ACCEPTED"}]);
   }
   
   function handleReject(request) {
-    setPendingRequests((prevRequests) => prevRequests.filter(req => req._id !== request.bookingId));
-    setRejectedRequests((prevRequests) => [...prevRequests, request]);
+    setPendingRequests((prevRequests) => prevRequests.filter(req => req._id !== request._id));
+    setRejectedRequests((prevRequests) => [...prevRequests, {...request,status:"REJECTED"}]);
   }
   useEffect(()=>{
     const getData = async() => {
       try {
-        const data = await axios.get("http://localhost:8000/api/get-serviceperson-bookings",{withCredentials:true});
-        console.log(data)
+        const data = await axios.get("/api/get-serviceperson-bookings",{withCredentials:true});
+        // console.log(data)
         if(data && data.status == 200) {
           let bookings = data.data.bookings;
-          console.log(data.data.bookings)
-          setRequests(data.data.bookings)
-          console.log("accepted",bookings.filter(x=>x.status=="ACCEPTED"))
+          // console.log(data.data.bookings)
+          // setRequests(bookings)
+          // console.log("accepted",bookings.filter(x=>x.status=="ACCEPTED"))
           setAcceptedRequests(bookings.filter(x=>x.status=="ACCEPTED"))
-          setRejectedRequests(data.data.bookings.filter(x=>x.status=="REJECTED"))
+          // console.log("rejected",bookings.filter(x=>x.status=="REJECTED"))
+          setRejectedRequests(bookings.filter(x=>x.status=="REJECTED"))
+          // console.log("pending",bookings.filter(x=>x.status=="PENDING"))
           setPendingRequests(bookings.filter(x => x.status === "PENDING"));
         }
       } catch(error) {
         console.error(error.response.data)
       }
       
-      // await axios.get("http://localhost:8000/api/get-serviceperson-bookings",{withCredentials:true})
+      // await axios.get("/api/get-serviceperson-bookings",{withCredentials:true})
       // .then(data=>{
       //   let bookings = data.data.bookings;
       //   console.log(data.data.bookings)
@@ -54,13 +56,13 @@ function ShowRequestsUpdate() {
 
     getData();
 
-    const interval = setInterval(() => {
-      getData();
-    }, 3000);
+    // const interval = setInterval(() => {
+    //   getData();
+    // }, 3000);
     
-    return () => {
-      clearInterval(interval);
-    }
+    // return () => {
+    //   clearInterval(interval);
+    // }
   },[]);
   return (
     <div className={style.mainPage}>
@@ -73,7 +75,7 @@ function ShowRequestsUpdate() {
         <div>
         <TabPanel className={style.requestsList}>
           {pendingRequests && pendingRequests.map((r, index) => (
-            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} onAccept={handleAccept} onReject={handleReject}/>
+            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} onAccept={()=>handleAccept(r)} onReject={()=>handleReject(r)}/>
           ))}
         </TabPanel>
 
@@ -178,7 +180,7 @@ export default ShowRequestsUpdate;
 //   useEffect(()=>{
 //     const getData = async() => {
 //       try {
-//         const data = await axios.get("http://localhost:8000/api/get-serviceperson-bookings",{withCredentials:true});
+//         const data = await axios.get("/api/get-serviceperson-bookings",{withCredentials:true});
 //         console.log(data)
 //         if(data && data.status == 200) {
 //           let bookings = data.data.bookings;
@@ -193,7 +195,7 @@ export default ShowRequestsUpdate;
 //         console.error(error.response.data)
 //       }
       
-//       // await axios.get("http://localhost:8000/api/get-serviceperson-bookings",{withCredentials:true})
+//       // await axios.get("/api/get-serviceperson-bookings",{withCredentials:true})
 //       // .then(data=>{
 //       //   let bookings = data.data.bookings;
 //       //   console.log(data.data.bookings)
@@ -256,7 +258,7 @@ export default ShowRequestsUpdate;
 //   const [requestStatus, setRequestStatus] = useState(status);
 
 //   function accept() {
-//     axios.get("http://localhost:8000/api/accept-booking?bookingId="+props.bookingId, {withCredentials: true})
+//     axios.get("/api/accept-booking?bookingId="+props.bookingId, {withCredentials: true})
 //     .then(()=>{
 //       setRequestStatus("ACCEPTED");
 //       props.onAccept(props);
@@ -265,7 +267,7 @@ export default ShowRequestsUpdate;
 //   }
 
 //   function reject() {
-//     axios.get("http://localhost:8000/api/reject-booking?bookingId="+props.bookingId, {withCredentials: true})
+//     axios.get("/api/reject-booking?bookingId="+props.bookingId, {withCredentials: true})
 //     .then(()=>{
 //       setRequestStatus("REJECTED");
 //       props.onReject(props);
