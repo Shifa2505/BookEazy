@@ -5,6 +5,7 @@ import { Box, Grid, Stack, Tab, Tabs } from "@mui/material"
 import { UserContext } from "../../App"
 import { useNavigate } from "react-router-dom";
 import {toast, Toaster} from 'react-hot-toast';
+import DropIn from "braintree-web-drop-in-react"
 
 function ShowClientBookings() {
     const [bookings, setBookings] = useState([])
@@ -27,6 +28,7 @@ function ShowClientBookings() {
                 //   console.log(data.data.bookings)
                   setBookings(data.data.bookings)
                   // console.log(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
+                  setPendingBookings(data.data.bookings.filter(d=>d.status=="PENDING"))
                   setAcceptedBookings(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
               })
               .catch(err=>console.error(err))
@@ -35,12 +37,12 @@ function ShowClientBookings() {
   return (
     <Box className={style.bookingsContainer}>
         <Tabs value={tab} onChange={(e,val)=>setTab(val)} style={{border:"1px solid blue", width:"80%"}} variant="fullWidth">
-            <Tab label="All" />
+            <Tab label="Pending" />
             <Tab label="Accepted" />
         </Tabs>
         <Stack gap={"1rem"} marginBlock={"1rem"} width={"80%"}>
             {(tab==0)?
-                bookings.map((data,index)=><BookingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)
+                pendingBookings.map((data,index)=><BookingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)
             :<>
             {(tab==1)?
             acceptedBookings.map((data,index)=><AcceptedRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime} id={data._id} fare={data.fare}/>)
@@ -70,6 +72,23 @@ function BookingRequest(props){
 }
 
 function AcceptedRequest(props){
+    const [clientToken, setClientToken] = useState(null);
+    const [instance, setInstance] = useState(null);
+    const [loading, setLoading] = useState(false);
+    
+    async function getToken(){
+        setLoading(true);
+        axios.get("/api/get-payment-token")
+        .then(data=>{
+            setClientToken(data.data.clientToken)
+            setLoading(false);
+        })
+        .catch(err=>{
+            console.error("Error fetching payment token.")
+            setLoading(false);
+        })
+    }
+
     useEffect(()=>{
         console.log(props)
     })
@@ -83,8 +102,15 @@ function AcceptedRequest(props){
                 <span>Accepted</span>
                 <span>{props.service}</span>
                 <span>{new Date(props.startTime).toLocaleString()}</span>
-                <button>Proceed to Pay</button>
+                {!instance && <button onClick={getToken} disabled={loading}>{loading ? "Loading" : "Proceed to Pay"}</button>}
             </div>
+            {clientToken && <div className={style.payment}>
+                {/* <span>{clientToken.slice(0,10) + "..." + clientToken.slice(-10)}</span> */}
+                <DropIn options={{authorization:clientToken}} onInstance={(instance)=>{
+                    setInstance(instance);
+                }}/>
+                <button onClick={()=>{}}>Pay</button>
+            </div>}
         </div>
     )
 }

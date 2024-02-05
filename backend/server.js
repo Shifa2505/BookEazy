@@ -254,6 +254,29 @@ app.get("/api/get-serviceperson-bookings", isServiceperson, (req, res)=>{
   .catch(err=>res.status(500).send(err.message))
 })
 
+app.get("/api/get-payment-token",(req,res)=>{
+  gateway.clientToken.generate()
+  .then((token)=>{console.log(token);res.status(200).send(token)})
+  .catch((err)=>{res.status(500).send("Error generating client token.")})
+})
+
+//payment settlement function
+// gateway.transaction.sale({
+//   amount: "10.00",
+//   paymentMethodNonce: nonceFromTheClient,
+//   deviceData: deviceDataFromTheClient,
+//   options: {
+//     submitForSettlement: true
+//   }
+// }).then(result => {
+//   if (result.success) {
+//     // See result.transaction for details
+//   } else {
+//     // Handle errors
+//   }
+// });
+
+
 app.listen(8000, () => {
   console.log("Server active...");
 });
