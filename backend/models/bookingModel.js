@@ -35,7 +35,7 @@ const bookingSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["PENDING", "ACCEPTED", "REJECTED", "DONE"],
+    enum: ["PENDING", "ACCEPTED", "REJECTED", "PAID","DONE"],
     default: "PENDING",
   },
 });

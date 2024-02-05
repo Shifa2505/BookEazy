@@ -75,6 +75,7 @@ function AcceptedRequest(props){
     const [clientToken, setClientToken] = useState(null);
     const [instance, setInstance] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [paid, setPaid] = useState(false);
     
     async function getToken(){
         setLoading(true);
@@ -89,9 +90,31 @@ function AcceptedRequest(props){
         })
     }
 
-    useEffect(()=>{
-        console.log(props)
-    })
+    function makePayment(){
+        if(instance){
+            instance.requestPaymentMethod()
+            .then(data=>{
+                // console.log(data);
+                axios.post("/api/process-payment",{nonce:data.nonce,amount:props.fare,bookingId:props.id})
+                .then(data=>{
+                    console.log(data);
+                    setInstance(null);
+                    setClientToken(null);
+                    setPaid(true);
+                })
+                .catch(err=>{
+                    console.error(err)
+                })
+            })
+        }
+        else{
+            toast.error("Could not complete payment.")
+        }
+    }
+
+    // useEffect(()=>{
+    //     console.log(props)
+    // })
     return(
         <div className={style.acceptedRequest}>
             <div className={style.profilePhoto}>
@@ -102,15 +125,17 @@ function AcceptedRequest(props){
                 <span>Accepted</span>
                 <span>{props.service}</span>
                 <span>{new Date(props.startTime).toLocaleString()}</span>
-                {!instance && <button onClick={getToken} disabled={loading}>{loading ? "Loading" : "Proceed to Pay"}</button>}
+                {!instance && <button onClick={getToken} disabled={loading || paid}>{loading ? "Loading" : (paid ? "Payment succesfully done" : "Proceed to Pay")}</button>}
             </div>
             {clientToken && <div className={style.payment}>
                 {/* <span>{clientToken.slice(0,10) + "..." + clientToken.slice(-10)}</span> */}
                 <DropIn options={{authorization:clientToken}} onInstance={(instance)=>{
                     setInstance(instance);
                 }}/>
-                <button onClick={()=>{}}>Pay</button>
+                <button onClick={makePayment}>Pay</button>
             </div>}
+            {/* {paid && <span>Payment Successfully done</span>} */}
+            <Toaster position="top-center" />
         </div>
     )
 }

@@ -459,8 +459,17 @@ async function listServicepersonBookings(username) {
     }
 }
 
-async function getAvailableServicepersonAtTime(){
-
+/**
+ * 
+ * @param {String} id 
+ */
+async function changeBookingStatusToPaid(id){
+  let booking = await bookingModel.findOne({_id:id});
+  if(!booking){
+    throw new Error("No such booking found.")
+  }
+  booking.status = "PAID";
+  await booking.save();
 }
 
 export default{
@@ -475,7 +484,8 @@ export default{
   rejectBooking,
   listUserBookings,
   listServicepersonBookings,
-  getServicesForCategory
+  getServicesForCategory,
+  changeBookingStatusToPaid
 };
 export {
   addUser,
@@ -489,5 +499,6 @@ export {
   rejectBooking,
   listUserBookings,
   listServicepersonBookings,
-  getServicesForCategory
+  getServicesForCategory,
+  changeBookingStatusToPaid
 };

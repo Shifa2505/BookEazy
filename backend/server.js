@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings, changeBookingStatusToPaid } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -260,6 +260,28 @@ app.get("/api/get-payment-token",(req,res)=>{
     // console.log(token);
     res.status(200).send(token)})
   .catch((err)=>{res.status(500).send("Error generating client token.")})
+})
+
+app.post("/api/process-payment",async (req,res)=>{
+  const nonce = req.body.nonce;
+  const amount = req.body.amount;
+  const bookingId = req.body.bookingId;
+  try{
+    let data = await gateway.transaction.sale({
+      amount: amount,
+      paymentMethodNonce: nonce,
+      options: {
+        submitForSettlement: true,
+      }
+    })
+    // console.log(data);
+    await changeBookingStatusToPaid(bookingId);
+    res.status(200).send(data);
+  }
+  catch(err){
+    res.status(500).send(err);
+  }
+  
 })
 
 //payment settlement function
