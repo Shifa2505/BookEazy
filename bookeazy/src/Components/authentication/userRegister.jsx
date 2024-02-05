@@ -174,5 +174,6 @@ const locationArr = [
     "Parel East",
     "Sewri",
     "Wadala",
-    "Worli Koliwada"
+    "Worli Koliwada",
+    "Sion"
   ]

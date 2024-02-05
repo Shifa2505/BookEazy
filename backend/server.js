@@ -248,7 +248,7 @@ app.get("/api/get-user-bookings", isUser, (req,res)=>{
 })
 
 app.get("/api/get-serviceperson-bookings", isServiceperson, (req, res)=>{
-  console.log(req.serviceperson)
+  // console.log(req.serviceperson)
   listServicepersonBookings(req.serviceperson.username)
   .then(data=>res.status(200).json(data))
   .catch(err=>res.status(500).send(err.message))
@@ -256,7 +256,9 @@ app.get("/api/get-serviceperson-bookings", isServiceperson, (req, res)=>{
 
 app.get("/api/get-payment-token",(req,res)=>{
   gateway.clientToken.generate()
-  .then((token)=>{console.log(token);res.status(200).send(token)})
+  .then((token)=>{
+    // console.log(token);
+    res.status(200).send(token)})
   .catch((err)=>{res.status(500).send("Error generating client token.")})
 })
 

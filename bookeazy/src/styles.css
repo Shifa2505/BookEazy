@@ -61,6 +61,7 @@ body {
 }
 .dropdown{
     display: none;
+    z-index: 10;
 } 
 .dropdown a{
     font-size: 1.1rem;

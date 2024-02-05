@@ -429,7 +429,7 @@ async function listUserBookings(username) {
         path: "service",
       },
     });
-    console.log(user);
+    // console.log(user);
   if (user) {
     return user;
   } else {
