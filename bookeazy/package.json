@@ -12,9 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.15.5",
+    "@mui/material": "^5.15.7",
     "@mui/x-date-pickers": "^6.19.0",
-    "axios": "^1.5.1",
+    "axios": "^1.6.7",
     "dayjs": "^1.11.10",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",
@@ -22,7 +22,8 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "react-tabs": "^6.0.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
