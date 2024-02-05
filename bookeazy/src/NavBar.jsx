@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
+import { UserContext } from "./App";
+import { useContext } from "react";
 
 export default function Navbar(){
+    const {user, setUser} = useContext(UserContext);
+
     return <nav className="nav">
-        <a href="/" className="site-title">BookEazy</a>
-        <i className="fa-solid fa-xmark" onClick="hideMenu()"></i>
+        <Link to="/" className="site-title">BookEazy</Link>
+        <i className="fa-solid fa-xmark"></i>
         <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
+            {user ? <li>
+                {user.userType=="client" ? 
+                <Link to="/showBookings">My Bookings</Link> : 
+                <Link to="/showRequests">My Bookings</Link>}
+            </li> : <></>}
             <li>
                 <Link to="/about">About</Link>
             </li>
