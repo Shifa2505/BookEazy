@@ -11,7 +11,13 @@ function ShowClientBookings() {
     const [bookings, setBookings] = useState([])
     const [pendingBookings, setPendingBookings] = useState([])
     const [acceptedBookings, setAcceptedBookings] = useState([])
+    const [paidBookings, setPaidBookings] = useState([])
     const [tab, setTab] = useState(1);
+
+    function moveToPaid(r){
+        setAcceptedBookings(acceptedBookings.filter(req=>req._id!==r._id))
+        setPaidBookings([...paidBookings,{...r,status:"PAID"}])
+    }
     
   const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
@@ -30,6 +36,7 @@ function ShowClientBookings() {
                   // console.log(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
                   setPendingBookings(data.data.bookings.filter(d=>d.status=="PENDING"))
                   setAcceptedBookings(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
+                  setPaidBookings(data.data.bookings.filter(d=>d.status=="PAID"))
               })
               .catch(err=>console.error(err))
           }
@@ -39,14 +46,18 @@ function ShowClientBookings() {
         <Tabs value={tab} onChange={(e,val)=>setTab(val)} style={{border:"1px solid blue", width:"80%"}} variant="fullWidth">
             <Tab label="Pending" />
             <Tab label="Accepted" />
+            <Tab label="PAID" />
         </Tabs>
         <Stack gap={"1rem"} marginBlock={"1rem"} width={"80%"}>
-            {(tab==0)?
+            {(tab==0) &&
                 pendingBookings.map((data,index)=><BookingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)
-            :<>
-            {(tab==1)?
-            acceptedBookings.map((data,index)=><AcceptedRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime} id={data._id} fare={data.fare}/>)
-            :<></>}</>}
+            }
+            {(tab==1) &&
+            acceptedBookings.map((data,index)=><AcceptedRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime} id={data._id} fare={data.fare} switchToPaid={()=>moveToPaid(data)}/>)
+            }
+            {(tab==2) &&
+            paidBookings.map((data,index)=> <PaidRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)
+            }
         </Stack>
         {/* {bookings.map((data, index)=><BookingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)} */}
 
@@ -101,6 +112,7 @@ function AcceptedRequest(props){
                     setInstance(null);
                     setClientToken(null);
                     setPaid(true);
+                    props.switchToPaid();
                 })
                 .catch(err=>{
                     console.error(err)
@@ -136,6 +148,18 @@ function AcceptedRequest(props){
             </div>}
             {/* {paid && <span>Payment Successfully done</span>} */}
             <Toaster position="top-center" />
+        </div>
+    )
+}
+
+function PaidRequest(props){
+    return(
+        <div className={style.bookingCard}>
+            <span className={style.imageContainer}><img src={`https://ui-avatars.com/api/?name=${props.serviceperson}&background=random`}/></span>
+            <span className={style.servicepersonName}>{props.serviceperson}</span>
+            <span className={style.serviceName}>{props.service}</span>
+            <span className={style.bookingTime}>{new Date(props.startTime).toLocaleString()}</span>
+            <span className={style.bookingStatus}>Status: {props.status}</span>
         </div>
     )
 }
