@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
 import { UserContext } from "./App";
 import { useContext } from "react";
+import axios from "./../axios.config"
 
 export default function Navbar(){
     const {user, setUser} = useContext(UserContext);
+    function signOut(){
+        axios.get("/sign-out")
+        .then(d=>{
+            setUser(null);
+        })
+    }
+    console.log(user)
 
     return <nav className="nav">
         <Link to="/" className="site-title">BookEazy</Link>
@@ -36,20 +44,24 @@ export default function Navbar(){
             <li>
                 <Link to="/contact-us">Contact Us</Link>
             </li>
+            {!user ? 
             <li>
-                <Link to="/login">Sign up/Log in</Link>
-                {/* <a href="/login">Sign up/Log in</a> */}
-                <div className="dropdown">
-                    <ul>
-                        <li>
-                            <a href="/">User</a>
-                        </li>
-                        <li>
-                            <a href="/">Service Provider</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+            <Link to="/login">Sign up/Log in</Link>
+            {/* <a href="/login">Sign up/Log in</a> */}
+            <div className="dropdown">
+                <ul>
+                    <li>
+                        <Link to="/login" state={{userType:"client"}}>User</Link>
+                    </li>
+                    <li>
+                        <Link to="/login" state={{userType:"serviceperson"}}>Service Provider</Link>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        :
+        <li onClick={signOut}>Sign Out</li>}
+            
             
         </ul>
     </nav>

@@ -1,16 +1,18 @@
 // import React from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../axios.config";
 function Login(){
     const {user, setUser} = useContext(UserContext);
+    const navigateState = useLocation();
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
     const userTypeRef = useRef(null);
     const navigate = useNavigate();
+    console.log(navigateState.state)
     
     function validateAndLogin(){
         if(usernameRef.current.value.trim().length==0){
@@ -22,7 +24,7 @@ function Login(){
             return
         }
         // console.log(userTypeRef.current.value)
-        if(userTypeRef.current.value=="User"){
+        if(userTypeRef.current.value=="Client"){
             axios.post("/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
@@ -56,9 +58,10 @@ function Login(){
                     <input ref={usernameRef} type="text" id="username" name="username" placeholder="Enter you User Name" required/><br/>
                     <label htmlFor="password">Password:</label><br/>
                     <input ref={passwordRef} type="password" id="password" name="password" placeholder="Enter you Password" required/><br/>
-                    <select ref={userTypeRef} defaultValue={"Client"}>
-                        <option value={"User"}>Client</option>
-                        <option value={"Serviceperson"}>Service Provider</option>
+                    <select ref={userTypeRef}>
+                        <option value={""} hidden>Select a user Type</option>
+                        <option value={"Client"} selected={navigateState.state?.userType == "client"}>Client</option>
+                        <option value={"Serviceperson"} selected={navigateState.state?.userType == "serviceperson"}>Service Provider</option>
                     </select>
                     <p>New here? <br />Sign up today as a{' '}
                         <Link to="/customerSignUp">Customer</Link>{' '}
