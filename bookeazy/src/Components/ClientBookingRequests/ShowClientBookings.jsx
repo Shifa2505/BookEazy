@@ -31,12 +31,12 @@ function ShowClientBookings() {
           else{
               axios.get("/api/get-user-bookings",{withCredentials: true})
               .then(data=>{
-                //   console.log(data.data.bookings)
-                  setBookings(data.data.bookings)
-                  // console.log(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
-                  setPendingBookings(data.data.bookings.filter(d=>d.status=="PENDING"))
-                  setAcceptedBookings(data.data.bookings.filter(d=>d.status=="ACCEPTED"))
-                  setPaidBookings(data.data.bookings.filter(d=>d.status=="PAID"))
+                  let b = data.data.bookings.sort((x,y)=> new Date(y.startTime) - new Date(x.startTime))
+                //   console.log(b)
+                  setBookings(b)
+                  setPendingBookings(b.filter(d=>d.status=="PENDING"))
+                  setAcceptedBookings(b.filter(d=>d.status=="ACCEPTED"))
+                  setPaidBookings(b.filter(d=>d.status=="PAID"))
               })
               .catch(err=>console.error(err))
           }
