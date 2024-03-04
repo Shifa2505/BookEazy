@@ -23,6 +23,10 @@ function Login(){
             window.alert("Please enter password")
             return
         }
+        if(userTypeRef.current.value!="Client" && userTypeRef.current.value!="Serviceperson"){
+            window.alert("Please select a valid user type to login.")
+            return
+        }
         // console.log(userTypeRef.current.value)
         if(userTypeRef.current.value=="Client"){
             axios.post("/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
