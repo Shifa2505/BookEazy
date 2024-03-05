@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
 
-import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings, changeBookingStatusToPaid } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings, changeBookingStatusToPaid, changeBookingStatusToOngoing, changeBookingStatusToCompleted } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -241,6 +241,27 @@ app.get("/api/reject-booking", isServiceperson, (req,res)=>{
     console.log(err);
     res.status(500).send(err.message)
   })
+})
+
+app.get("/api/startBooking", isServiceperson, (req,res)=>{
+  const bookingId = req.query.bookingId;
+  if(!bookingId){
+    res.status(400).send("Need to provide a booking id.");
+  }
+  changeBookingStatusToOngoing(bookingId)
+  .then(()=>res.sendStatus(200))
+  .catch(err=>res.status(500).send(err.message))
+})
+
+app.post("/api/completeBooking", isUser, (req,res)=>{
+  const bookingId = req.body.bookingId;
+  const feedback = req.body.feedback;
+  if(!bookingId){
+    res.status(400).send("Need to provide a booking id.");
+  }
+  changeBookingStatusToCompleted(bookingId, feedback)
+  .then(()=>res.sendStatus(200))
+  .catch(err=>res.status(500).send(err.message))
 })
 
 app.get("/api/send-feedback", isUser, (req,res)=>{

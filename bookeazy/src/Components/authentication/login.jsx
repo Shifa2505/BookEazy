@@ -12,7 +12,7 @@ function Login(){
     const passwordRef = useRef(null);
     const userTypeRef = useRef(null);
     const navigate = useNavigate();
-    console.log(navigateState.state)
+    // console.log(navigateState.state)
     
     function validateAndLogin(){
         if(usernameRef.current.value.trim().length==0){
@@ -32,7 +32,7 @@ function Login(){
             axios.post("/sign-in/user",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
-                console.log(data.data);
+                // console.log(data.data);
                 setUser({...data.data, userType:"client"});
                 navigate("/");
             })
@@ -42,7 +42,7 @@ function Login(){
             axios.post("/sign-in/serviceperson",{username: usernameRef.current.value, password:passwordRef.current.value}, {withCredentials: true})
             .then(data=>{
                 window.alert(`Log In Successfull, Welcome ${data.data.name}`)
-                console.log(data);
+                // console.log(data);
                 setUser({...data.data,userType:"serviceperson"});
                 navigate("/");
             })

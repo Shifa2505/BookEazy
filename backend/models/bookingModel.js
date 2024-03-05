@@ -17,10 +17,15 @@ const bookingSchema = new Schema({
     required: true,
   },
   feedback: {
+    text : {
     type: String,
     required: false,
     default: null,
   },
+  sentiment : {
+    type: Number
+  }
+},
   fare: {
     type: Number,
     required: true,
@@ -35,7 +40,7 @@ const bookingSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["PENDING", "ACCEPTED", "REJECTED", "PAID","DONE"],
+    enum: ["PENDING", "ACCEPTED", "REJECTED", "PAID","ONGOING", "COMPLETED"],
     default: "PENDING",
   },
 });

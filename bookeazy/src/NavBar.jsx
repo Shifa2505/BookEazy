@@ -1,17 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
 import { useContext } from "react";
 import axios from "./../axios.config"
 
 export default function Navbar(){
+    const navigate = useNavigate();
     const {user, setUser} = useContext(UserContext);
     function signOut(){
         axios.get("/sign-out")
         .then(d=>{
             setUser(null);
+            navigate("/");
         })
     }
-    console.log(user)
+    // console.log(user)
 
     return <nav className="nav">
         <Link to="/" className="site-title">BookEazy</Link>

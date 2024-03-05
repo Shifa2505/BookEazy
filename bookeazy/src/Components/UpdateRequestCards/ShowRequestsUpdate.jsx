@@ -9,6 +9,9 @@ function ShowRequestsUpdate() {
   const [pendingRequests, setPendingRequests] = useState([]);
   const [acceptedRequests, setAcceptedRequests] = useState([]);
   const [rejectedRequests, setRejectedRequests] = useState([]);
+  const [paidRequests, setPaidRequests] = useState([]);
+  const [ongoingRequests, setOngoingRequests] = useState([]);
+  const [completedRequests, setCompletedRequests] = useState([]);
 
   function handleAccept(request) {
     setPendingRequests((prevRequests) => prevRequests.filter(req => req._id !== request._id));
@@ -25,7 +28,7 @@ function ShowRequestsUpdate() {
         const data = await axios.get("/api/get-serviceperson-bookings",{withCredentials:true});
         // console.log(data)
         if(data && data.status == 200) {
-          let bookings = data.data.bookings;
+          let bookings = data.data.bookings.sort((x,y)=>new Date(y.startTime) - new Date(x.startTime));
           // console.log(data.data.bookings)
           // setRequests(bookings)
           // console.log("accepted",bookings.filter(x=>x.status=="ACCEPTED"))
@@ -34,6 +37,9 @@ function ShowRequestsUpdate() {
           setRejectedRequests(bookings.filter(x=>x.status=="REJECTED"))
           // console.log("pending",bookings.filter(x=>x.status=="PENDING"))
           setPendingRequests(bookings.filter(x => x.status === "PENDING"));
+          setPaidRequests(bookings.filter(x => x.status === "PAID"));
+          setOngoingRequests(bookings.filter(x=>x.status==="ONGOING"))
+          setCompletedRequests(bookings.filter(x => x.status === "COMPLETED"));
         }
       } catch(error) {
         console.error(error.response.data)
@@ -64,30 +70,56 @@ function ShowRequestsUpdate() {
     //   clearInterval(interval);
     // }
   },[]);
+  function start(index){
+    let b = paidRequests[index];
+    console.log(b)
+    axios.get("/api/startBooking?bookingId="+b._id,{withCredentials:true})
+    .then(()=>{
+      setPaidRequests([...paidRequests.slice(0,index), ...paidRequests.slice(index+1,paidRequests.length)])
+      setOngoingRequests([{...b,status:"ONGOING"},...ongoingRequests])
+      // setPaidRequests([...paidRequests].splice(index,1))
+      // setOngoingRequests([b,...ongoingRequests]);
+    })
+  }
+
   return (
     <div className={style.mainPage}>
     <Tabs className={style.reactTabs}>
         <TabList className={style.reactTablist}>
           <Tab>Pending Requests</Tab>
           <Tab>Accepted Requests</Tab>
-          <Tab>Rejected Requests</Tab>
+          <Tab>Paid Requests</Tab>
+          <Tab>Ongoing Requests</Tab>
+          <Tab>Completed Requests</Tab>
         </TabList>
         <div>
         <TabPanel className={style.requestsList}>
           {pendingRequests && pendingRequests.map((r, index) => (
-            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} onAccept={()=>handleAccept(r)} onReject={()=>handleReject(r)}/>
+            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} onAccept={()=>handleAccept(r)} onReject={()=>handleReject(r)} index={index}/>
           ))}
         </TabPanel>
 
         <TabPanel className={style.requestsList}>
           {acceptedRequests && acceptedRequests.map((r, index) => (
-            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} />
+            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} index={index} />
           ))}
         </TabPanel>
         <TabPanel className={style.requestsList}>
-          {rejectedRequests && rejectedRequests.map((r, index) => (
-            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status}/>
+          {paidRequests && paidRequests.map((r, index) => (
+            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} index={index} start={()=>start(index)}/>
           ))}
+        </TabPanel>
+        <TabPanel className={style.requestsList}>
+          {ongoingRequests && ongoingRequests.map((r, index) => (
+            <RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} index={index}/>
+          ))}
+        </TabPanel>
+        <TabPanel className={style.requestsList}>
+            {completedRequests.length!=0 ? 
+            completedRequests.map((r,index)=><RequestCardUpdate key={index} clientName={r.user.name} location={r.user.location} startTime={r.startTime} service={r.service.name} bookingId={r._id} status={r.status} index={index} />)
+            :
+            <span>No Completed Booking Requests yet</span>
+          }
         </TabPanel>
         </div>
       </Tabs>
@@ -98,7 +130,7 @@ function ShowRequestsUpdate() {
 
 function RequestCardUpdate(props) {
   // const [status, setStatus] = useState(props.status);
-  const { bookingId, clientName, location, startTime, service, status } = props;
+  const { bookingId, clientName, location, startTime, service, status, start } = props;
   const [requestStatus, setRequestStatus] = useState(status);
 
   function accept() {
@@ -149,6 +181,7 @@ function RequestCardUpdate(props) {
           </span>
         )}
       </div>
+      {(status==="PAID" && Math.abs(new Date(startTime) - new Date())<=1800000) && <button onClick={start}>Begin</button>}
       </div>
       </div>
     

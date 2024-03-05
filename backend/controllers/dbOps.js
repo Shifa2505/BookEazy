@@ -4,6 +4,7 @@ import { serviceModel } from "../models/serviceModel.js";
 import { servicepersonModel } from "../models/servicepersonModel.js";
 import { userModel } from "../models/userModel.js";
 import { bookingModel } from "../models/bookingModel.js";
+import { sentiment } from "../test3.js";
 
 /**
  * @param {String} username
@@ -472,6 +473,28 @@ async function changeBookingStatusToPaid(id){
   await booking.save();
 }
 
+async function changeBookingStatusToOngoing(id){
+  let booking = await bookingModel.findOne({_id:id});
+  if(!booking){
+    throw new Error("No such booking found.")
+  }
+  booking.status = "ONGOING";
+  await booking.save();
+}
+
+async function changeBookingStatusToCompleted(id,feedback){
+  let booking = await bookingModel.findOne({_id:id});
+  if(!booking){
+    throw new Error("No such booking found.")
+  }
+  booking.status = "COMPLETED";
+  let s = feedback ? sentiment.analyze(feedback).score : 0;
+  console.log(s)
+  let f = {text : feedback, sentiment: s};
+  booking.feedback = f;
+  await booking.save();
+}
+
 export default{
   addUser,
   addServiceperson,
@@ -485,7 +508,9 @@ export default{
   listUserBookings,
   listServicepersonBookings,
   getServicesForCategory,
-  changeBookingStatusToPaid
+  changeBookingStatusToPaid,
+  changeBookingStatusToOngoing,
+  changeBookingStatusToCompleted
 };
 export {
   addUser,
@@ -500,5 +525,7 @@ export {
   listUserBookings,
   listServicepersonBookings,
   getServicesForCategory,
-  changeBookingStatusToPaid
+  changeBookingStatusToPaid,
+  changeBookingStatusToOngoing,
+  changeBookingStatusToCompleted
 };

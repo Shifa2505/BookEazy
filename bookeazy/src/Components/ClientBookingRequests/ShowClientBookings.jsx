@@ -12,6 +12,8 @@ function ShowClientBookings() {
     const [pendingBookings, setPendingBookings] = useState([])
     const [acceptedBookings, setAcceptedBookings] = useState([])
     const [paidBookings, setPaidBookings] = useState([])
+    const [ongoingBookings, setOngoingBookings] = useState([])
+    const [completedBookings, setCompletedBookings] = useState([])
     const [tab, setTab] = useState(1);
 
     function moveToPaid(r){
@@ -20,6 +22,12 @@ function ShowClientBookings() {
     }
     
   const {user, setUser} = useContext(UserContext);
+
+    function moveToCompleted(r){
+        setOngoingBookings(ongoingBookings.filter(req=>req._id!==r._id))
+        setCompletedBookings([...completedBookings,{...r,status:"COMPLETED"}])
+    }
+
   const navigate = useNavigate();
     useEffect(()=>{
         if(!user || user.userType!=="client"){
@@ -37,6 +45,8 @@ function ShowClientBookings() {
                   setPendingBookings(b.filter(d=>d.status=="PENDING"))
                   setAcceptedBookings(b.filter(d=>d.status=="ACCEPTED"))
                   setPaidBookings(b.filter(d=>d.status=="PAID"))
+                  setOngoingBookings(b.filter(d=>d.status=="ONGOING"))
+                  setCompletedBookings(b.filter(d=>d.status=="COMPLETED"))
               })
               .catch(err=>console.error(err))
           }
@@ -46,7 +56,9 @@ function ShowClientBookings() {
         <Tabs value={tab} onChange={(e,val)=>setTab(val)} style={{border:"1px solid blue", width:"80%"}} variant="fullWidth">
             <Tab label="Pending" />
             <Tab label="Accepted" />
-            <Tab label="PAID" />
+            <Tab label="Paid" />
+            <Tab label="Ongoing" />
+            <Tab label="Completed" />
         </Tabs>
         <Stack gap={"1rem"} marginBlock={"1rem"} width={"80%"}>
             {(tab==0) &&
@@ -57,6 +69,12 @@ function ShowClientBookings() {
             }
             {(tab==2) &&
             paidBookings.map((data,index)=> <PaidRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)
+            }
+            {(tab==3) &&
+            ongoingBookings.map((data,index)=> <OngoingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime} move={()=>moveToCompleted(data)} id={data._id}/>)
+            }
+            {(tab==4) &&
+            completedBookings.map((data,index)=> <CompletedRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime} move={()=>moveToCompleted(data)} id={data._id}/>)
             }
         </Stack>
         {/* {bookings.map((data, index)=><BookingRequest key={index} serviceperson={data.servicePerson.name} service={data.service.name} status={data.status} startTime={data.startTime}/>)} */}
@@ -153,6 +171,49 @@ function AcceptedRequest(props){
 }
 
 function PaidRequest(props){
+    return(
+        <div className={style.bookingCard}>
+            <span className={style.imageContainer}><img src={`https://ui-avatars.com/api/?name=${props.serviceperson}&background=random`}/></span>
+            <span className={style.servicepersonName}>{props.serviceperson}</span>
+            <span className={style.serviceName}>{props.service}</span>
+            <span className={style.bookingTime}>{new Date(props.startTime).toLocaleString()}</span>
+            <span className={style.bookingStatus}>Status: {props.status}</span>
+        </div>
+    )
+}
+
+function OngoingRequest(props){
+    const [modalState, setModalState] = useState(false);
+    const [feedback, setFeedback] = useState("");
+    function markAsCompleted(){
+        axios.post("/api/completeBooking",{bookingId:props.id,feedback:feedback},{withCredentials: true})
+        .then(()=>{
+            props.move();
+        })
+        .catch((err)=>{
+            console.error(err);
+        })
+    }
+    return(
+        <div className={style.bookingCard}>
+            
+            <span className={style.imageContainer}><img src={`https://ui-avatars.com/api/?name=${props.serviceperson}&background=random`}/></span>
+            <span className={style.servicepersonName}>{props.serviceperson}</span>
+            <span className={style.serviceName}>{props.service}</span>
+            <span className={style.bookingTime}>{new Date(props.startTime).toLocaleString()}</span>
+            <span className={style.bookingStatus}>Status: {props.status}</span>
+            { !modalState ? <>
+            <button onClick={()=>setModalState(true)} className={style.completeButton}>Mark as completed</button>
+            </> :
+            <>
+                <input type="text" onChange={e=>setFeedback(e.target.value)}/>
+                <button onClick={markAsCompleted}>Complete</button>
+            </>}
+        </div>
+    )
+}
+
+function CompletedRequest(props){
     return(
         <div className={style.bookingCard}>
             <span className={style.imageContainer}><img src={`https://ui-avatars.com/api/?name=${props.serviceperson}&background=random`}/></span>
