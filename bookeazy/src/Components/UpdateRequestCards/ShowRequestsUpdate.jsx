@@ -181,7 +181,7 @@ function RequestCardUpdate(props) {
           </span>
         )}
       </div>
-      {(status==="PAID" && Math.abs(new Date(startTime) - new Date())<=1800000) && <button onClick={start}>Begin</button>}
+      {(status==="PAID" && Math.abs(new Date(startTime) - new Date())<=3600000) && <button onClick={start}>Begin</button>}
       </div>
       </div>
     

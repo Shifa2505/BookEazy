@@ -7,7 +7,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Modal from "react-modal";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import axios from "./../../../axios.config";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -57,33 +57,33 @@ export default function ServiceMen() {
     }
     axios
       .get(
-        "http://localhost:8000/api/get-servicepeople/" +
+        "/api/get-servicepeople/" +
           searchParams.get("category")
       )
       .then((res) => {
-        // console.log(res.data)
-        setServicePeople(res.data)
+        console.log(res.data.sort((x,y)=>x.rating - y.rating))
+        setServicePeople(res.data.sort((x,y)=>y.rating - x.rating))
       });
-    axios.get(`http://localhost:8000/api/get-services-for-category/${searchParams.get("category")}`)
+    axios.get(`/api/get-services-for-category/${searchParams.get("category")}`)
     .then(res=>{
       setServices(res.data)
     })
   }, []);
 
   useEffect(()=>{
-    console.log("resending new query...")
-    console.log(selectedDateTime)
+    // console.log("resending new query...")
+    // console.log(selectedDateTime)
     if (!searchParams.has("category")) {
       alert("Please mention category.");
       navigate("/");
     }
     axios
       .get(
-        `http://localhost:8000/api/get-servicepeople/${searchParams.get("category")}?datetime=${selectedDateTime}`
+        `/api/get-servicepeople/${searchParams.get("category")}?datetime=${selectedDateTime}`
       )
       .then((res) => {
         // console.log(res.data)
-        setServicePeople(res.data)
+        setServicePeople(res.data.sort((x,y)=>y.rating - x.rating))
       });
   }, [selectedDateTime]);
 

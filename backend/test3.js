@@ -35,7 +35,7 @@ import Sentiment from "sentiment"
 
 export var sentiment = new Sentiment();
 var answer = sentiment.analyze("this is bad");
-console.log(answer.score);
+console.log(answer);
 
 // if(answer[0] > 0){
 //     console.log("Sentiment: Positive");

@@ -288,6 +288,14 @@ async function getServicepersonForCategories(category,nowTime=null) {
         $match: {
           "service.name":"Electrical Help"
         }
+      },
+      {
+        $lookup: {
+          from: "bookings",
+          localField: "bookings",
+          foreignField: "_id",
+          as: "bookings"
+        }
       }
     ])
     }

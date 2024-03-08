@@ -65,7 +65,7 @@ function ServicemenShowCard(props) {
           <div className={styles.aboutDiv}>
         <p className={styles.about}>{props.about}</p>
         </div>
-        <a href="/">Read More</a>
+        <a href="#">Read More</a>
         </div>
       </div>
       {isModalOpen && <ReviewsModal onClose={closeModal} name={props.name}/>}
