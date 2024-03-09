@@ -19,15 +19,17 @@
 }
 
 .bookingCard .imageContainer{
-    place-self: start;
+    place-items: center;
     grid-row: 1/6;
     display: grid;
+    width: 100%;
+    height: 100%;
 }
 
 .bookingCard .imageContainer img{
-    width: 128px;
+    width: 80%;
     aspect-ratio: 1/1;
-    border-radius: 24px;
+    border-radius: 25%;
     box-shadow: 2px 0px 2px 0px rgba(0, 0, 0, 0.355);
 }
 
@@ -36,6 +38,11 @@
 }
 .bookingCard .servicepersonName, .bookingTime, .bookingStatus{
     vertical-align: center;
+}
+
+.bookingCard .feedbackContainer{
+    display: grid;
+    padding:1rem;
 }
 
 /* .bookingCard *{

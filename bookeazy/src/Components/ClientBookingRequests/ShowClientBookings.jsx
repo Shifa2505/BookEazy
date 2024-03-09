@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import style from "./ShowClientBooking.module.scss"
 import axios from "../../../axios.config"
-import { Box, Grid, Stack, Tab, Tabs } from "@mui/material"
+import { Box, Grid, Rating, Stack, Tab, Tabs } from "@mui/material"
 import { UserContext } from "../../App"
 import { useNavigate } from "react-router-dom";
 import {toast, Toaster} from 'react-hot-toast';
@@ -53,7 +53,7 @@ function ShowClientBookings() {
     },[])
   return (
     <Box className={style.bookingsContainer}>
-        <Tabs value={tab} onChange={(e,val)=>setTab(val)} style={{border:"1px solid blue", width:"80%"}} variant="fullWidth">
+        <Tabs value={tab} onChange={(e,val)=>setTab(val)} style={{border:"1px solid blue", width:"80%"}} variant="scrollable">
             <Tab label="Pending" />
             <Tab label="Accepted" />
             <Tab label="Paid" />
@@ -184,19 +184,20 @@ function PaidRequest(props){
 
 function OngoingRequest(props){
     const [modalState, setModalState] = useState(false);
-    const [feedback, setFeedback] = useState("");
+    const [feedback, setFeedback] = useState({});
+    // const [starRating, setStarRating] = useState(null);
     function markAsCompleted(){
-        axios.post("/api/completeBooking",{bookingId:props.id,feedback:feedback},{withCredentials: true})
-        .then(()=>{
-            props.move();
-        })
-        .catch((err)=>{
-            console.error(err);
-        })
+        console.log({bookingId:props.id,...feedback})
+        // axios.post("/api/completeBooking",{bookingId:props.id,feedback:feedback},{withCredentials: true})
+        // .then(()=>{
+        //     props.move();
+        // })
+        // .catch((err)=>{
+        //     console.error(err);
+        // })
     }
     return(
         <div className={style.bookingCard}>
-            
             <span className={style.imageContainer}><img src={`https://ui-avatars.com/api/?name=${props.serviceperson}&background=random`}/></span>
             <span className={style.servicepersonName}>{props.serviceperson}</span>
             <span className={style.serviceName}>{props.service}</span>
@@ -205,10 +206,40 @@ function OngoingRequest(props){
             { !modalState ? <>
             <button onClick={()=>setModalState(true)} className={style.completeButton}>Mark as completed</button>
             </> :
-            <>
-                <input type="text" onChange={e=>setFeedback(e.target.value)}/>
+            <div className={style.feedbackContainer}>
+                <Rating style={{placeSelf:"center"}} onChange={(e,value)=>{
+                    setFeedback(val=>{
+                        // console.log(val);
+                        return {...val, star: value};
+                    })
+                }}/>
+                <p>Please provide feedback for features asked below</p>
+                <label>Efficiency</label><input type="text" onChange={e=>{
+                    setFeedback(val=>{
+                        // console.log(val);
+                        return {...val, efficiency: e.target.value};
+                    })
+                }}/>
+                <label>Behaviour</label><input type="text" onChange={e=>{
+                    setFeedback(val=>{
+                        // console.log(val);
+                        return {...val, behaviour: e.target.value};
+                    })
+                }}/>
+                <label>Cleanliness</label><input type="text" onChange={e=>{
+                    setFeedback(val=>{
+                        // console.log(val);
+                        return {...val, cleanliness: e.target.value};
+                    })
+                }}/>
+                <label>Overall</label><input type="text" onChange={e=>{
+                    setFeedback(val=>{
+                        // console.log(val);
+                        return {...val, overall: e.target.value};
+                    })
+                }}/>
                 <button onClick={markAsCompleted}>Complete</button>
-            </>}
+            </div>}
         </div>
     )
 }
