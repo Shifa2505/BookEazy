@@ -184,17 +184,24 @@ function PaidRequest(props){
 
 function OngoingRequest(props){
     const [modalState, setModalState] = useState(false);
-    const [feedback, setFeedback] = useState({});
+    const [feedback, setFeedback] = useState({
+        behaviour: null,
+        cleanliness: null,
+        efficiency: null,
+        overall: null,
+        star: null
+    });
     // const [starRating, setStarRating] = useState(null);
     function markAsCompleted(){
         console.log({bookingId:props.id,...feedback})
-        // axios.post("/api/completeBooking",{bookingId:props.id,feedback:feedback},{withCredentials: true})
-        // .then(()=>{
-        //     props.move();
-        // })
-        // .catch((err)=>{
-        //     console.error(err);
-        // })
+        axios.post("/api/completeBooking",{bookingId:props.id,feedback:feedback},{withCredentials: true})
+        .then(()=>{
+            // console.log("successfully sent request to move to ongoing");
+            props.move();
+        })
+        .catch((err)=>{
+            console.error(err);
+        })
     }
     return(
         <div className={style.bookingCard}>

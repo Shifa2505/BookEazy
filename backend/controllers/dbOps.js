@@ -496,10 +496,45 @@ async function changeBookingStatusToCompleted(id,feedback){
     throw new Error("No such booking found.")
   }
   booking.status = "COMPLETED";
-  let s = feedback ? sentiment.analyze(feedback).score : 0;
-  console.log(s)
-  let f = {text : feedback, sentiment: s};
-  booking.feedback = f;
+  booking.endTime = new Date();
+  // trying to take weighted average below for each column present (star-3, efficiency-1, cleanliness-1, behaviour-1, overall-3)
+  let totalWeight = 0;
+  let summedWeight = 0;
+  if(feedback.star){
+    summedWeight+=(3*(feedback.star-3)/2);
+    totalWeight+=3;
+    console.log(`starRating : ${feedback.star}`)
+  }
+  if(feedback.efficiency){
+    summedWeight+=sentiment.analyze(feedback.efficiency).comparative;
+    totalWeight+=1;
+    console.log(`efficiencyRating : ${sentiment.analyze(feedback.efficiency).comparative}`)
+  }
+  if(feedback.cleanliness){
+    summedWeight+=sentiment.analyze(feedback.cleanliness).comparative;
+    totalWeight+=1;
+    console.log(`cleanlinessRating : ${sentiment.analyze(feedback.cleanliness).comparative}`)
+  }
+  if(feedback.behaviour){
+    summedWeight+=sentiment.analyze(feedback.behaviour).comparative;
+    totalWeight+=1;
+    console.log(`behaviourRating : ${sentiment.analyze(feedback.behaviour).comparative}`)
+  }
+  if(feedback.overall){
+    summedWeight+=(3*sentiment.analyze(feedback.overall).comparative);
+    totalWeight+=3;
+    console.log(`overallRating : ${sentiment.analyze(feedback.overall).comparative}`)
+  }
+  console.log("summedWeight",summedWeight)
+  console.log("totalWeight",totalWeight)
+  if(summedWeight!==0){
+    let f = {content : feedback, calculatedRating: summedWeight/totalWeight};
+    console.log(f)
+    booking.feedback = f;
+  }
+  else{
+    booking.feedback = null;
+  }
   await booking.save();
 }
 

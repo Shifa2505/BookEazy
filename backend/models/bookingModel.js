@@ -17,12 +17,10 @@ const bookingSchema = new Schema({
     required: true,
   },
   feedback: {
-    text : {
-    type: String,
-    required: false,
-    default: null,
+    content : {
+    type: Object,
   },
-  sentiment : {
+  calculatedRating : {
     type: Number
   }
 },

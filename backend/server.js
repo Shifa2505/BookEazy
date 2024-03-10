@@ -256,6 +256,7 @@ app.get("/api/startBooking", isServiceperson, (req,res)=>{
 app.post("/api/completeBooking", isUser, (req,res)=>{
   const bookingId = req.body.bookingId;
   const feedback = req.body.feedback;
+  // console.log(req.body)
   if(!bookingId){
     res.status(400).send("Need to provide a booking id.");
   }
