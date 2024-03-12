@@ -61,8 +61,12 @@ export default function ServiceMen() {
           searchParams.get("category")
       )
       .then((res) => {
-        console.log(res.data.sort((x,y)=>x.rating - y.rating))
-        setServicePeople(res.data.sort((x,y)=>y.rating - x.rating))
+        // console.log(res.data.sort((x,y)=>x.rating.rating - y.rating.rating))
+        let l =[...res.data.filter(x=>x.rating!==null).sort((x,y)=>y.rating.rating-x.rating.rating)];
+        l = [...l,...res.data.filter(x=>x.rating===null)];
+        console.log(l.map(m=>m.rating))
+        // console.log(l)
+        setServicePeople(l);
       });
     axios.get(`/api/get-services-for-category/${searchParams.get("category")}`)
     .then(res=>{
@@ -83,7 +87,11 @@ export default function ServiceMen() {
       )
       .then((res) => {
         // console.log(res.data)
-        setServicePeople(res.data.sort((x,y)=>y.rating - x.rating))
+        let l =[...res.data.filter(x=>x.rating!==null).sort((x,y)=>y.rating.rating-x.rating.rating)];
+        l = [...l,...res.data.filter(x=>x.rating===null)];
+        console.log(l.map(m=>m.rating))
+        // console.log(l)
+        setServicePeople(l);
       });
   }, [selectedDateTime]);
 
