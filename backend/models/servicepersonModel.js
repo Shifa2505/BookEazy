@@ -36,8 +36,12 @@ const servicepersonSchema = new Schema({
     required: true,
   },
   rating: {
-    type: Number,
-    required: false,
+    rating: {
+      type: Number,
+    },
+    totalReviews: {
+      type: Number,
+    },
   },
   image_url: {
     type: String,

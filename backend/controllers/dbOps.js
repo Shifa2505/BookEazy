@@ -503,38 +503,53 @@ async function changeBookingStatusToCompleted(id,feedback){
   if(feedback.star){
     summedWeight+=(3*(feedback.star-3)/2);
     totalWeight+=3;
-    console.log(`starRating : ${feedback.star}`)
+    // console.log(`starRating : ${3*(feedback.star-3)/2}`)
   }
   if(feedback.efficiency){
-    summedWeight+=sentiment.analyze(feedback.efficiency).comparative;
+    summedWeight+=sentiment.analyze(feedback.efficiency).comparative/5;
     totalWeight+=1;
-    console.log(`efficiencyRating : ${sentiment.analyze(feedback.efficiency).comparative}`)
+    // console.log(`efficiencyRating : ${sentiment.analyze(feedback.efficiency).comparative/5}`)
   }
   if(feedback.cleanliness){
-    summedWeight+=sentiment.analyze(feedback.cleanliness).comparative;
+    summedWeight+=sentiment.analyze(feedback.cleanliness).comparative/5;
     totalWeight+=1;
-    console.log(`cleanlinessRating : ${sentiment.analyze(feedback.cleanliness).comparative}`)
+    // console.log(`cleanlinessRating : ${sentiment.analyze(feedback.cleanliness).comparative/5}`)
   }
   if(feedback.behaviour){
-    summedWeight+=sentiment.analyze(feedback.behaviour).comparative;
+    summedWeight+=sentiment.analyze(feedback.behaviour).comparative/5;
     totalWeight+=1;
-    console.log(`behaviourRating : ${sentiment.analyze(feedback.behaviour).comparative}`)
+    // console.log(`behaviourRating : ${sentiment.analyze(feedback.behaviour).comparative/5}`)
   }
   if(feedback.overall){
-    summedWeight+=(3*sentiment.analyze(feedback.overall).comparative);
+    summedWeight+=(3*sentiment.analyze(feedback.overall).comparative/5);
     totalWeight+=3;
-    console.log(`overallRating : ${sentiment.analyze(feedback.overall).comparative}`)
+    // console.log(`overallRating : ${sentiment.analyze(feedback.overall).comparative/5}`)
   }
-  console.log("summedWeight",summedWeight)
-  console.log("totalWeight",totalWeight)
-  if(summedWeight!==0){
+  // console.log("summedWeight",summedWeight)
+  // console.log("totalWeight",totalWeight)
+  if(totalWeight!==0){
     let f = {content : feedback, calculatedRating: summedWeight/totalWeight};
+    console.clear();
     console.log(f)
     booking.feedback = f;
+    let serviceperson = await servicepersonModel.findOne({_id:booking.servicePerson});
+    console.log("serviceperson.rating",serviceperson.rating)
+    if(serviceperson.rating.rating){
+      let x = (serviceperson.rating.rating*serviceperson.rating.totalReviews + (2.5+f.calculatedRating*2.5)) / (serviceperson.rating.totalReviews+1)
+      console.log(x)
+      serviceperson.rating.rating = x;
+      serviceperson.rating.totalReviews++;
+    }else{
+      console.log("first time storing")
+      serviceperson.rating = {rating : 2.5 + f.calculatedRating*2.5,totalReviews : 1};
+    }
+    console.log(serviceperson.rating)
+    await serviceperson.save();
   }
   else{
     booking.feedback = null;
   }
+  // console.log(booking)
   await booking.save();
 }
 

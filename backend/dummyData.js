@@ -11,7 +11,10 @@ const data = {
       jobs_done: 25,
       qualification: "Bachelor's in Electrical Engineering",
       bio: "Experienced electrician specializing in residential wiring.",
-      rating: 4.8,
+      rating: {
+        rating:3.8,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/johndoe.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:150}],
       username: "johndoe123",
@@ -26,7 +29,10 @@ const data = {
       jobs_done: 18,
       qualification: "Master's in Plumbing and Pipefitting",
       bio: "Licensed plumber with expertise in commercial plumbing.",
-      rating: 4.6,
+      rating: {
+        rating:2.8,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/alicesmith.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:160}],
       username: "alicesmith456",
@@ -41,7 +47,10 @@ const data = {
       jobs_done: 32,
       qualification: "Certified HVAC Technician",
       bio: "Heating and cooling expert with a focus on energy-efficient systems.",
-      rating: 4.9,
+      rating: {
+        rating:3.8,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/michaeljohnson.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:140}],
       username: "michaelhvacpro",
@@ -56,7 +65,6 @@ const data = {
       jobs_done: 14,
       qualification: "Certified Interior Designer",
       bio: "Passionate interior designer creating beautiful living spaces.",
-      rating: 4.7,
       avatar: "https://example.com/avatar/emilydavis.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcd",fare:200}],
       username: "emilydesigns",
@@ -71,7 +79,10 @@ const data = {
       jobs_done: 20,
       qualification: "Certified Carpentry Specialist",
       bio: "Skilled carpenter specializing in custom furniture and cabinetry.",
-      rating: 4.5,
+      rating: {
+        rating:4.5,
+        totalReviews:10
+      },
       image_url: "https://images.pexels.com/photos/1674666/pexels-photo-1674666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:130}, {service:"6514429095402ea423785bcd",fare:200}],
       username: "davidcraftsman",
@@ -86,7 +97,6 @@ const data = {
       jobs_done: 28,
       qualification: "Certified Landscaping Professional",
       bio: "Experienced landscaper creating beautiful outdoor spaces.",
-      rating: 4.8,
       avatar: "https://example.com/avatar/oliviabrown.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:140}, {service:"6514429095402ea423785bcd",fare:160}],
       username: "olivialandscapes",
@@ -101,7 +111,10 @@ const data = {
       jobs_done: 22,
       qualification: "Certified Structural Engineer",
       bio: "Structural engineer specializing in building safety and design.",
-      rating: 4.9,
+      rating: {
+        rating:4.9,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/daniellee.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:200}],
       username: "danielengineer",
@@ -116,7 +129,10 @@ const data = {
       jobs_done: 17,
       qualification: "Bachelor's in Civil Engineering",
       bio: "Civil engineer with expertise in infrastructure development.",
-      rating: 4.7,
+      rating: {
+        rating:3.8,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/sophiawhite.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:150}],
       username: "sophiacivileng",
@@ -131,7 +147,10 @@ const data = {
       jobs_done: 23,
       qualification: "Master's in Chemical Engineering",
       bio: "Chemical engineer specializing in process optimization.",
-      rating: 4.6,
+      rating: {
+        rating:3.2,
+        totalReviews:10
+      },
       avatar: "https://example.com/avatar/liammartinez.jpg",
       servicesOffered: [{service:"6514429095402ea423785bcc",fare:150}],
       username: "liamchemical",

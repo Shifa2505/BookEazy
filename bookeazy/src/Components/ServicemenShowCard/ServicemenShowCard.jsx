@@ -59,7 +59,7 @@ function ServicemenShowCard(props) {
         </div>
         <div className={styles.help}>
         <span className={styles.logo}> <StarLogo className={styles.starLogo}/><label>Ratings : 
-            {props.rating}
+            {props.rating ? props.rating.rating : "NA"}
           </label></span>
           <h2>How I Can Help : </h2>
           <div className={styles.aboutDiv}>
