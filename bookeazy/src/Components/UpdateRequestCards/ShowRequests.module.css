@@ -17,6 +17,8 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     overflow: hidden; */
+    --border-color: rgba(128, 128, 128, 0.4);
+    --background-color: rgba(255, 255, 255, 0.8);
 
     display: flex;
     border-radius: 1rem;
@@ -26,7 +28,9 @@
     animation: loadCard 0.4s ease-out;
     z-index: 0;
     /* height: 19rem; */
-    border: 0.02rem solid rgb(191, 194, 193);
+    border: 1px solid var(--border-color);
+    box-shadow: -1px 1px 6px 1px var(--border-color);
+    padding: 0.4em;
 }
 
 .leftContainer {

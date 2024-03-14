@@ -5,18 +5,30 @@
     flex-direction: column;
     align-items: center;
     margin-inline: 2em;
+
+    .tabSwitcher {
+        // border: "1px solid blue";
+        --border-color: rgba(128, 128, 128, 0.4);
+        border: 1px solid var(--border-color);
+        padding: 0.4em;
+        border-radius: 0.4em;
+        // width: "80%" ;
+    }
 }
 
 .bookingCard {
     display: grid;
-    outline: 1px solid blue;
+    --border-color: rgba(128, 128, 128, 0.4);
+    --background-color: rgba(255, 255, 255, 0.8);
     // width: 80%;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    box-shadow: 0px 1px 3px 1px blue;
+    border: 1px solid var(--border-color);
+    box-shadow: -1px 1px 6px 1px var(--border-color);
     border-radius: 24px;
     overflow: hidden;
     place-items: center;
+    padding: 0.4em;
 }
 
 .bookingCard .imageContainer {

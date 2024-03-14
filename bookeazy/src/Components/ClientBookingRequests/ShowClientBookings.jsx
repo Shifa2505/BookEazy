@@ -88,8 +88,8 @@ function ShowClientBookings() {
       <Tabs
         value={tab}
         onChange={(e, val) => setTab(val)}
-        style={{ border: "1px solid blue", width: "80%" }}
         variant="scrollable"
+        className={style.tabSwitcher}
       >
         <Tab label="Pending" />
         <Tab label="Accepted" />
