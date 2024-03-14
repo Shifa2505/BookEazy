@@ -5,7 +5,7 @@
     gap: 1.5rem;
 }
 
-.react-tabs__tab-panel--selected{
+.react-tabs__tab-panel--selected {
     display: grid;
 }
 
@@ -29,12 +29,13 @@
     border: 0.02rem solid rgb(191, 194, 193);
 }
 
-.leftContainer{
+.leftContainer {
     display: flex;
     align-items: center;
     margin: 2rem 2rem 2rem;
 }
-.requestImage{
+
+.requestImage {
     position: relative;
     display: flex;
     -webkit-box-align: center;
@@ -49,7 +50,7 @@
     width: 204px;
 }
 
-.requestImage img{
+.requestImage img {
     width: 100%;
     height: 100%;
     text-align: center;
@@ -58,7 +59,7 @@
     text-indent: 10000px;
 }
 
-.rightContainer{
+.rightContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,7 +68,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.bookBtn{
+
+.bookBtn {
     display: inline-flex;
     -webkit-box-align: center;
     align-items: center;
@@ -84,7 +86,7 @@
     transition: none 0s ease 0s;
     box-shadow: none;
     /* background: rgb(40, 101, 154); */
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     font-size: 16px;
     font-weight: 600;
     letter-spacing: normal;
@@ -101,27 +103,29 @@
 }
 
 .bookBtn:hover,
-.bookBtn:focus { 
-  background-color: #023047;
-  color: rgb(255, 255, 255);
+.bookBtn:focus {
+    background-color: #023047;
+    color: rgb(255, 255, 255);
 }
 
 .bookBtn:active {
-  background-color: rgb(62, 113, 157);
-  color: rgb(255, 255, 255, .7);
+    background-color: rgb(62, 113, 157);
+    color: rgb(255, 255, 255, .7);
 }
 
-.acceptBtn{
+.acceptBtn {
     background-color: rgb(8, 86, 155);
 }
 
-.rejectBtn{
-    background-color:rgb(170, 0, 0);
+.rejectBtn {
+    background-color: rgb(170, 0, 0);
 }
-.requestDetails101{
+
+.requestDetails101 {
     display: flex;
-    
+
 }
+
 /* .name{
     color: rgb(31, 31, 31);;
     line-height: 160%;
@@ -138,78 +142,95 @@
     font-size: 1.5em;
     font-weight: bold;
 } */
-.requestDetails2{
+.requestDetails2 {
     display: flex;
-    
+
 }
-.clName{
-    color: rgb(31, 31, 31);;
+
+.clName {
+    color: rgb(31, 31, 31);
+    ;
     line-height: 160%;
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     /* margin-bottom: 10px; */
     font-size: 2em;
     font-weight: bold;
 }
-.locName{
-    color: rgb(31, 31, 31);;
+
+.locName {
+    color: rgb(31, 31, 31);
+    ;
     line-height: 160%;
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     /* margin-bottom: 10px; */
     font-size: 1.5em;
     font-weight: bold;
 }
-.requestDetails2{
+
+.requestDetails2 {
     display: flex;
     justify-content: space-between;
 }
-.requestDetails2 span{
-    color: rgb(31, 31, 31);;
+
+.requestDetails2 span {
+    color: rgb(31, 31, 31);
+    ;
     line-height: 100%;
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     margin-bottom: 10px;
     font-size: 1em;
     font-weight: bold;
     /* margin-bottom: 1rem; */
 }
-.service{
-    color: rgb(31, 31, 31);;
+
+.service {
+    color: rgb(31, 31, 31);
+    ;
     line-height: 100%;
-    font-family: Helvetica,sans-serif;
-    margin-bottom: 1rem; 
+    font-family: Helvetica, sans-serif;
+    margin-bottom: 1rem;
     font-size: 1em;
     font-weight: bold;
 }
-.requestBtnContainer{
+
+.requestBtnContainer {
     display: flex;
     justify-content: space-between;
 }
-.reactTabs{
+
+.reactTabs {
     /* width: 40%; */
+    display: grid;
 }
-.reactTablist{
+
+.reactTablist {
     display: flex;
     justify-content: space-between;
     margin-bottom: 3rem;
 }
-.reactTablist .Tab{
+
+.reactTablist .Tab {
     font-size: 2rem;
 }
-.requestCard .requestBtnContainer span.acceptedText{
+
+.requestCard .requestBtnContainer span.acceptedText {
     line-height: 160%;
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     /* margin-bottom: 10px; */
     font-size: 1.5em;
     font-weight: bold;
     color: rgb(0, 111, 0);
 }
-.requestCard .requestBtnContainer span.rejectedText{
+
+.requestCard .requestBtnContainer span.rejectedText {
     color: rgb(170, 0, 0);
     line-height: 160%;
-    font-family: Helvetica,sans-serif;
+    font-family: Helvetica, sans-serif;
     /* margin-bottom: 10px; */
     font-size: 1.5em;
     font-weight: bold;
 }
+
 /* .reactTab{
     font-size: 1rem;
 } */
@@ -240,11 +261,72 @@
 /* .requestCard * {
     outline: 1px solid red;
 } */
-.mainPage{
+.mainPage {
     width: 100%;
     margin: auto;
     /* background-color:bisque; */
     margin-top: 2rem;
     display: flex;
     justify-content: center;
-} 
+}
+
+.refreshButton {
+    place-self: end;
+    position: relative;
+    --border-color: rgba(128, 128, 128, 0.4);
+    --text-color: black;
+    --background-color: rgba(255, 255, 255, 0.8);
+    margin: 0.5em;
+    padding: 0.8em;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75em;
+    box-shadow: -1px 1px 6px 1px var(--border-color);
+    transform: translateX(-2px) translateY(-2px);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+
+.refreshButton:hover {
+    transform: translateX(0px) translateY(0px);
+    box-shadow: 1px 1px 4px 0px var(--border-color);
+}
+
+.refreshButton::after {
+    content: "";
+    background-color: green;
+    position: absolute;
+    display: none;
+}
+
+.refreshButton[data-state="loading"] {
+    transform: translateX(0px) translateY(0px);
+    box-shadow: none;
+    /* --text-color: yellow; */
+    /* --border-color: yellow; */
+}
+
+.refreshButton[data-state="loading"]::after {
+    display: block;
+    /*   width:100%; */
+    animation: loader 1s ease infinite;
+    height: 4px;
+}
+
+@keyframes loader {
+    0% {
+        left: 4%;
+        width: 0%;
+    }
+
+    50% {
+        left: 4%;
+        width: 92%;
+    }
+
+    100% {
+        left: 96%;
+        width: 0%;
+    }
+}
