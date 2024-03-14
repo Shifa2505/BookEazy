@@ -29,6 +29,8 @@
     overflow: hidden;
     place-items: center;
     padding: 0.4em;
+    // max-width: 728px;
+    // align-self: center;
 }
 
 .bookingCard .imageContainer {
@@ -40,7 +42,7 @@
 }
 
 .bookingCard .imageContainer img {
-    width: 80%;
+    // width: 80%;
     aspect-ratio: 1/1;
     border-radius: 25%;
     box-shadow: 2px 0px 2px 0px rgba(0, 0, 0, 0.355);
@@ -156,7 +158,7 @@
 
 .refreshButton::after {
     content: "";
-    // background-color: yellow;
+    background-color: green;
     position: absolute;
     display: none;
 }
@@ -172,7 +174,7 @@
     display: block;
     /*   width:100%; */
     animation: loader 1s ease infinite;
-    height: 4px;
+    height: 2px;
 }
 
 @keyframes loader {
