@@ -5,8 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
+import mongoose from "mongoose";
 
-import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings, changeBookingStatusToPaid, changeBookingStatusToOngoing, changeBookingStatusToCompleted } from "./controllers/dbOps.js";
+import { addServiceperson, addUser, createBookingRequest, getServiceCategories, getServicesForCategory, getServicepersonForCategories, userLogin, servicepersonLogin, acceptBooking, rejectBooking, listUserBookings, listServicepersonBookings, changeBookingStatusToPaid, changeBookingStatusToOngoing, changeBookingStatusToCompleted, getServiceperson } from "./controllers/dbOps.js";
 import { isServiceperson, isUser } from "./middlewares/auth.js";
 
 const app = express();
@@ -28,6 +29,12 @@ const gateway = new braintree.BraintreeGateway({
 
 await connectDB(process.env.Test_Database_URL);
 // await connectDB(process.env.Database_URL);
+const profileSchema = new mongoose.Schema({
+  username: String,
+  name: String,
+  bio: String
+});
+const Profile = mongoose.model('Profile', profileSchema);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");
@@ -264,7 +271,20 @@ app.post("/api/completeBooking", isUser, (req,res)=>{
   .then(()=>res.sendStatus(200))
   .catch(err=>res.status(500).send(err.message))
 })
-
+app.get("/api/serviceperson/:username", (req, res) => {
+  const serviceperson = req.params.username;
+  if (serviceperson) {
+    getServiceperson(serviceperson)
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  } else {
+    res.status(400).send("Invalid request. Username to be specified.");
+  }
+});
 app.get("/api/send-feedback", isUser, (req,res)=>{
 
 })
@@ -311,6 +331,8 @@ app.post("/api/process-payment",async (req,res)=>{
   }
   
 })
+
+
 
 //payment settlement function
 // gateway.transaction.sale({

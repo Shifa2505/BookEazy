@@ -553,6 +553,18 @@ async function changeBookingStatusToCompleted(id,feedback){
   await booking.save();
 }
 
+async function getServiceperson(username) {
+  let sp = await servicepersonModel.findOne({ username: username });
+  if (!sp) {
+    throw new Error("No serviceperson found.");
+  }
+  sp = await servicepersonModel
+    .findOne({ username: username })
+    .populate("servicesOffered.service")
+    .populate("bookings");
+  console.log(sp);
+}
+
 export default{
   addUser,
   addServiceperson,
@@ -568,7 +580,8 @@ export default{
   getServicesForCategory,
   changeBookingStatusToPaid,
   changeBookingStatusToOngoing,
-  changeBookingStatusToCompleted
+  changeBookingStatusToCompleted,
+  getServiceperson
 };
 export {
   addUser,
@@ -585,5 +598,6 @@ export {
   getServicesForCategory,
   changeBookingStatusToPaid,
   changeBookingStatusToOngoing,
-  changeBookingStatusToCompleted
+  changeBookingStatusToCompleted,
+  getServiceperson
 };

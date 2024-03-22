@@ -3,6 +3,7 @@ import styles from "./ServicemenShowCard.module.css";
 import ReviewsModal from "./ReviewsModal";
 import { Link, useNavigate } from "react-router-dom";
 import { BookingContext } from "../../App";
+import ViewProfile from "../profile-section/ViewProfile";
 
 
 function ServicemenShowCard(props) {
@@ -29,7 +30,7 @@ function ServicemenShowCard(props) {
         <img src={props.image ? props.image : "https://avatars.dicebear.com/api/adventurer-neutral/mail%40ashallendesign.co.uk.svg"} alt={props.name} />
         </div>
         <div className={styles.completeProfile}>
-          <a href="#" onClick={openModal}>View Profile and Reviews</a>
+          <Link to={`/showprofile/${props.username}`}>View Profile and Reviews</Link>
         </div>
         <div className={styles.book}>
           <button className={styles.bookBtn} onClick={()=>{
