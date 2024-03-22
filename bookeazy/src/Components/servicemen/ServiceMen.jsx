@@ -15,17 +15,16 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Box, Container, Stack } from "@mui/material";
 import { DatePickerToolbar } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import {FormControl,MenuItem, InputLabel, Select} from "@mui/material";
+import { FormControl, MenuItem, InputLabel, Select } from "@mui/material";
 //import Modal from './Modal';
 
 export default function ServiceMen() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [servicePeople, setServicePeople] = useState([]);
-  const [service, setService] = useState('');
-  const [services, setServices] = useState([])
+  const [service, setService] = useState("");
+  const [services, setServices] = useState([]);
   // console.log(searchParams.get("category"));
-  
 
   //   const [modalIsOpen, setModalIsOpen] = useState(false);
   // const [selectedDate, setSelectedDate] = useState(null);
@@ -56,25 +55,27 @@ export default function ServiceMen() {
       navigate("/");
     }
     axios
-      .get(
-        "/api/get-servicepeople/" +
-          searchParams.get("category")
-      )
+      .get("/api/get-servicepeople/" + searchParams.get("category"))
       .then((res) => {
         // console.log(res.data.sort((x,y)=>x.rating.rating - y.rating.rating))
-        let l =[...res.data.filter(x=>x.rating!==null).sort((x,y)=>y.rating.rating-x.rating.rating)];
-        l = [...l,...res.data.filter(x=>x.rating===null)];
-        console.log(l.map(m=>m.rating))
+        let l = [
+          ...res.data
+            .filter((x) => x.rating != null)
+            .sort((x, y) => y.rating.rating - x.rating.rating),
+        ];
+        l = [...l, ...res.data.filter((x) => x.rating === null)];
+        console.log(l.map((m) => m.rating));
         // console.log(l)
         setServicePeople(l);
       });
-    axios.get(`/api/get-services-for-category/${searchParams.get("category")}`)
-    .then(res=>{
-      setServices(res.data)
-    })
+    axios
+      .get(`/api/get-services-for-category/${searchParams.get("category")}`)
+      .then((res) => {
+        setServices(res.data);
+      });
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log("resending new query...")
     // console.log(selectedDateTime)
     if (!searchParams.has("category")) {
@@ -83,13 +84,19 @@ export default function ServiceMen() {
     }
     axios
       .get(
-        `/api/get-servicepeople/${searchParams.get("category")}?datetime=${selectedDateTime}`
+        `/api/get-servicepeople/${searchParams.get(
+          "category"
+        )}?datetime=${selectedDateTime}`
       )
       .then((res) => {
         // console.log(res.data)
-        let l =[...res.data.filter(x=>x.rating!==null).sort((x,y)=>y.rating.rating-x.rating.rating)];
-        l = [...l,...res.data.filter(x=>x.rating===null)];
-        console.log(l.map(m=>m.rating))
+        let l = [
+          ...res.data
+            .filter((x) => x.rating !== null)
+            .sort((x, y) => y.rating.rating - x.rating.rating),
+        ];
+        l = [...l, ...res.data.filter((x) => x.rating === null)];
+        console.log(l.map((m) => m.rating));
         // console.log(l)
         setServicePeople(l);
       });
@@ -140,40 +147,47 @@ export default function ServiceMen() {
             </div>
           </div>
           <hr className="horizontal-line"></hr>
-            <Stack spacing={4}>
-              <h4>Time Of Day</h4>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker minDateTime={dayjs(new Date())} onAccept={val=>setSelectedDateTime(val)}/>
-              </LocalizationProvider>
-              
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Service</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={service}
-                  label="Service"
-                  onChange={(event)=>setService(event.target.value)}
-                >
-                  {services.map((service,index)=><MenuItem key={index} value={service.name}>{service.name}</MenuItem>)}
-                </Select>
-              </FormControl>
+          <Stack spacing={4}>
+            <h4>Time Of Day</h4>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                minDateTime={dayjs(new Date())}
+                onAccept={(val) => setSelectedDateTime(val)}
+              />
+            </LocalizationProvider>
 
-          <div className="time-selection">
-            <div className="checkbox-1">
-              <input type="checkbox" />
-              <p>Morning (8am to 12pm)</p>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Service</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={service}
+                label="Service"
+                onChange={(event) => setService(event.target.value)}
+              >
+                {services.map((service, index) => (
+                  <MenuItem key={index} value={service.name}>
+                    {service.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <div className="time-selection">
+              <div className="checkbox-1">
+                <input type="checkbox" />
+                <p>Morning (8am to 12pm)</p>
+              </div>
+              <div className="checkbox-2">
+                <input type="checkbox" />
+                <p>Afternoon (12pm to 5 pm)</p>
+              </div>
+              <div className="checkbox-3">
+                <input type="checkbox" />
+                <p>Evening (5pm to 9:30pm)</p>
+              </div>
             </div>
-            <div className="checkbox-2">
-              <input type="checkbox" />
-              <p>Afternoon (12pm to 5 pm)</p>
-            </div>
-            <div className="checkbox-3">
-              <input type="checkbox" />
-              <p>Evening (5pm to 9:30pm)</p>
-            </div>
-          </div>
-            </Stack>
+          </Stack>
           <hr className="horizontal-line"></hr>
           <h4>Price</h4>
           <div className="price">

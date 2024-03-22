@@ -134,7 +134,7 @@ async function servicepersonLogin(username, password) {
 }
 
 async function getServiceCategories() {
-  const categories = await categoryModel.find({}, {__v: 0 });
+  const categories = await categoryModel.find({}, { __v: 0 });
   return categories;
 }
 
@@ -142,7 +142,7 @@ async function getServiceCategories() {
  * @param {String} category,
  * @param {Date|null} nowTime
  */
-async function getServicepersonForCategories(category,nowTime=null) {
+async function getServicepersonForCategories(category, nowTime = null) {
   // console.log(`category received = ${category}`)
   const serviceCategory = await categoryModel.findOne({ name: category });
   if (!serviceCategory) {
@@ -150,7 +150,7 @@ async function getServicepersonForCategories(category,nowTime=null) {
   }
   let servicepeople;
   // console.log(`received time : ${nowTime}`)
-  if(nowTime){
+  if (nowTime) {
     // console.log("received time for querying ..")
     nowTime = new Date(nowTime);
     // console.log(typeof nowTime)
@@ -199,16 +199,16 @@ async function getServicepersonForCategories(category,nowTime=null) {
           _id: { _id: "$_id" },
           name: { $first: "$name" },
           bookings: { $push: "$bookings" },
-          username: {$first: "$username"},
-          servicesOffered: {$first: "$servicesOffered"},
-          location: {$first: "$location"},
-          qualification: {$first: "$qualification"},
-          phone: {$first: "$phone"},
-          jobs_done: {$first: "$jobs_done"},
-          bio: {$first: "$bio"},
-          rating: {$first: "$rating"},
-          image_url: {$first: "$image_url"},
-          email: {$first: "$email"},
+          username: { $first: "$username" },
+          servicesOffered: { $first: "$servicesOffered" },
+          location: { $first: "$location" },
+          qualification: { $first: "$qualification" },
+          phone: { $first: "$phone" },
+          jobs_done: { $first: "$jobs_done" },
+          bio: { $first: "$bio" },
+          rating: { $first: "$rating" },
+          image_url: { $first: "$image_url" },
+          email: { $first: "$email" },
         },
       },
       {
@@ -247,7 +247,7 @@ async function getServicepersonForCategories(category,nowTime=null) {
               ],
             },
           },
-        }
+        },
       },
       // {
       //     $project: {
@@ -255,9 +255,8 @@ async function getServicepersonForCategories(category,nowTime=null) {
       //         name: "$name"
       //     }
       // }
-    ])
-  }
-  else{
+    ]);
+  } else {
     // console.log("did not receive time for querying...")
     // servicepeople = await servicepersonModel
     //   .find(
@@ -273,43 +272,45 @@ async function getServicepersonForCategories(category,nowTime=null) {
           path: "$servicesOffered",
         },
       },
-      {$lookup: {
+      {
+        $lookup: {
           from: "servicecategories",
           localField: "servicesOffered.service",
           foreignField: "_id",
-          as: "service"
-        }},
+          as: "service",
+        },
+      },
       {
         $unwind: {
           path: "$service",
-        }
+        },
       },
       {
         $match: {
-          "service.name":"Electrical Help"
-        }
+          "service.name": "Electrical Help",
+        },
       },
       {
         $lookup: {
           from: "bookings",
           localField: "bookings",
           foreignField: "_id",
-          as: "bookings"
-        }
-      }
-    ])
-    }
-    return servicepeople;
+          as: "bookings",
+        },
+      },
+    ]);
+  }
+  return servicepeople;
 }
 
 /**
- * 
- * @param {String} category 
+ *
+ * @param {String} category
  */
-async function getServicesForCategory(category){
-  const categoryDoc = await categoryModel.findOne({name:category})
+async function getServicesForCategory(category) {
+  const categoryDoc = await categoryModel.findOne({ name: category });
   // console.log(categoryDoc.name)
-  let services = serviceModel.find({category:categoryDoc._id})
+  let services = serviceModel.find({ category: categoryDoc._id });
   return services;
 }
 
@@ -425,7 +426,7 @@ async function rejectBooking(servicepersonUsername, bookingId) {
 
 async function listUserBookings(username) {
   const user = await userModel
-    .findOne({ username: username }, { username: 1, bookings: 1 , __id: 1})
+    .findOne({ username: username }, { username: 1, bookings: 1, __id: 1 })
     .populate({
       path: "bookings",
       populate: {
@@ -438,7 +439,7 @@ async function listUserBookings(username) {
         path: "service",
       },
     });
-    // console.log(user);
+  // console.log(user);
   if (user) {
     return user;
   } else {
@@ -461,99 +462,118 @@ async function listServicepersonBookings(username) {
         path: "service",
       },
     });
-    if (serviceperson) {
-      return serviceperson;
-    } else {
-      throw new Error("Error getting specified serviceperson bookings");
-    }
+  if (serviceperson) {
+    return serviceperson;
+  } else {
+    throw new Error("Error getting specified serviceperson bookings");
+  }
 }
 
 /**
- * 
- * @param {String} id 
+ *
+ * @param {String} id
  */
-async function changeBookingStatusToPaid(id){
-  let booking = await bookingModel.findOne({_id:id});
-  if(!booking){
-    throw new Error("No such booking found.")
+async function changeBookingStatusToPaid(id) {
+  let booking = await bookingModel.findOne({ _id: id });
+  if (!booking) {
+    throw new Error("No such booking found.");
   }
   booking.status = "PAID";
   await booking.save();
 }
 
-async function changeBookingStatusToOngoing(id){
-  let booking = await bookingModel.findOne({_id:id});
-  if(!booking){
-    throw new Error("No such booking found.")
+async function changeBookingStatusToOngoing(id) {
+  let booking = await bookingModel.findOne({ _id: id });
+  if (!booking) {
+    throw new Error("No such booking found.");
   }
   booking.status = "ONGOING";
   await booking.save();
 }
 
-async function changeBookingStatusToCompleted(id,feedback){
-  let booking = await bookingModel.findOne({_id:id});
-  if(!booking){
-    throw new Error("No such booking found.")
+async function changeBookingStatusToCompleted(id, feedback) {
+  let booking = await bookingModel.findOne({ _id: id });
+  if (!booking) {
+    throw new Error("No such booking found.");
   }
   booking.status = "COMPLETED";
   booking.endTime = new Date();
   // trying to take weighted average below for each column present (star-3, efficiency-1, cleanliness-1, behaviour-1, overall-3)
   let totalWeight = 0;
   let summedWeight = 0;
-  if(feedback.star){
-    summedWeight+=(3*(feedback.star-3)/2);
-    totalWeight+=3;
+  if (feedback.star) {
+    summedWeight += (3 * (feedback.star - 3)) / 2;
+    totalWeight += 3;
     // console.log(`starRating : ${3*(feedback.star-3)/2}`)
   }
-  if(feedback.efficiency){
-    summedWeight+=sentiment.analyze(feedback.efficiency).comparative/5;
-    totalWeight+=1;
+  if (feedback.efficiency) {
+    summedWeight += sentiment.analyze(feedback.efficiency).comparative / 5;
+    totalWeight += 1;
     // console.log(`efficiencyRating : ${sentiment.analyze(feedback.efficiency).comparative/5}`)
   }
-  if(feedback.cleanliness){
-    summedWeight+=sentiment.analyze(feedback.cleanliness).comparative/5;
-    totalWeight+=1;
+  if (feedback.cleanliness) {
+    summedWeight += sentiment.analyze(feedback.cleanliness).comparative / 5;
+    totalWeight += 1;
     // console.log(`cleanlinessRating : ${sentiment.analyze(feedback.cleanliness).comparative/5}`)
   }
-  if(feedback.behaviour){
-    summedWeight+=sentiment.analyze(feedback.behaviour).comparative/5;
-    totalWeight+=1;
+  if (feedback.behaviour) {
+    summedWeight += sentiment.analyze(feedback.behaviour).comparative / 5;
+    totalWeight += 1;
     // console.log(`behaviourRating : ${sentiment.analyze(feedback.behaviour).comparative/5}`)
   }
-  if(feedback.overall){
-    summedWeight+=(3*sentiment.analyze(feedback.overall).comparative/5);
-    totalWeight+=3;
+  if (feedback.overall) {
+    summedWeight += (3 * sentiment.analyze(feedback.overall).comparative) / 5;
+    totalWeight += 3;
     // console.log(`overallRating : ${sentiment.analyze(feedback.overall).comparative/5}`)
   }
   // console.log("summedWeight",summedWeight)
   // console.log("totalWeight",totalWeight)
-  if(totalWeight!==0){
-    let f = {content : feedback, calculatedRating: summedWeight/totalWeight};
+  if (totalWeight !== 0) {
+    let f = { content: feedback, calculatedRating: summedWeight / totalWeight };
     console.clear();
-    console.log(f)
+    console.log(f);
     booking.feedback = f;
-    let serviceperson = await servicepersonModel.findOne({_id:booking.servicePerson});
-    console.log("serviceperson.rating",serviceperson.rating)
-    if(serviceperson.rating.rating){
-      let x = (serviceperson.rating.rating*serviceperson.rating.totalReviews + (2.5+f.calculatedRating*2.5)) / (serviceperson.rating.totalReviews+1)
-      console.log(x)
+    let serviceperson = await servicepersonModel.findOne({
+      _id: booking.servicePerson,
+    });
+    console.log("serviceperson.rating", serviceperson.rating);
+    if (serviceperson.rating.rating) {
+      let x =
+        (serviceperson.rating.rating * serviceperson.rating.totalReviews +
+          (2.5 + f.calculatedRating * 2.5)) /
+        (serviceperson.rating.totalReviews + 1);
+      console.log(x);
       serviceperson.rating.rating = x;
       serviceperson.rating.totalReviews++;
-    }else{
-      console.log("first time storing")
-      serviceperson.rating = {rating : 2.5 + f.calculatedRating*2.5,totalReviews : 1};
+    } else {
+      console.log("first time storing");
+      serviceperson.rating = {
+        rating: 2.5 + f.calculatedRating * 2.5,
+        totalReviews: 1,
+      };
     }
-    console.log(serviceperson.rating)
+    console.log(serviceperson.rating);
     await serviceperson.save();
-  }
-  else{
+  } else {
     booking.feedback = null;
   }
   // console.log(booking)
   await booking.save();
 }
 
-export default{
+async function getServiceperson(username) {
+  let sp = await servicepersonModel.findOne({ username: username });
+  if (!sp) {
+    throw new Error("No serviceperson found.");
+  }
+  sp = await servicepersonModel
+    .findOne({ username: username })
+    .populate("servicesOffered.service")
+    .populate("bookings");
+  console.log(sp);
+}
+
+export default {
   addUser,
   addServiceperson,
   userLogin,
@@ -568,7 +588,8 @@ export default{
   getServicesForCategory,
   changeBookingStatusToPaid,
   changeBookingStatusToOngoing,
-  changeBookingStatusToCompleted
+  changeBookingStatusToCompleted,
+  getServiceperson,
 };
 export {
   addUser,
@@ -585,5 +606,6 @@ export {
   getServicesForCategory,
   changeBookingStatusToPaid,
   changeBookingStatusToOngoing,
-  changeBookingStatusToCompleted
+  changeBookingStatusToCompleted,
+  getServiceperson,
 };
