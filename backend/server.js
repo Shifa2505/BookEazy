@@ -276,7 +276,9 @@ app.get("/api/serviceperson/:username", (req, res) => {
   if (serviceperson) {
     getServiceperson(serviceperson)
       .then((data) => {
+        console.log(data);
         res.status(200).send(data);
+
       })
       .catch((err) => {
         res.status(500).send(err);

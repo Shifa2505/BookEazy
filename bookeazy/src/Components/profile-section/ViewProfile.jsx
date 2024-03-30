@@ -5,24 +5,24 @@ import { useParams } from 'react-router-dom';
 import axios from "./../../../axios.config";
 
 const ViewProfile = (props) => {
-  // const { username } = useParams();
+  const { username } = useParams();
+  console.log(username);
   // const [profileData, setProfileData] = useState(null);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`/api/serviceperson/${username}`);
-  //       setProfileData(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching profile data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/serviceperson/${username}`);
+        // setProfileData(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
 
-  //   fetchData();
-  // }, [username]);
+    fetchData();
+  }, [username]);
 
-  // if (!profileData) {
-  //   return <div>Loading...</div>;
-  // }
+  
 
   // Sample data for demonstration
   const profileData = {
@@ -41,6 +41,9 @@ const ViewProfile = (props) => {
       { id: 4, text: "Impressive work!", rating: 5 },
     ],
   };
+  if (!profileData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="profile-container">
