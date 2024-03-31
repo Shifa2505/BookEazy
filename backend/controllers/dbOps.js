@@ -570,6 +570,20 @@ async function getServiceperson(username) {
     .findOne({ username: username })
     .populate("servicesOffered.service")
     .populate("bookings");
+
+  console.log(sp);
+  return sp;
+}
+
+async function getServiceperson(username) {
+  let sp = await servicepersonModel.findOne({ username: username });
+  if (!sp) {
+    throw new Error("No serviceperson found.");
+  }
+  sp = await servicepersonModel
+    .findOne({ username: username })
+    .populate("servicesOffered.service")
+    .populate("bookings");
   console.log(sp);
 }
 

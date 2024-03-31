@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { connectDB } from "./config/config.js";
+import mongoose from "mongoose";
 
 import {
   addServiceperson,
@@ -55,6 +56,12 @@ const gateway = new braintree.BraintreeGateway({
 
 await connectDB(process.env.Test_Database_URL);
 // await connectDB(process.env.Database_URL);
+const profileSchema = new mongoose.Schema({
+  username: String,
+  name: String,
+  bio: String,
+});
+const Profile = mongoose.model("Profile", profileSchema);
 
 app.get("/", (req, res) => {
   res.send("Server is active.");
@@ -308,12 +315,12 @@ app.post("/api/completeBooking", isUser, (req, res) => {
     .then(() => res.sendStatus(200))
     .catch((err) => res.status(500).send(err.message));
 });
-
 app.get("/api/serviceperson/:username", (req, res) => {
   const serviceperson = req.params.username;
   if (serviceperson) {
     getServiceperson(serviceperson)
       .then((data) => {
+        console.log(data);
         res.status(200).send(data);
       })
       .catch((err) => {
@@ -323,6 +330,7 @@ app.get("/api/serviceperson/:username", (req, res) => {
     res.status(400).send("Invalid request. Username to be specified.");
   }
 });
+app.get("/api/send-feedback", isUser, (req, res) => {});
 
 app.get("/api/get-user-bookings", isUser, (req, res) => {
   listUserBookings(req.user.username)

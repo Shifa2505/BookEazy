@@ -17,6 +17,7 @@ import FinalBooking from './Components/final-booking/FinalBooking'
 import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBookings'
 // import Reviews from './Components/ServicemenShowCard/Reviews'
 import { createContext, useState } from 'react'
+import ViewProfile from './Components/profile-section/ViewProfile.jsx'
 
 export const UserContext = createContext();
 export const BookingContext = createContext();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/serviceProviderSignUp" element={<ServicemenRegister/>} />
           <Route path="/showBookings" element={<ShowClientBookings />} /> 
           <Route path="/showRequests" element={<ShowRequestsUpdate/>} />
+          <Route path="/showprofile/:username" element={<ViewProfile/>} />
           {/* <Route path="/reviews" element={<Reviews/>} /> */}
 
           {/* <Route path='/service1' Component={<ElectricalHelp/>}/> */}
@@ -57,4 +59,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
