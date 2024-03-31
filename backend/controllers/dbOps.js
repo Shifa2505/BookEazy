@@ -570,7 +570,8 @@ async function getServiceperson(username) {
     .findOne({ username: username })
     .populate("servicesOffered.service")
     .populate("bookings");
-  console.log(sp);
+  // console.log(sp);
+  return sp;
 }
 
 export default {
