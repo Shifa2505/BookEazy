@@ -1,4 +1,4 @@
-.login-section{
+.login-section {
     /* width: 500px; */
     height: 620px;
     background-color: white;
@@ -7,18 +7,22 @@
     justify-content: center;
 
 }
-.sub-login-section{
+
+.sub-login-section {
     /* background-color: firebrick; */
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
 }
-.left-login{
+
+.left-login {
     /* background-color: pink; */
-    width: 500px;
+    /* width: 500px; */
+    width: 50%;
 }
-.left-login h1{
+
+.left-login h1 {
     font-size: 3rem;
     /* color: aliceblues; */
     /* color: #36454F; */
@@ -26,15 +30,18 @@
     transition: color 0.3s ease-in-out;
     margin-bottom: 50px;
 }
-.left-login h1:hover{
+
+.left-login h1:hover {
     color: rgb(0, 64, 119);
 }
-.left-login label{
+
+.left-login label {
     font-size: 1.5rem;
     /* padding-bottom: 300px; */
     /* margin-top: -100px; */
 }
-#username{
+
+#username {
     width: 100%;
     padding: 5px 20px;
     margin: 15px 0;
@@ -46,7 +53,8 @@
     font-weight: bold;
     /* box-shadow: 5px 5px 0px rgb(0, 64, 119); */
 }
-#password{
+
+#password {
     width: 100%;
     padding: 5px 20px;
     margin: 8px 0;
@@ -57,15 +65,36 @@
     border-radius: 10px;
     font-weight: bold;
 }
-.left-login input:not([type="radio"]){
+
+.left-login input:not([type="radio"]) {
     width: 80%;
     height: 2rem;
 }
-.right-login img{
-    background-color: purple;
-    height: 500px;
-    width: 650px;
+
+.right-login {
+    width: 50%;
+    display: grid;
 }
-.left-login .confirm-btn{
+
+.right-login img {
+    /* background-color: purple; */
+    /* height: 500px;
+    width: 650px; */
+    object-fit: contain;
     width: 100%;
+    place-self: center;
+}
+
+.left-login .confirm-btn {
+    width: 100%;
+}
+
+@media screen and (max-width:768px) {
+    .right-login {
+        display: none;
+    }
+
+    .left-login {
+        width: 100%;
+    }
 }
