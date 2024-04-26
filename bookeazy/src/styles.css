@@ -20,7 +20,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-    padding: 1rem 10rem;
+    padding: 1rem 2rem;
 }
 .site-title{
     font-size: 2rem;

@@ -17,7 +17,7 @@ export default function Navbar(){
 
     return <nav className="nav">
         <Link to="/" className="site-title">BookEazy</Link>
-        <i className="fa-solid fa-xmark"></i>
+        {/* <i className="fa-solid fa-xmark"></i> */}
         <ul>
             {user ? <li>
                 {user.userType=="client" ? 

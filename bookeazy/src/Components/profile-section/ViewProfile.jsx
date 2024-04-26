@@ -7,6 +7,7 @@ import axios from "./../../../axios.config";
 const ViewProfile = (props) => {
   const { username } = useParams();
   const [profileData, setProfileData] = useState();
+  const [errorOccured, setErrorOccured] = useState(false);
   console.log(username);
   // const [profileData, setProfileData] = useState(null);
   useEffect(() => {
@@ -18,6 +19,7 @@ const ViewProfile = (props) => {
         const b = response.data.bookings.filter((d) => d.endTime != null);
         setProfileData({ ...response.data, bookings: b });
       } catch (error) {
+        setErrorOccured(true);
         console.error("Error fetching profile data:", error);
       }
     };
@@ -42,6 +44,9 @@ const ViewProfile = (props) => {
   //     { id: 4, text: "Impressive work!", rating: 5 },
   //   ],
   // };
+  if(errorOccured){
+    return <p>Error occured..</p>;
+  }
   if (!profileData) {
     return <div>Loading...</div>;
   }
@@ -49,7 +54,7 @@ const ViewProfile = (props) => {
   return (
     <div className="profile-container">
       <div className="profile-left">
-        <img src={profileData.image} alt={profileData.name} />
+        <img src={profileData.image ? profileData.image : `https://api.dicebear.com/8.x/bottts-neutral/svg?seed=${profileData.name}`} alt={profileData.name} />
         <h2>{profileData.name}</h2>
       </div>
       <div className="profile-right">
@@ -75,20 +80,44 @@ const ViewProfile = (props) => {
         </p>
         <h3>Reviews:</h3>
         <div className="review-list">
-          {profileData.bookings.map((review) => (
+          {/* {profileData.bookings.map((review) => (
             <div key={review._id} className="review">
               <p>{review.feedback?.content?.overall}</p>
               <p>
                 Rating:
-                {Number(3 + 2 * review.feedback?.calculatedRating).toFixed(2)}
+                {Math.ceil(3 + 2 * review.feedback?.calculatedRating)}
               </p>
             </div>
-          ))}
+          ))} */}
+          {
+            profileData.bookings.length!==0 ? profileData.bookings.map(review=><StarCard key={review._id} review={review}/>) : <p>No reviews yet.</p>
+          }
         </div>
         <button className="load-more-button">Load More Reviews</button>
       </div>
     </div>
   );
 };
+
+function StarCard({review}){
+  if(review?.feedback?.calculatedRating){
+    let starCard=[]
+    for(let i=0; i<Math.ceil(3 + 2*review?.feedback?.calculatedRating); i++){
+      starCard.push(<i className="fa-solid fa-star" style={{color:"gold"}} key={i}></i>)
+    }
+    return (
+      <div className="review">
+                <p>{review.feedback?.content?.overall}</p>
+                <p>
+                  Rating:
+                  {starCard.map(s=>s)}
+                </p>
+              </div>
+    )
+  }
+  else{
+    return (<div className="review"><p>No review.</p></div>)
+  }
+}
 
 export default ViewProfile;
