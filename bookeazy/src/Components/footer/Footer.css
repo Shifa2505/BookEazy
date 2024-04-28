@@ -2,27 +2,30 @@
     height: 400px;
 }
 .main-footer{
-    display: flex;
-    height: 350px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    /* height: 350px; */
     justify-content: space-evenly;
+    align-items: start;
     background-color: #023047;
     padding-top: 50px;
     color: #fff;
+    gap: 1rem;
 }
 
 .info-part{
-    width: 30%;
+    width: 90%;
     text-align: justify;
 }
 
 .contact{
     font-size: 1.1rem;
-    line-height: 30px;
+    /* line-height: 30px; */
 }
 
 
 .footer-heading{
-    margin-top: 0;
+    /* margin-top: 0; */
     margin-bottom: 30px;
     text-decoration: underline;
 }

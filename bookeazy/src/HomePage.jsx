@@ -29,18 +29,19 @@ export default function Homepage() {
         </div>
         <div className="service-containers">
           <div className="services-card">
-            <div className="services-main">
-              <h3>Plumbing Repairs</h3>
+            <div className="service-img">
+              <img src="images/plumbing.jpeg" /* This is a comment in a JSX expression. */ />
             </div>
             <div className="services-content">
               <h3>Plumbing Repairs</h3>
-              <p>Avg. Project: ₹400-₹500</p>
+              <p>Avg. Project: ₹500-₹600</p>
               <button className="services-btn">Book Now</button>
+             
             </div>
           </div>
           <div className="services-card">
             <div className="service-img">
-              <img src="images/electrical.jpeg" width="480" height="310" />
+              <img src="images/electrical.jpeg" /* This is a comment in a JSX expression. */ />
             </div>
             <div className="services-content">
               <h3>Electrical Help</h3>
@@ -51,7 +52,7 @@ export default function Homepage() {
           </div>
           <div className="services-card">
             <div className="service-img">
-              <img src="images/cleaning.jpg" width="480" height="310" />
+              <img src="images/cleaning.jpg" /* width="480" height="310" */ />
             </div>
             <div className="services-content">
               <h3>Home Cleaning</h3>
@@ -63,7 +64,7 @@ export default function Homepage() {
         <div className="service-containers">
           <div className="services-card">
             <div className="service-img">
-              <img src="images/furniture.jpg" width="480" height="310" />
+              <img src="images/furniture.jpg" /*width="480" height="310"*/ />
             </div>
             <div className="services-content">
               <h3>Furniture Assembly</h3>
@@ -73,7 +74,7 @@ export default function Homepage() {
           </div>
           <div className="services-card">
             <div className="service-img">
-              <img src="images/painting.jpeg" width="480" height="310" />
+              <img src="images/painting.jpeg" /*width="480" height="310"*/ />
             </div>
             <div className="services-content">
               <h3>Painting</h3>
@@ -83,7 +84,7 @@ export default function Homepage() {
           </div>
           <div className="services-card">
             <div className="service-img">
-              <img src="images/lifting.jpeg" width="480" height="310" />
+              <img src="images/lifting.jpeg" /*width="480" height="310"*/ />
             </div>
             <div className="services-content">
               <h3>Heavy Lifting</h3>
@@ -101,11 +102,11 @@ export default function Homepage() {
                 <p>Select your Service Provider based on reviews, skills, and pricing</p>    
                 <p>Set a schedule that suits you - as soon as today.</p>  
             </div>
-            <div className="info-img">
-                {/* <img src="images/booking.jpg" alt="" /> */}
+            {/*<div className="info-img">
+                <img src="images/booking.jpg" alt="" />
                 <img src="images/book_info.jpg" alt="" />
 
-            </div>
+            </div>*/}
               
 
         </section>

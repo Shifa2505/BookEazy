@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../../App";
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast, Toaster} from 'react-hot-toast';
 import axios from "../../../axios.config";
 function Login() {
   const { user, setUser } = useContext(UserContext);
@@ -16,12 +17,14 @@ function Login() {
 
   function validateAndLogin() {
     if (usernameRef.current.value.trim().length == 0) {
-      window.alert("Please enter username");
+      // window.alert("Please enter username");
+      toast.error("Please enter username.")
       usernameRef.current.focus();
       return;
     }
     if (passwordRef.current.value.trim().length == 0) {
-      window.alert("Please enter password");
+      // window.alert("Please enter password");
+      toast.error("Please enter password");
       passwordRef.current.focus();
       return;
     }
@@ -29,7 +32,8 @@ function Login() {
       userTypeRef.current.value != "Client" &&
       userTypeRef.current.value != "Serviceperson"
     ) {
-      window.alert("Please select a valid user type to login.");
+      toast.error("Please select a valid user type to login.");
+      // window.alert("Please select a valid user type to login.");
       userTypeRef.current.focus();
       return;
     }
@@ -51,7 +55,10 @@ function Login() {
           setUser({ ...data.data, userType: "client" });
           navigate("/");
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+          toast.error("Invalid credentials.");
+        });
     } else {
       axios
         .post(
@@ -69,7 +76,10 @@ function Login() {
           setUser({ ...data.data, userType: "serviceperson" });
           navigate("/");
         })
-        .catch((err) => console.error(err.response.data));
+        .catch((err) => {
+          console.error(err.response.data);
+          toast.error("Invalid credentials.")
+        });
     }
   }
   return (
@@ -132,6 +142,7 @@ function Login() {
           <img src="/images/login.jpg" alt="" width={200} height={200} />
         </div>
       </div>
+      <Toaster position="top-center"/>
     </section>
   );
 }

@@ -41,12 +41,13 @@ body {
     padding: 8px 12px;
     position: relative;
     letter-spacing: 2px;
+    font-size: 1.3rem;
 }
 .nav a, .nav span {
     color: inherit;
     text-decoration: none;
     font-size: 1.3rem;
-    font-weight: 450;
+    /* font-weight: 450; */
 }
 .nav ul li::after{
     content: '';
@@ -86,7 +87,7 @@ body {
 } 
 .dashboard {
     height: 85vh;
-    background-image: url(/images/homepage_image.jpeg);
+    /* background-image: url(/images/homepage_image.jpeg); */
     /* backdrop-filter: blur(10px); */
     /* width: 50%; */
     /* background-repeat: no-repeat; */
@@ -105,7 +106,7 @@ body {
 }
 .home-page h3{
     /* height: 25vh; */
-    width: 800px;
+    /* width: 800px; */
     /* background-color: yellowgreen; */
     font-size: 1.5rem;
     text-align: center;
@@ -114,7 +115,7 @@ body {
 .home-wrap{
     /* background-color: rgba(233, 128, 116, 0.8); */
     background-color: #023047;
-    height: 55vh;
+    /* height: 55vh; */
     letter-spacing: 1px;
     /* width: 80%; */
     display: flex;
@@ -131,10 +132,14 @@ body {
     /* background-color: aquamarine; */
     justify-content: center;
     align-items: center;
-    height: 10vh;
+    background-image: url(/images/homepage_image.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* height: 10vh; */
     /* width: 70%; */
     text-align: justify ;
-    padding: 50px 100px 5px 100px;
+    padding: 50px 50px 5px 50px;
 }
 .help-btn{
     /* background-color: aqua; */
@@ -162,7 +167,7 @@ body {
     display: block;
     min-height: 90vh;
     width: 100%;
-    margin-top: 75vh;
+    /* margin-top: 75vh; */
 }
 .servicetext{
     width: 100%;
@@ -279,15 +284,20 @@ body {
 /* information booking */
 .book-info{
     display: flex;
-    margin-top: 50px;
-    height: 80vh;
+    /* margin-top: 50px; */
+    /* height: 80vh; */
     background-color: #fff;
+    background-image: url(/images/book_info.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+    background-size: 50%;
 }
 .info-content{
     /* background-color: aquamarine; */
-    margin: 60px;
+    padding: 60px;
     width: 50%;
-    height: 70vh;
+    /* height: 70vh; */
     /* background-color: pink; */
     display: flex;
     flex-direction: column;
@@ -345,24 +355,37 @@ body {
         width: 100%;
     }
     .home-page{
-        height: 50vh;
-        margin-bottom: 50px;
+        /* height: 50vh; */
+        /* margin-bottom: 50px; */
     }
     .home-wrap{
-        height: 80vh;
+        /* height: 80vh; */
     }
     .home-wrap h3 {
-        width: 380px;
+        /* width: 380px; */
         text-align: center;
         /* background-color: chocolate; */
         padding: 0;
     }
     .service-cardss{
-        margin-top: 600px;
+        /* margin-top: 600px; */
     }
     .service-containers{
 
         flex-direction: column;
+    }
+    .home-page h1{
+        font-size: 1.5rem;
+    }
+    .home-page h3{
+        font-size: 1rem;
+    }
+    .info-content{
+        width: 100%;
+    }
+    .book-info{
+        background-size: 80%;
+        background-position: center;
     }
    
 }
@@ -379,6 +402,7 @@ body {
 
     .nav ul li {
         padding: 8px 6px;
+        font-size: 0.9rem;
     }
 
     .nav a, .nav span {

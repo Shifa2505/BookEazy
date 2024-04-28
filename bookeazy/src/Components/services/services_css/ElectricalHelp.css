@@ -76,9 +76,10 @@
 
 .service-img img{   
     /* background-color: bisque; */
-    margin-left: 50px;
-    max-width: 500px;
+    /* margin-left: 50px; */
+    /* max-width: 500px; */
     max-height: 500px;
+    min-height: 280px;
 }
 /* how it works */
 .how-it-works{
