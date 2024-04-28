@@ -58,24 +58,36 @@ const ViewProfile = (props) => {
         <h2>{profileData.name}</h2>
       </div>
       <div className="profile-right">
+      <div className="imgAndtitle">
+      <img src="/src/assets/qualification.png"/>
         <h3>Qualifications:</h3>
+        </div>
         <p>{profileData.qualification}</p>
+        <div className="imgAndtitle">
+        <img src="/src/assets/services.png"/>
         <h3>Offered Services:</h3>
+        </div>
         <ul>
           {profileData.servicesOffered.map((service, index) => (
-            <li key={index}>{service.service.name}</li>
+            <li className="list" key={index}>{service.service.name}</li>
           ))}
         </ul>
+        <div className="imgAndtitle">
+        <img src="/src/assets/biography.png"/>
         <h3>Bio:</h3>
+        </div>
         <p>{profileData.bio}</p>
+        <div className="imgAndtitle">
+        <img src="/src/assets/communicate.png"/>
         <h3>Contact Information:</h3>
-        <p>
+        </div>
+        <p className="list">
           <strong>Phone:</strong> {profileData.phone}
         </p>
-        <p>
+        <p className="list">
           <strong>Email:</strong> {profileData.email}
         </p>
-        <p>
+        <p className="list">
           <strong>Address:</strong> {profileData.address}
         </p>
         <h3>Reviews:</h3>
