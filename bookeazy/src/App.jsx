@@ -16,7 +16,7 @@ import ServicemenRegister from "./Components/authentication/serviceRegister"
 import FinalBooking from './Components/final-booking/FinalBooking'
 import ShowClientBookings from './Components/ClientBookingRequests/ShowClientBookings'
 // import Reviews from './Components/ServicemenShowCard/Reviews'
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import ViewProfile from './Components/profile-section/ViewProfile.jsx'
 
 export const UserContext = createContext();
@@ -25,6 +25,13 @@ export const BookingContext = createContext();
 function App() {
   const [user, setUser] = useState(null);
   const [booking, setBooking] = useState(null);
+
+  useEffect(()=>{
+    // checking if already logged in
+    if(window.localStorage.getItem("userDetails")){
+      setUser(JSON.parse(window.localStorage.getItem("userDetails")))
+    }
+  },[])
   return (
     <>
     <BrowserRouter>

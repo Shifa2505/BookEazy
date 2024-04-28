@@ -10,6 +10,7 @@ export default function Navbar(){
         axios.get("/sign-out")
         .then(d=>{
             setUser(null);
+            window.localStorage.removeItem("userDetails")
             navigate("/");
         })
     }

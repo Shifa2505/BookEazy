@@ -47,6 +47,7 @@ function Login() {
         .then((data) => {
           window.alert(`Log In Successfull, Welcome ${data.data.name}`);
           // console.log(data.data);
+          window.localStorage.setItem("userDetails", JSON.stringify({ ...data.data, userType: "client" }))
           setUser({ ...data.data, userType: "client" });
           navigate("/");
         })
@@ -64,6 +65,7 @@ function Login() {
         .then((data) => {
           window.alert(`Log In Successfull, Welcome ${data.data.name}`);
           // console.log(data);
+          window.localStorage.setItem("userDetails", JSON.stringify({ ...data.data, userType: "serviceperson" }))
           setUser({ ...data.data, userType: "serviceperson" });
           navigate("/");
         })
